@@ -1,5 +1,5 @@
 #ifndef _h_base_
 #define _h_base_
 enum direct {UP,RIGHT,DOWN,LEFT};
-enum type {BLOCK = 1, PERSON = 2,BOX = 4,WALL = 8,INTEND = 16};
+enum type {BLOCK = 0, PERSON = 1,BOX = 2,WALL = 4,INTEND = 8};
 #endif

@@ -1,31 +1,47 @@
 #include"block.h"
 #include<iostream>
-block::block(){
-
+block::block() {
+    root = this;
+    rear = this;
 }
 
-block::~block(){
-    block *p,*t;
-    p = cover;
-    
-    while(p != nullptr) {
-        t = cover->cover;
-        if(t->type() != PERSON)
-            delete p;
-        p = t;
+block::~block() {
+    if(cover != nullptr){
+        if(cover->type() != PERSON)
+            delete cover;
+    }
+}
+  
+
+
+void block::_cover(block* b) {
+    b->lay = this;
+    this->cover = b;
+    b->root =this->root;
+    root->rear = b;
+}
+
+block* block::_rmcover() {
+    if(rear == root) {
+        return nullptr;
+    }else {
+        block *t = this;
+        this->lay->cover = nullptr;
+        root->rear = this->lay;
+        return t;
     }
 }
 
 void block::display(int t) {
     if(cover == nullptr) {
-        std::cout<<"X";
+        std::cout<<" ";
     }else{
-        cover->display(type());
+        cover->display(t + cover->type());
     }
 }
 
 bool block::move(direct d) {
-
+    return false;
 }
 
 int block::type() {

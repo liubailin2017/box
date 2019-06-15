@@ -1,0 +1,51 @@
+
+
+enum direct {UP,RIGHT,DOWN,LEFT}
+
+block
+-block lay
+-block cover
+--int type();
+--void display()
+--boolean canpush()
+--boolean cancover()
+--move(direct d)
+
+person::block
+--display()
+--void push()
+--move(direct d)
+--type()
+
+box::block
+--display()
+--canpush()
+--cancover()
+--type()
+
+wall::block
+--display()
+--canpush()
+--cancover()
+--type()
+
+
+intend::block
+--display()
+--type()
+
+
+content
+-person* p
+-map
+
+map
+-block p[12][12]
+--read(int data[12][12])
+
+
+
+
+
+
+
