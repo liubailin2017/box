@@ -19,9 +19,7 @@ private:
     block  b[182];
 public:
     const int w = 14,h = 13;
-    map();
     void read(int d[]);
     block* blocks();
-    ~map();
 };
 

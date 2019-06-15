@@ -20,13 +20,6 @@ void content::display() {
     std::cout<<std::endl; 
 }
 
-map::map(){
-   
-}
-
-map::~map(){
-     
-}
 
 block* map::blocks(){
     return b;
