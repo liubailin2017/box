@@ -11,8 +11,14 @@ block::~block() {
             delete cover;
     }
 }
-  
 
+void block::setContent(content *c){
+  _content = c;
+}
+
+content* block::getContent(){
+    return _content;
+}
 
 void block::_cover(block* b) {
     b->lay = this;

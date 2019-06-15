@@ -1,5 +1,8 @@
-#include"person.h"
-#include"box.h"
+#ifndef _h_content_
+#define _h_content_
+#include "person.h"
+#include "block.h"
+#include "box.h"
 class map;
 
 class content
@@ -8,6 +11,7 @@ private:
     person *p;
     map *m;
 public:
+    map* getmap();
     content(map *m);
     void display();
     ~content();
@@ -23,3 +27,4 @@ public:
     block* blocks();
 };
 
+#endif

@@ -1,8 +1,23 @@
 #include "box.h"
+#include "content.h"
 #include <iostream>
 
 int box::type(){
     return BOX;
+}
+
+bool box::move(direct d){
+    int w = getContent()->getmap()->w;
+    
+    switch (d)
+    {
+    case UP:
+         
+        break;
+    
+    default:
+        break;
+    }
 }
 
 void box::display(int t) {

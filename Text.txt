@@ -21,6 +21,7 @@ box::block
 --display()
 --canpush()
 --cancover()
+--move(direct d)
 --type()
 
 wall::block

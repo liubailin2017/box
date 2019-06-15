@@ -1,5 +1,6 @@
-#include "block.h"
-
+#ifndef _h_person_
+#define _h_person_ 
+#include"block.h"
 class person:public block {
 
     private :
@@ -12,3 +13,4 @@ class person:public block {
         virtual bool move(direct d);
         virtual int type();
 };
+#endif
