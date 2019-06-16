@@ -7,5 +7,6 @@ g++ *.cpp
 ## 说明
 可在 [_maps.cpp](https://github.com/liubailin2017/box/blob/master/_maps.cpp) 文件中编辑地图
 ## 演示
+加载图片请稍候...
 ![](readme_img/prtsc.gif)
 
