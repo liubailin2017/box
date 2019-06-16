@@ -6,13 +6,21 @@ class block //其实这是一个双向链表
 {
 
 private:
+
+    content *_content;
+protected: 
     block *root = nullptr;
     block *rear = nullptr;
-    content *_content;
-protected:    
+
     block *lay = nullptr;
     block *cover = nullptr;
 public:
+
+    block* _root();
+    block* _rear();
+    block* _lay();
+    block* _cover();
+
     void   _cover(block *);
     block* _rmcover();
 

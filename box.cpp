@@ -2,27 +2,48 @@
 #include "content.h"
 #include <iostream>
 
-int box::type(){
+int box::type() {
     return BOX;
 }
 
-bool box::move(direct d){
-    int w = getContent()->getmap()->w;
+bool box::move(direct d) {
+    content * cnt = root ->getContent();
     
-    switch (d)
-    {
-    case UP:
-         
-        break;
-    
-    default:
-        break;
+    if(cnt == nullptr) {
+        std::cout<< "box:null content"<<std::endl;
+        return false;
+    }
+
+    int w = cnt->getmap()->w;
+
+     block *c = nullptr;
+     block *t = nullptr;
+    switch (d) {
+        case UP:
+            c = root - w;
+            t = _rmcover();
+            c->_rear()->_cover(t);
+            break;
+        case RIGHT:
+            c = root + 1;
+            t = _rmcover();
+            c->_rear()->_cover(t);
+            break;
+        case DOWN:
+            c = root + w;
+            t = _rmcover();
+            c->_rear()->_cover(t);
+            break;
+        case LEFT:
+            c = root - 1;
+            t = _rmcover();
+            c->_rear()->_cover(t);
+            break;
     }
 }
 
 void box::display(int t) {
-    switch (t)
-    {
+    switch (t) {
     case  BLOCK+INTEND+BOX:
         std::cout<<"★";
         break;
@@ -35,7 +56,7 @@ void box::display(int t) {
     }
 }
 
-int wall::type(){
+int wall::type() {
     return WALL;
 }
 
@@ -43,7 +64,7 @@ void wall::display(int t) {
     std::cout<<"■";
 }
 
-int intend::type(){
+int intend::type() {
     return INTEND;
 }
 

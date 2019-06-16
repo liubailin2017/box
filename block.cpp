@@ -20,6 +20,19 @@ content* block::getContent(){
     return _content;
 }
 
+block* block::_root() {
+    return root;
+}
+block* block::_rear() {
+    return rear;
+}
+block* block::_lay() {
+    return lay;
+}
+block* block::_cover() {
+    return cover;
+}
+
 void block::_cover(block* b) {
     b->lay = this;
     this->cover = b;
