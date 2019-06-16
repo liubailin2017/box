@@ -75,6 +75,16 @@ void map::read(int d[]) {
 void content::actinput(direct d){
     p->move(d);
 }
+bool content::isfinsh() {
+    bool isf = true;
+    int n = m->w * m->h;
+    for(int i = 0; i< n; i++) { 
+        if(m->blocks()[i]._rear()->type() == BOX)
+            if(m->blocks()[i]._rear()->_lay() == nullptr || m->blocks()[i]._rear()->_lay() ->type() != INTEND)
+                 isf = false;
+    }
+    return isf;
+}
 
 int main() {
 
@@ -87,56 +97,48 @@ int main() {
  9:人在目的地上  ♂ 
  */
 /**最外面一圈只能使用墙壁(4)*/
-    int map1[182/*13*14*/] = {
-        4,4,4,4,4,4,4,4,4,4,4,4,4,4,
-        4,9,4,10,4,4,0,0,4,4,4,4,4,4,
-        4,4,4,4,4,4,8,0,4,4,4,4,4,4, 
-        4,4,4,4,4,4,2,0,4,4,4,4,4,4, 
-        4,4,4,4,4,4,0,0,4,4,4,4,4,4, 
-        4,4,4,8,2,0,1,0,2,8,4,4,4,4,
-        4,4,4,4,4,4,0,4,4,4,4,4,4,4,
-        4,4,4,4,4,4,2,4,4,4,4,4,4,4,
-        4,4,4,4,4,4,8,4,4,4,4,4,4,4,
-        4,4,4,4,4,4,4,4,4,4,4,4,4,4,
-        4,4,4,4,4,4,4,4,4,4,4,4,4,4,
-        4,4,4,4,4,4,4,4,4,4,4,4,4,4,
-        4,4,4,4,4,4,4,4,4,4,4,4,4,4,
-    };
-    map m;   
-    m.read(map1);
-    content c(&m);
-    char in;
-    bool isq = false;
-    c.display();
-    while(!isq) { 
-        std::cin>>in;
-        switch (in)
-        {
-        case 'w' :
-        case 'W' :
-            c.actinput(UP);
-        break;
-        case 's' :
-        case 'S' :
-            c.actinput(DOWN);
-        break;
-        case 'a' :
-        case 'A' :
-            c.actinput(LEFT);
-        break;
-        case 'd' :
-        case 'D' :
-            c.actinput(RIGHT);
-        break;
-        case 'q':
-        case 'Q':
-            isq = true;
+    #include"_maps.cpp"
+    for(int i = 0; i< _LEVEL; i++){
+        map m;   
+        m.read(_MAPS[i]);
+        content c(&m);
+        char in;
+        bool isq = false;
+        bool isf = false;
+        while(!isq && !isf) {
+            system("clear");
+            c.display();
+            std::cout << "asdw控制方向请输入回车确定:";
+            std::cin>>in;
+            switch (in)
+            {
+            case 'w' :
+            case 'W' :
+                c.actinput(UP);
             break;
-        default:
+            case 's' :
+            case 'S' :
+                c.actinput(DOWN);
             break;
+            case 'a' :
+            case 'A' :
+                c.actinput(LEFT);
+            break;
+            case 'd' :
+            case 'D' :
+                c.actinput(RIGHT);
+            break;
+            case 'q':
+            case 'Q':
+                isq = true;
+                break;
+            default:
+                break;
+            }
+            isf = c.isfinsh();
         }
-         system("clear");
-        c.display();
+    
     }
-   
+    std::cout << "恭喜你,完成了所有关卡!"<<std::endl;
+    return 0;
 }

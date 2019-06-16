@@ -33,28 +33,28 @@ bool person::move(direct d){
      block *t = nullptr;
     switch (d) {
         case UP:
-            if(push()) {
+            if(push() || (root - w)->_rear()->cancover()) {
                 c = root - w;
                 t = _rmcover();
                 c->_rear()->_cover(t);
             }
             break;
         case RIGHT:
-            if(push()) {
+            if(push() || (root+1)->_rear()->cancover()) {
                 c = root + 1;
                 t = _rmcover();
                 c->_rear()->_cover(t);
             }
             break;
         case DOWN:
-            if(push()) {
+            if(push()|| (root + w)->_rear()->cancover()) {
                 c = root + w;
                 t = _rmcover();
                 c->_rear()->_cover(t);
             }
             break;
         case LEFT:
-            if(push()){
+            if(push()|| (root - 1)->_rear()->cancover()){
                 c = root - 1;
                 t = _rmcover();
                 c->_rear()->_cover(t);

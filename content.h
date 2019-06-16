@@ -16,6 +16,7 @@ public:
     void display();
     person *_p();
     void actinput(direct d);
+    bool isfinsh();
     ~content();
 };
 
