@@ -106,7 +106,11 @@ int main() {
         bool isq = false;
         bool isf = false;
         while(!isq && !isf) {
+        #ifdef _WIN32
+            system("cls");
+        #else
             system("clear");
+        #endif
             c.display();
             std::cout << "asdw控制方向请输入回车确定:";
             std::cin>>in;
@@ -137,7 +141,6 @@ int main() {
             }
             isf = c.isfinsh();
         }
-    
     }
     std::cout << "恭喜你,完成了所有关卡!"<<std::endl;
     return 0;
