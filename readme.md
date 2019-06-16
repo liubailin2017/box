@@ -7,6 +7,5 @@ g++ *.cpp
 ## 安装
 $ make install
 ## 演示
-$ snake
 ![](readme_img/prtsc.gif)
 
