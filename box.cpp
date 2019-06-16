@@ -56,12 +56,26 @@ void box::display(int t) {
     }
 }
 
+bool box::canpush() {
+    return true;
+}
+
+bool box::cancover() {
+    return false;
+}
+
 int wall::type() {
     return WALL;
 }
 
 void wall::display(int t) {
     std::cout<<"■";
+}
+bool wall::canpush() {
+    return false;
+}
+bool wall::cancover() {
+    return false;
 }
 
 int intend::type() {

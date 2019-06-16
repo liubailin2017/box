@@ -1,4 +1,5 @@
 #include"person.h"
+#include"content.h"
 #include<iostream>
 
 person::person() {
@@ -18,12 +19,96 @@ void person::display(int t){
 }
 
 bool person::move(direct d){ 
+    content * cnt = root ->getContent();
+    
+    if(cnt == nullptr) {
+        std::cout<< "person:null content"<<std::endl;
+        return false;
+    }
+
+    int w = cnt->getmap()->w;
      _inter_push_dir = d;
-    if(lay == nullptr) return false;
+
+     block *c = nullptr;
+     block *t = nullptr;
+    switch (d) {
+        case UP:
+            if(push()) {
+                c = root - w;
+                t = _rmcover();
+                c->_rear()->_cover(t);
+            }
+            break;
+        case RIGHT:
+            if(push()) {
+                c = root + 1;
+                t = _rmcover();
+                c->_rear()->_cover(t);
+            }
+            break;
+        case DOWN:
+            if(push()) {
+                c = root + w;
+                t = _rmcover();
+                c->_rear()->_cover(t);
+            }
+            break;
+        case LEFT:
+            if(push()){
+                c = root - 1;
+                t = _rmcover();
+                c->_rear()->_cover(t);
+            }
+            break;
+    }
+    
+
 }
 
-void person::push() {
+bool person::push() {
+    content * cnt = root ->getContent();
+    
+    if(cnt == nullptr) {
+        std::cout<< "person:null content"<<std::endl;
+        return false;
+    }
 
+    int w = cnt->getmap()->w;
+
+    bool ispush =false;
+    switch (_inter_push_dir)
+    {
+    case LEFT:
+        if( ((root-1)->_cover() == nullptr) || 
+        (root -1)->_rear()->canpush() && (root-2)->_rear()->cancover()) {
+            (root-1)->_rear()->move(_inter_push_dir);
+            ispush = true;
+        }
+        break;
+    case RIGHT:
+        if(((root+1)->_cover() == nullptr) || 
+        (root+1)->_rear()->canpush() && (root+2)->_rear()->cancover()) {
+             (root+1)->_rear()->move(_inter_push_dir);
+            ispush = true;
+        }
+        break;
+    case UP:
+        if(((root-w)->_cover() == nullptr) || 
+        (root-w)->_rear()->canpush() && (root-2*w)->_rear()->cancover()) {
+             (root-w)->_rear()->move(_inter_push_dir);
+            ispush = true;
+        }
+        break;
+    break;
+    case DOWN:
+        if(((root+1)->_cover() == nullptr) || 
+        (root+w)->_rear()->canpush() && (root+2*w)->_rear()->cancover()) {
+             (root+w)->_rear()->move(_inter_push_dir);
+            ispush = true;
+        }
+        break;
+    }
+    return ispush;
 }
 
 int person::type() {

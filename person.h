@@ -9,7 +9,7 @@ class person:public block {
     public:
         person();
         virtual void display(int t);
-        virtual void push();
+        virtual bool push();
         virtual bool move(direct d);
         virtual int type();
 };

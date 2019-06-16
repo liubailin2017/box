@@ -16,10 +16,17 @@ map* content::getmap(){
     return m;
 }
 
+person *content::_p(){
+    return p;
+}
 
 void content::display() {
-      m->blocks()[48]._rear()->move(UP);
-      
+    //   m->blocks()[48]._rear()->move(UP);
+    //   m->blocks()[74]._rear()->move(RIGHT);
+    //   m->blocks()[75]._rear()->move(LEFT);
+    //   m->blocks()[78]._rear()->move(RIGHT);
+    //   m->blocks()[104]._rear()->move(DOWN);
+
     for(int i = 0; i < m->w * m->h; i++) {
         if(i % m->w == 0) std::cout<<std::endl;
         m->blocks()[i].display(0);
@@ -93,5 +100,9 @@ int main() {
     map m;   
     m.read(map1);
     content c(&m);
+    c._p()->move(LEFT);
+    c._p()->move(LEFT);
+    c._p()->move(LEFT);
+    c._p()->move(RIGHT);
     c.display();
 }

@@ -9,6 +9,9 @@ public:
     virtual int type();
     virtual void display(int t );
     virtual bool move(direct d);
+
+    virtual bool canpush();
+    virtual bool cancover();
 };
 
 class wall:public block
@@ -18,7 +21,9 @@ private:
 public:
     virtual int type();
     virtual void display(int t );
-      
+    
+    virtual bool canpush();
+    virtual bool cancover();
 };
  
 class intend:public block
