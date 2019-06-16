@@ -14,7 +14,7 @@ bool box::move(direct d) {
         return false;
     }
 
-    int w = cnt->getmap()->w;
+    int w = cnt->getmap()->_w();
 
      block *c = nullptr;
      block *t = nullptr;
@@ -45,13 +45,13 @@ bool box::move(direct d) {
 void box::display(int t) {
     switch (t) {
     case  BLOCK+INTEND+BOX:
-        std::cout<<"★";
+        std::cout<<B10;
         break;
     case BLOCK+BOX:
-        std::cout<<"□";
+        std::cout<<B2;
         break;
     default:
-        std::cout<<"F";
+        std::cout<<Er;
         break;
     }
 }
@@ -69,7 +69,7 @@ int wall::type() {
 }
 
 void wall::display(int t) {
-    std::cout<<"■";
+    std::cout<<B4;
 }
 bool wall::canpush() {
     return false;
@@ -84,7 +84,7 @@ int intend::type() {
 
 void intend::display(int t) {
    if(cover == nullptr) {
-       std::cout<<"☆";
+       std::cout<<B8;
    }else {
        cover->display(t+cover->type());
    }

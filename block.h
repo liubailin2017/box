@@ -9,12 +9,15 @@ private:
 
     content *_content;
 protected: 
-    block *root = nullptr;
-    block *rear = nullptr;
+    block *root;
+    block *rear;
 
-    block *lay = nullptr;
-    block *cover = nullptr;
+    block *lay;
+    block *cover;
 public:
+
+    block();
+    ~block();
 
     block* _root();
     block* _rear();
@@ -23,9 +26,6 @@ public:
 
     void   _cover(block *);
     block* _rmcover();
-
-    block();
-    ~block();
 
     virtual void display(int t );
     virtual bool canpush();

@@ -3,6 +3,8 @@
 block::block() {
     root = this;
     rear = this;
+    lay= nullptr;
+    cover = nullptr;
 }
 
 block::~block() {
@@ -53,7 +55,7 @@ block* block::_rmcover() {
 
 void block::display(int t) {
     if(cover == nullptr) {
-        std::cout<<" ";
+        std::cout<<B0;
     }else{
         cover->display(t + cover->type());
     }

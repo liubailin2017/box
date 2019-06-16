@@ -2,7 +2,7 @@
 #include<iostream>
 content::content(map *m){
     this->m = m;
-    for(int i = 0; i< (m->w)*(m->h); i++) {
+    for(int i = 0; i< (m->_w())*(m->_h()); i++) {
         m->blocks()[i].setContent(this);
         if(m->blocks()[i].cover != nullptr && m->blocks()[i].cover->type() == PERSON){
             p = (person *)(m->blocks()[i].cover);
@@ -27,16 +27,19 @@ void content::display() {
     //   m->blocks()[78]._rear()->move(RIGHT);
     //   m->blocks()[104]._rear()->move(DOWN);
 
-    for(int i = 0; i < m->w * m->h; i++) {
-        if(i % m->w == 0) std::cout<<std::endl;
+    for(int i = 0; i < m->_w() * m->_h(); i++) {
+        if(i % m->_w() == 0) std::cout<<std::endl;
         m->blocks()[i].display(0);
     }
     std::cout<<std::endl; 
 }
 
-map::map() {
+map::map():w(14),h(13) {
 
 }
+
+int map::_w() { return w; }
+int map::_h() {return h;}
 
 block* map::blocks(){
     return b;
@@ -77,7 +80,7 @@ void content::actinput(direct d){
 }
 bool content::isfinsh() {
     bool isf = true;
-    int n = m->w * m->h;
+    int n = m->_w() * m->_h();
     for(int i = 0; i< n; i++) { 
         if(m->blocks()[i]._rear()->type() == BOX)
             if(m->blocks()[i]._rear()->_lay() == nullptr || m->blocks()[i]._rear()->_lay() ->type() != INTEND)

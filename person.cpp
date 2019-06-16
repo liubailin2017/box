@@ -10,10 +10,10 @@ void person::display(int t){
     t -= BLOCK;
     switch(t) {
         case PERSON :
-            std::cout<<"♀";
+            std::cout<<B1;
             break;
         case INTEND + PERSON:
-            std::cout<<"♂";
+            std::cout<<B9;
             break;
     }
 }
@@ -26,7 +26,7 @@ bool person::move(direct d){
         return false;
     }
 
-    int w = cnt->getmap()->w;
+    int w = cnt->getmap()->_w();
      _inter_push_dir = d;
 
      block *c = nullptr;
@@ -73,7 +73,7 @@ bool person::push() {
         return false;
     }
 
-    int w = cnt->getmap()->w;
+    int w = cnt->getmap()->_w();
 
     bool ispush =false;
     switch (_inter_push_dir)

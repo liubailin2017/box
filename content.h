@@ -24,9 +24,12 @@ class map
 {
 private:
     block  b[182];
+    int w;
+    int h;
 public:
     map();
-    const int w = 14,h = 13;
+    int _w();
+    int _h();
     void read(int d[]);
     block* blocks();
   
