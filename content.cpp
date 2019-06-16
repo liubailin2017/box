@@ -71,6 +71,11 @@ void map::read(int d[]) {
     }
 }
 
+
+void content::actinput(direct d){
+    p->move(d);
+}
+
 int main() {
 
 /* 8: 目的地 ☆
@@ -84,10 +89,10 @@ int main() {
 /**最外面一圈只能使用墙壁(4)*/
     int map1[182/*13*14*/] = {
         4,4,4,4,4,4,4,4,4,4,4,4,4,4,
-        4,9,4,10,4,4,4,4,4,4,4,4,4,4,
-        4,4,4,4,4,4,8,4,4,4,4,4,4,4, 
-        4,4,4,4,4,4,2,4,4,4,4,4,4,4, 
-        4,4,4,4,4,4,0,4,4,4,4,4,4,4, 
+        4,9,4,10,4,4,0,0,4,4,4,4,4,4,
+        4,4,4,4,4,4,8,0,4,4,4,4,4,4, 
+        4,4,4,4,4,4,2,0,4,4,4,4,4,4, 
+        4,4,4,4,4,4,0,0,4,4,4,4,4,4, 
         4,4,4,8,2,0,1,0,2,8,4,4,4,4,
         4,4,4,4,4,4,0,4,4,4,4,4,4,4,
         4,4,4,4,4,4,2,4,4,4,4,4,4,4,
@@ -100,9 +105,38 @@ int main() {
     map m;   
     m.read(map1);
     content c(&m);
-    c._p()->move(LEFT);
-    c._p()->move(LEFT);
-    c._p()->move(LEFT);
-    c._p()->move(RIGHT);
+    char in;
+    bool isq = false;
     c.display();
+    while(!isq) { 
+        std::cin>>in;
+        switch (in)
+        {
+        case 'w' :
+        case 'W' :
+            c.actinput(UP);
+        break;
+        case 's' :
+        case 'S' :
+            c.actinput(DOWN);
+        break;
+        case 'a' :
+        case 'A' :
+            c.actinput(LEFT);
+        break;
+        case 'd' :
+        case 'D' :
+            c.actinput(RIGHT);
+        break;
+        case 'q':
+        case 'Q':
+            isq = true;
+            break;
+        default:
+            break;
+        }
+         system("clear");
+        c.display();
+    }
+   
 }

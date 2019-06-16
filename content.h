@@ -15,6 +15,7 @@ public:
     content(map *m);
     void display();
     person *_p();
+    void actinput(direct d);
     ~content();
 };
 

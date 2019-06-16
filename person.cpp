@@ -101,7 +101,7 @@ bool person::push() {
         break;
     break;
     case DOWN:
-        if(((root+1)->_cover() == nullptr) || 
+        if(((root+w)->_cover() == nullptr) || 
         (root+w)->_rear()->canpush() && (root+2*w)->_rear()->cancover()) {
              (root+w)->_rear()->move(_inter_push_dir);
             ispush = true;
