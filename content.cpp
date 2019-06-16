@@ -88,22 +88,14 @@ bool content::isfinsh() {
 
 int main() {
 
-/* 8: 目的地 ☆
- 4: 墙壁  ■
- 2: 箱子  □
- 1: 玩家  ♀
- 0: 空地
- 10:箱子已在目的地  ★
- 9:人在目的地上  ♂ 
- */
-/**最外面一圈只能使用墙壁(4)*/
     #include"_maps.cpp"
-    for(int i = 0; i< _LEVEL; i++){
+    bool isq = false;
+    for(int i = 0; i< _LEVEL && !isq; i++){
         map m;   
         m.read(_MAPS[i]);
         content c(&m);
         char in;
-        bool isq = false;
+
         bool isf = false;
         while(!isq && !isf) {
         #ifdef _WIN32
@@ -111,6 +103,7 @@ int main() {
         #else
             system("clear");
         #endif
+            std::cout<<"关卡"<<(i+1)<<std::endl;
             c.display();
             std::cout << "asdw控制方向请输入回车确定:";
             std::cin>>in;
@@ -142,6 +135,6 @@ int main() {
             isf = c.isfinsh();
         }
     }
-    std::cout << "恭喜你,完成了所有关卡!"<<std::endl;
+    if(!isq)std::cout << "恭喜你,完成了所有关卡!"<<std::endl;
     return 0;
 }
