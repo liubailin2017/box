@@ -6,9 +6,11 @@ class block //其实这是一个双向链表
 {
 
 private:
-
+  
     content *_content;
-protected: 
+protected:
+    int __type;
+    
     block *root;
     block *rear;
 

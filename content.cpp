@@ -15,8 +15,10 @@ void content::back() {
     direct d = btranf((direct)((~_PUSH_BYTE) & t));
     
     _p()->back_move(d);
-    if(ispull)
+    if(ispull){
+        std::cout <<"pull"<<std::endl;
         _p()->pull();
+    }
 }
 
 content::content(map *m){

@@ -6,6 +6,7 @@ class box:public block
 private:
     /* data */
 public:
+    box();
     virtual int type();
     virtual void display(int t );
     virtual bool move(direct d);
@@ -19,6 +20,7 @@ class wall:public block
 private:
     /* data */
 public:
+    wall();
     virtual int type();
     virtual void display(int t );
     
@@ -32,6 +34,7 @@ class intend:public block
 private:
     /* data */
 public:
+    intend();
     virtual int type();
     virtual void display(int t );
     virtual bool move(direct d);

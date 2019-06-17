@@ -1,11 +1,13 @@
 #include "box.h"
 #include "content.h"
 #include <iostream>
-
-int box::type() {
-    return BOX;
+box::box() {
+    __type = BOX;
 }
 
+int box::type() {
+    return __type;
+}
 bool box::move(direct d) {
     content * cnt = root ->getContent();
     
@@ -41,7 +43,6 @@ bool box::move(direct d) {
             break;
     }
 }
-
 void box::display(int t) {
     switch (t) {
     case  BLOCK+INTEND+BOX:
@@ -55,19 +56,19 @@ void box::display(int t) {
         break;
     }
 }
-
 bool box::canpush() {
     return true;
 }
-
 bool box::cancover() {
     return false;
 }
 
-int wall::type() {
-    return WALL;
+wall::wall(){
+    __type = WALL;
 }
-
+int wall::type() {
+    return __type;
+}
 void wall::display(int t) {
     std::cout<<B4;
 }
@@ -78,10 +79,14 @@ bool wall::cancover() {
     return false;
 }
 bool wall::move(direct d) {return false;}
-int intend::type() {
-    return INTEND;
-}
 
+
+int intend::type() {
+    return __type;
+}
+intend::intend() {
+    __type = INTEND;
+}
 void intend::display(int t) {
    if(cover == nullptr) {
        std::cout<<B8;

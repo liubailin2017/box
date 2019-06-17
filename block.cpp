@@ -5,6 +5,7 @@ block::block() {
     rear = this;
     lay= nullptr;
     cover = nullptr;
+    __type = BLOCK;
 }
 
 block::~block() {
@@ -66,7 +67,7 @@ bool block::move(direct d) {
 }
 
 int block::type() {
-    return BLOCK;
+    return __type;
 }
 
 bool block::cancover() {

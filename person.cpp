@@ -3,7 +3,7 @@
 #include<iostream>
 
 person::person() {
-    
+    __type = PERSON;
 }
 
 void person::display(int t){
@@ -178,24 +178,38 @@ bool person::pull() {
 
     int w = cnt->getmap()->_w();
 
-    bool ispull =false;
+    bool ispull = false;
+//  block *t;
+//  block *m;
+//  block* b;
+//  block *d1,*d2,*d3,*d4;
+//  int si;
     switch (_inter_push_dir)
     {
     case LEFT:
-            (root+1)->_rear()->move(_inter_push_dir);
+            (root+2)->_rear()->move(_inter_push_dir);
             ispull = true;
         break;
     case RIGHT:
-            (root-1)->_rear()->move(_inter_push_dir);
+            (root-2)->_rear()->move(_inter_push_dir);
             ispull = true;
         break;
     case UP:
-             (root+w)->_rear()->move(_inter_push_dir);
+            (root+2*w)->_rear()->move(_inter_push_dir);
             ispull = true;
+    // si = sizeof(block);
+    //        t = root->getContent()->getmap()->blocks();
+    //        m =  (root)->_rear();
+    //         d1 = (root+w);
+    //         d2 = d1->_cover();
+    //         d3 = d2->_cover();
+    //         b = d1->_rear();
+    //          b->move(_inter_push_dir);
+    //         ispull = true;
         break;
     break;
     case DOWN:
-             (root-w)->_rear()->move(_inter_push_dir);
+             (root-2*w)->_rear()->move(_inter_push_dir);
             ispull = true;
         break;
     }
@@ -203,5 +217,5 @@ bool person::pull() {
 }
 
 int person::type() {
-    return PERSON;
+    return __type;
 }
