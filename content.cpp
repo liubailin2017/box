@@ -1,5 +1,24 @@
 #include"content.h"
 #include<iostream>
+
+direct btranf(direct d) {
+    if(d == RIGHT) return LEFT;
+    if(d == LEFT) return RIGHT;
+    if(d == UP ) return DOWN;
+    if(d = DOWN) return UP;
+}
+
+void content::back() {
+    int t = popm();
+    if(t == -1) return ;
+    bool ispull = ((_PUSH_BYTE & t) == _PUSH_BYTE);
+    direct d = btranf((direct)((~_PUSH_BYTE) & t));
+    
+    _p()->back_move(d);
+    if(ispull)
+        _p()->pull();
+}
+
 content::content(map *m){
     this->m = m;
     for(int i = 0; i< (m->_w())*(m->_h()); i++) {
@@ -35,11 +54,15 @@ void content::display() {
 }
 
 map::map():w(14),h(13) {
+    b =(block*) new block[w*h];
+}
 
+map::~map() {
+    delete[] b;
 }
 
 int map::_w() { return w; }
-int map::_h() {return h;}
+int map::_h() {return h; }
 
 block* map::blocks(){
     return b;
@@ -89,45 +112,62 @@ bool content::isfinsh() {
     return isf;
 }
 
+void content::pushm(int d){ 
+    memery.push(d);
+}
+
+int content::popm() {
+    if(memery.empty()) 
+        return -1;
+    else {
+        int t = memery.top();
+        memery.pop();
+        return t;
+    }
+}
+
 int main() {
 
     #include"_maps.cpp"
     bool isq = false;
-    for(int i = 0; i< _LEVEL && !isq; i++){
+    for(int i = 0; i< _LEVEL && !isq; i++) {
         map m;   
         m.read(_MAPS[i]);
         content c(&m);
         char in;
-
         bool isf = false;
         while(!isq && !isf) {
-        #ifdef _WIN32
-            system("cls");
-        #else
-            system("clear");
-        #endif
-            std::cout<<"关卡"<<(i+1)<<std::endl;
-            c.display();
-            std::cout << "asdw控制方向请输入回车确定:";
-            std::cin>>in;
-            switch (in)
-            {
+#ifdef _WIN32
+        system("cls");
+#else
+        system("clear");
+#endif
+        std::cout<<"关卡"<<(i+1)<<std::endl;
+        c.display();
+        std::cout << "asdw控制方向请输入回车确定:";
+        std::cin>>in;
+        switch (in)
+        {
             case 'w' :
             case 'W' :
-                c.actinput(UP);
-            break;
+               c.actinput(UP);
+               break;
             case 's' :
             case 'S' :
                 c.actinput(DOWN);
-            break;
+                break;
             case 'a' :
             case 'A' :
                 c.actinput(LEFT);
-            break;
+                break;
             case 'd' :
             case 'D' :
                 c.actinput(RIGHT);
-            break;
+                break;
+            case 'b':
+            case 'B':
+                c.back();
+                break;
             case 'q':
             case 'Q':
                 isq = true;

@@ -77,7 +77,7 @@ bool wall::canpush() {
 bool wall::cancover() {
     return false;
 }
-
+bool wall::move(direct d) {return false;}
 int intend::type() {
     return INTEND;
 }
@@ -89,3 +89,4 @@ void intend::display(int t) {
        cover->display(t+cover->type());
    }
 }
+bool intend::move(direct d) {return false;}

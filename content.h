@@ -3,6 +3,7 @@
 #include "person.h"
 #include "block.h"
 #include "box.h"
+#include <stack>
 class map;
 
 class content
@@ -10,24 +11,34 @@ class content
 private:
     person *p;
     map *m;
+    std::stack<int> memery;
+protected:
+
+    person *_p();
+
 public:
     map* getmap();
     content(map *m);
     void display();
-    person *_p();
     void actinput(direct d);
     bool isfinsh();
+    
+    void pushm(int d);
+    int popm(); //-1 表示空
+    void back();
+
     ~content();
 };
 
 class map
 {
 private:
-    block  b[182];
+    block  *b;
     int w;
     int h;
 public:
     map();
+    ~map();
     int _w();
     int _h();
     void read(int d[]);

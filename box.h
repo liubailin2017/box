@@ -24,6 +24,7 @@ public:
     
     virtual bool canpush();
     virtual bool cancover();
+    virtual bool move(direct d);
 };
  
 class intend:public block
@@ -33,5 +34,6 @@ private:
 public:
     virtual int type();
     virtual void display(int t );
+    virtual bool move(direct d);
 };
 #endif
