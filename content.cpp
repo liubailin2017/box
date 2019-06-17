@@ -55,7 +55,7 @@ void content::display() {
     std::cout<<std::endl; 
 }
 
-map::map():w(14),h(13) {
+map::map():w(28),h(16) {
     b =(block*) new block[w*h];
 }
 
@@ -128,9 +128,38 @@ int content::popm() {
     }
 }
 
+#ifdef _WIN32
+#include<conio.h>
+#else
+#include <termio.h>
+
+char getch(void)
+{
+     struct termios tm, tm_old;
+     int fd = 0, ch;
+ 
+     if (tcgetattr(fd, &tm) < 0) {
+          return -1;
+     }
+ 
+     tm_old = tm;
+     cfmakeraw(&tm);
+     if (tcsetattr(fd, TCSANOW, &tm) < 0) {
+          return -1;
+     }
+ 
+     ch = getchar();
+     if (tcsetattr(fd, TCSANOW, &tm_old) < 0) {
+          return -1;
+     }
+    
+     return ch;
+}
+#endif
+
 int main() {
 
-    #include"_maps.cpp"
+    #include"_maps.h"
     bool isq = false;
     for(int i = 0; i< _LEVEL && !isq; i++) {
         map m;   
@@ -146,8 +175,10 @@ int main() {
 #endif
         std::cout<<"关卡"<<(i+1)<<std::endl;
         c.display();
-        std::cout << "asdw控制方向请输入回车确定:";
-        std::cin>>in;
+        std::cout << "b回退asdw控制方向请enter确定\n请输入:";
+
+        in = getch();
+      
         switch (in)
         {
             case 'w' :
