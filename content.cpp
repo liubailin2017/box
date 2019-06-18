@@ -151,7 +151,13 @@ char getch(void)
 #endif
 
 int main() {
-
+#ifdef _WIN32
+       	system("@CHCP 65001");
+	system("@cls");
+#else
+        system("clear");
+#endif
+ 
     #include"_maps.h"
     bool isq = false;
     int _LEVEL = sizeof(_MAPS_def)/_SIZE;
@@ -163,7 +169,7 @@ int main() {
         bool isf = false;
         while(!isq && !isf) {
 #ifdef _WIN32
-        system("cls");
+        system("@cls");
 #else
         system("clear");
 #endif
