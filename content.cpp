@@ -42,17 +42,10 @@ person *content::_p(){
 }
 
 void content::display() {
-    //   m->blocks()[48]._rear()->move(UP);
-    //   m->blocks()[74]._rear()->move(RIGHT);
-    //   m->blocks()[75]._rear()->move(LEFT);
-    //   m->blocks()[78]._rear()->move(RIGHT);
-    //   m->blocks()[104]._rear()->move(DOWN);
-
     for(int i = 0; i < m->_w() * m->_h(); i++) {
-        if(i % m->_w() == 0) std::cout<<std::endl;
         m->blocks()[i].display(0);
+        if((i+1) % m->_w() == 0) std::cout<<std::endl;
     }
-    std::cout<<std::endl; 
 }
 
 map::map():w(28),h(16) {
@@ -161,9 +154,10 @@ int main() {
 
     #include"_maps.h"
     bool isq = false;
+    int _LEVEL = sizeof(_MAPS_def)/_SIZE;
     for(int i = 0; i< _LEVEL && !isq; i++) {
         map m;   
-        m.read(_MAPS[i]);
+        m.read(_MAPS_def[i]);
         content c(&m);
         char in;
         bool isf = false;
@@ -175,7 +169,7 @@ int main() {
 #endif
         std::cout<<"关卡"<<(i+1)<<std::endl;
         c.display();
-        std::cout << "b回退asdw控制方向请enter确定\n请输入:";
+        std::cout << "****回退(b)方向控制（asdw)****"<<std::endl;
 
         in = getch();
       
@@ -211,6 +205,10 @@ int main() {
             isf = c.isfinsh();
         }
     }
-    if(!isq)std::cout << "恭喜你,完成了所有关卡!"<<std::endl;
+    if(!isq)
+        std::cout << "恭喜你,完成了所有关卡!"<<std::endl;
+    else 
+        std::cout <<"再见!"<<std::endl;
+    getch();
     return 0;
 }
