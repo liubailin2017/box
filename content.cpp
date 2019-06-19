@@ -1,6 +1,5 @@
 #include"content.h"
 #include<iostream>
-
 direct btranf(direct d) {
     if(d == RIGHT) return LEFT;
     if(d == LEFT) return RIGHT;
@@ -125,7 +124,7 @@ int content::popm() {
 #include<conio.h>
 #else
 #include <termio.h>
-
+#include<stdio.h>
 char getch(void)
 {
      struct termios tm, tm_old;
@@ -149,7 +148,7 @@ char getch(void)
      return ch;
 }
 #endif
-
+#include<stdlib.h>
 int main() {
 #ifdef _WIN32
        	system("@CHCP 65001");
