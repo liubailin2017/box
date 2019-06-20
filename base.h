@@ -20,3 +20,4 @@ enum type {BLOCK = 0, PERSON = 1,BOX = 2,WALL = 4,INTEND = 8};
 #define B10 "★"
 #define B9 "♂"
 #define Er "E"
+

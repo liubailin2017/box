@@ -95,3 +95,4 @@ void intend::display(int t) {
    }
 }
 bool intend::move(direct d) {return false;}
+

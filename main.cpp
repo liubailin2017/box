@@ -6,21 +6,26 @@
 #include"content.h"
 #include<stdio.h>
 #include<stdlib.h>
-
+#include <unistd.h> 
 #ifdef _WIN32
     #include<conio.h>
-#define clear_sc() system("cls") 
+    #define clear_sc() system("cls") 
 #else
-#define clear_sc() system("clear")
-#include <unistd.h> 
-
-char getch();
+    #define clear_sc() system("clear")
+    char getch();
 #endif
-void   _mdelay(int   time);
 
+void   _mdelay(int   time);
 #include"_maps.h"
 using namespace std;
+void init() {
+	#if defined (__WIN32) /*解决 win下unicode乱码问题*/
+	system("@CHCP 65001");
+	system("@cls");
+	#endif
+}
 int main() {
+    init();
     bool isq = false;
     int _LEVEL = sizeof(_MAPS_def)/_SIZE;
     for(int leve = 0; leve<_LEVEL && !isq; leve++) {
@@ -97,6 +102,9 @@ int main() {
 
 void   _mdelay(int   time)
 { 
+#ifdef _WIN32
+	time /= 1000;
+#endif
     clock_t   now   =   clock(); 
 
     while(   clock()   -   now   <   time   ); 
@@ -129,3 +137,4 @@ char getch(void)
      return ch;
 } 
 #endif
+

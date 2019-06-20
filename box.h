@@ -40,3 +40,4 @@ public:
     virtual bool move(direct d);
 };
 #endif
+

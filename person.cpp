@@ -216,3 +216,4 @@ bool person::pull() {
 int person::type() {
     return __type;
 }
+

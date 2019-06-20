@@ -73,3 +73,4 @@ bool block::cancover() {
 bool block::canpush() {
     return false;
 }
+

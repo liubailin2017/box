@@ -16,3 +16,4 @@ class person:public block {
         virtual bool pull(); //推返回就对应着拉
 };
 #endif
+
