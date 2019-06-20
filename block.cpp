@@ -1,11 +1,7 @@
 #include"block.h"
 #include<iostream>
-block::block() {
-    root = this;
-    rear = this;
-    lay= nullptr;
-    cover = nullptr;
-    __type = BLOCK;
+
+block::block():root(this),rear(this),lay(nullptr),cover(nullptr),__type(BLOCK) {
 }
 
 block::~block() {
@@ -23,16 +19,16 @@ content* block::getContent(){
     return _content;
 }
 
-block* block::_root() {
+block* & block::_root() {
     return root;
 }
-block* block::_rear() {
+block* & block::_rear() {
     return rear;
 }
-block* block::_lay() {
+block* & block::_lay() {
     return lay;
 }
-block* block::_cover() {
+block* & block::_cover() {
     return cover;
 }
 

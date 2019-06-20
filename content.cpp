@@ -21,8 +21,7 @@ void content::back() {
     }
 }
 
-content::content(map *m){
-    this->m = m;
+content::content(map *m):m(m){
     for(int i = 0; i< (m->_w())*(m->_h()); i++) {
         m->blocks()[i].setContent(this);
         if(m->blocks()[i].cover != nullptr && m->blocks()[i].cover->type() == PERSON){
@@ -32,7 +31,10 @@ content::content(map *m){
 }
 
 content::~content(){
+    if(p!= nullptr)
+        delete p;
 }
+
 map* content::getmap(){
     return m;
 }
@@ -94,6 +96,10 @@ void map::read(int d[]) {
 
 
 void content::actinput(direct d){
+    if(p==nullptr) {
+        std::cout<<"content::actinput: nullptr err"<<std::endl;
+        return;
+    }
     p->move(d);
 }
 bool content::isfinsh() {
@@ -108,107 +114,29 @@ bool content::isfinsh() {
 }
 
 void content::pushm(int d){ 
-    memery.push(d);
+    memery.push_back(d);
 }
 
 int content::popm() {
     if(memery.empty()) 
         return -1;
     else {
-        int t = memery.top();
-        memery.pop();
+        int t = memery.back();
+        memery.pop_back();
         return t;
     }
 }
 
-#ifdef _WIN32
-#include<conio.h>
-#else
-#include <termio.h>
-
-char getch(void)
-{
-     struct termios tm, tm_old;
-     int fd = 0, ch;
- 
-     if (tcgetattr(fd, &tm) < 0) {
-          return -1;
-     }
- 
-     tm_old = tm;
-     cfmakeraw(&tm);
-     if (tcsetattr(fd, TCSANOW, &tm) < 0) {
-          return -1;
-     }
- 
-     ch = getchar();
-     if (tcsetattr(fd, TCSANOW, &tm_old) < 0) {
-          return -1;
-     }
-    
-     return ch;
-}
-#endif
-
-int main() {
-
-    #include"_maps.h"
-    bool isq = false;
-    int _LEVEL = sizeof(_MAPS_def)/_SIZE;
-    for(int i = 0; i< _LEVEL && !isq; i++) {
-        map m;   
-        m.read(_MAPS_def[i]);
-        content c(&m);
-        char in;
-        bool isf = false;
-        while(!isq && !isf) {
-#ifdef _WIN32
-        system("cls");
-#else
-        system("clear");
-#endif
-        std::cout<<"关卡"<<(i+1)<<std::endl;
-        c.display();
-        std::cout << "****回退(b)方向控制（asdw)****"<<std::endl;
-
-        in = getch();
-      
-        switch (in)
-        {
-            case 'w' :
-            case 'W' :
-               c.actinput(UP);
-               break;
-            case 's' :
-            case 'S' :
-                c.actinput(DOWN);
-                break;
-            case 'a' :
-            case 'A' :
-                c.actinput(LEFT);
-                break;
-            case 'd' :
-            case 'D' :
-                c.actinput(RIGHT);
-                break;
-            case 'b':
-            case 'B':
-                c.back();
-                break;
-            case 'q':
-            case 'Q':
-                isq = true;
-                break;
-            default:
-                break;
-            }
-            isf = c.isfinsh();
-        }
+int content::popf() {
+    if(memery.empty()) 
+        return -1;
+    else {
+        int t = memery.front();
+        memery.pop_front();
+        return t;
     }
-    if(!isq)
-        std::cout << "恭喜你,完成了所有关卡!"<<std::endl;
-    else 
-        std::cout <<"再见!"<<std::endl;
-    getch();
-    return 0;
+}
+
+int content::msize() {
+    return memery.size();
 }

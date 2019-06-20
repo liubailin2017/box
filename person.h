@@ -7,6 +7,7 @@ class person:public block {
         direct _inter_push_dir;
     public:
         person();
+        virtual ~person();
         virtual void display(int t);
         virtual bool push();
         virtual bool move(direct d);

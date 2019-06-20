@@ -2,8 +2,14 @@
 #include"content.h"
 #include<iostream>
 
-person::person() {
+person::person():block::block() {
     __type = PERSON;
+}
+person::~person() {
+        if(lay != nullptr) lay->_cover() = nullptr;
+        if(cover != nullptr){
+            delete cover;
+    }
 }
 
 void person::display(int t){
@@ -197,15 +203,6 @@ bool person::pull() {
     case UP:
             (root+2*w)->_rear()->move(_inter_push_dir);
             ispull = true;
-    // si = sizeof(block);
-    //        t = root->getContent()->getmap()->blocks();
-    //        m =  (root)->_rear();
-    //         d1 = (root+w);
-    //         d2 = d1->_cover();
-    //         d3 = d2->_cover();
-    //         b = d1->_rear();
-    //          b->move(_inter_push_dir);
-    //         ispull = true;
         break;
     break;
     case DOWN:

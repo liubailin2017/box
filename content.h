@@ -11,7 +11,7 @@ class content
 private:
     person *p;
     map *m;
-    std::stack<int> memery;
+    std::deque<int> memery;
 protected:
 
     person *_p();
@@ -25,6 +25,8 @@ public:
     
     void pushm(int d);
     int popm(); //-1 表示空
+    int popf();
+    int msize();
     void back();
 
     ~content();

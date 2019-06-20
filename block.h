@@ -21,10 +21,10 @@ public:
     block();
     ~block();
 
-    block* _root();
-    block* _rear();
-    block* _lay();
-    block* _cover();
+    block* & _root();
+    block* & _rear();
+    block* & _lay();
+    block* & _cover();
 
     void   _cover(block *);
     block* _rmcover();

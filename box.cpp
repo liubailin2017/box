@@ -1,7 +1,7 @@
 #include "box.h"
 #include "content.h"
 #include <iostream>
-box::box() {
+box::box():block::block() {
     __type = BOX;
 }
 
@@ -63,7 +63,7 @@ bool box::cancover() {
     return false;
 }
 
-wall::wall(){
+wall::wall():block::block(){
     __type = WALL;
 }
 int wall::type() {
@@ -80,13 +80,13 @@ bool wall::cancover() {
 }
 bool wall::move(direct d) {return false;}
 
-
+intend::intend():block::block() {
+    __type = INTEND;
+}
 int intend::type() {
     return __type;
 }
-intend::intend() {
-    __type = INTEND;
-}
+
 void intend::display(int t) {
    if(cover == nullptr) {
        std::cout<<B8;
