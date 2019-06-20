@@ -8,8 +8,11 @@ enum type {BLOCK = 0, PERSON = 1,BOX = 2,WALL = 4,INTEND = 8};
 #ifndef nullptr
 #define nullptr 0
 #endif
-
+#ifdef _WIN32
+#define B0 "  "
+#else
 #define B0 " "
+#endif
 #define B1 "♀"
 #define B2 "□"
 #define B4 "■"

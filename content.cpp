@@ -1,6 +1,5 @@
 #include"content.h"
 #include<iostream>
-
 direct btranf(direct d) {
     if(d == RIGHT) return LEFT;
     if(d == LEFT) return RIGHT;
