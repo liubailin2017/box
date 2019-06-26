@@ -43,9 +43,9 @@ public:
     ~map();
     int _w();
     int _h();
-    void read(int d[]);
+    void read(int d[]);//default w = 28, h =16
+    void read(int d[],int w,int h);
     block* blocks();
-  
 };
 
 #endif

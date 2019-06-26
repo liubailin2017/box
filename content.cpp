@@ -43,6 +43,7 @@ person *content::_p(){
 }
 
 void content::display() {
+    std::cout<<m->_w() <<std::endl<<m->_h() <<std::endl;
     for(int i = 0; i < m->_w() * m->_h(); i++) {
         m->blocks()[i].display(0);
         if((i+1) % m->_w() == 0) std::cout<<std::endl;
@@ -92,7 +93,16 @@ void map::read(int d[]) {
         }
     }
 }
+void map::read(int d[],int w,int h) {
 
+    if(w>_w() || h >_h()) {
+        delete[] b;
+        b =(block*) new block[w*h];
+    }
+    map::w = w;
+    map::h = h;
+    read(d);
+}
 
 void content::actinput(direct d){
     if(p==nullptr) {
