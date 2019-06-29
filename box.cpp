@@ -42,6 +42,7 @@ bool box::move(direct d) {
             c->_rear()->_cover(t);
             break;
     }
+    return true;
 }
 void box::display(int t) {
     switch (t) {
@@ -94,5 +95,6 @@ void intend::display(int t) {
        cover->display(t+cover->type());
    }
 }
+
 bool intend::move(direct d) {return false;}
 

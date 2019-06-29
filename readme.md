@@ -1,8 +1,9 @@
 ## c++推箱子
 
 ## 编译
-没写makefile 编译请直接用命令
-g++ *.cpp
+没编写makefile 请直接用命令编译
+
+    g++ *.cpp
 
 ## 说明
 可在 [_maps.h](https://github.com/liubailin2017/box/blob/master/_maps.h) 文件中编辑地图

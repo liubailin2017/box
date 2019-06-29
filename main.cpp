@@ -7,6 +7,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include <unistd.h> 
+#include<time.h>
 #ifdef _WIN32
     #include<conio.h>
     #define clear_sc() system("cls") 
@@ -24,10 +25,11 @@ void init() {
 	system("@cls");
 	#endif
 }
+ 
 int main() {
-    init();
+//  init();
     bool isq = false;
-    int _LEVEL = sizeof(_MAPS_def)/_SIZE;
+    int _LEVEL = sizeof(_MAPS_def)/ sizeof(_MAPS_def[0]);
     for(int leve = 0; leve<_LEVEL && !isq; leve++) {
         map m;   
         m.read(_MAPS_def[leve]);
@@ -36,9 +38,9 @@ int main() {
         bool isf = false;
         while(!isq && !isf) {
             clear_sc();
-            std::cout<<"关卡"<<(leve)<<std::endl;
+            std::cout<<"leve:("<<(leve+1)<<"/"<< _LEVEL <<")"<<std::endl;
             c.display();
-            std::cout << "****回退(b)方向控制（asdw)****"<<std::endl;
+            std::cout << "****back(b) move(asdw)****"<<std::endl;
 
             in = getch();
         
@@ -85,7 +87,7 @@ int main() {
                 _mdelay(1000*s);
                 clear_sc();
                 rc.display(); 
-                std::cout<<"***回放***"<<endl;
+                std::cout<<"***play record***"<<endl;
             }
             std::cout<<"press any key to contine."<<endl;
             getch();
@@ -93,9 +95,9 @@ int main() {
     }
 
     if(!isq)
-        std::cout << "恭喜你,完成了所有关卡!"<<std::endl;
+        std::cout << "You have completed all the leves!"<<std::endl;
     else 
-        std::cout <<"再见!"<<std::endl;
+        std::cout <<"bye!"<<std::endl;
     getch();
     return 0;
 }

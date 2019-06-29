@@ -9,15 +9,15 @@ enum type {BLOCK = 0, PERSON = 1,BOX = 2,WALL = 4,INTEND = 8};
 #define nullptr 0
 #endif
 #ifdef _WIN32
-#define B0 "  "
+#define B0 " "
 #else
 #define B0 " "
 #endif
-#define B1 "♀"
-#define B2 "□"
-#define B4 "■"
-#define B8 "☆"
-#define B10 "★"
-#define B9 "♂"
-#define Er "E"
+#define B1 "$"
+#define B2 "0"
+#define B4 "#"
+#define B8 "*"
+#define B10 "@"
+#define B9 "&"
+#define Er " E"
 

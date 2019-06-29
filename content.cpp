@@ -1,10 +1,14 @@
 #include"content.h"
 #include<iostream>
 direct btranf(direct d) {
-    if(d == RIGHT) return LEFT;
-    if(d == LEFT) return RIGHT;
-    if(d == UP ) return DOWN;
-    if(d = DOWN) return UP;
+    if(d == RIGHT) 
+        return LEFT;
+    else if(d == LEFT)
+        return RIGHT;
+    else if(d == UP )
+        return DOWN;
+    else /* if(d = DOWN) */
+        return UP;
 }
 
 void content::back() {
@@ -43,11 +47,10 @@ person *content::_p(){
 }
 
 void content::display() {
-    std::cout<<m->_w() <<std::endl<<m->_h() <<std::endl;
     for(int i = 0; i < m->_w() * m->_h(); i++) {
         m->blocks()[i].display(0);
         if((i+1) % m->_w() == 0) std::cout<<std::endl;
-    }
+    } 
 }
 
 map::map():w(28),h(16) {
