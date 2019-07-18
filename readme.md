@@ -11,3 +11,6 @@
 加载图片请稍候...
 ![](readme_img/prtsc.gif)
 
+## 下载
+[windows](https://github.com/liubailin2017/box/releases/download/1.011/box.exe)
+[linux](https://github.com/liubailin2017/box/releases/download/1.011/box)
