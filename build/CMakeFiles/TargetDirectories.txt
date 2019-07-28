@@ -1,0 +1,6 @@
+/home/liubailin/Desktop/box/build/CMakeFiles/rebuild_cache.dir
+/home/liubailin/Desktop/box/build/CMakeFiles/box.dir
+/home/liubailin/Desktop/box/build/CMakeFiles/edit_cache.dir
+/home/liubailin/Desktop/box/build/src/CMakeFiles/rebuild_cache.dir
+/home/liubailin/Desktop/box/build/src/CMakeFiles/main.dir
+/home/liubailin/Desktop/box/build/src/CMakeFiles/edit_cache.dir

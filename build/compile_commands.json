@@ -1,0 +1,32 @@
+[
+{
+  "directory": "/home/liubailin/Desktop/box/build",
+  "command": "/usr/bin/g++-7    -g   -o CMakeFiles/box.dir/main.cpp.o -c /home/liubailin/Desktop/box/main.cpp",
+  "file": "/home/liubailin/Desktop/box/main.cpp"
+},
+{
+  "directory": "/home/liubailin/Desktop/box/build",
+  "command": "/usr/bin/g++-7    -g   -o CMakeFiles/box.dir/adapt.cpp.o -c /home/liubailin/Desktop/box/adapt.cpp",
+  "file": "/home/liubailin/Desktop/box/adapt.cpp"
+},
+{
+  "directory": "/home/liubailin/Desktop/box/build/src",
+  "command": "/usr/bin/g++-7    -g   -o CMakeFiles/main.dir/block.cpp.o -c /home/liubailin/Desktop/box/src/block.cpp",
+  "file": "/home/liubailin/Desktop/box/src/block.cpp"
+},
+{
+  "directory": "/home/liubailin/Desktop/box/build/src",
+  "command": "/usr/bin/g++-7    -g   -o CMakeFiles/main.dir/box.cpp.o -c /home/liubailin/Desktop/box/src/box.cpp",
+  "file": "/home/liubailin/Desktop/box/src/box.cpp"
+},
+{
+  "directory": "/home/liubailin/Desktop/box/build/src",
+  "command": "/usr/bin/g++-7    -g   -o CMakeFiles/main.dir/content.cpp.o -c /home/liubailin/Desktop/box/src/content.cpp",
+  "file": "/home/liubailin/Desktop/box/src/content.cpp"
+},
+{
+  "directory": "/home/liubailin/Desktop/box/build/src",
+  "command": "/usr/bin/g++-7    -g   -o CMakeFiles/main.dir/person.cpp.o -c /home/liubailin/Desktop/box/src/person.cpp",
+  "file": "/home/liubailin/Desktop/box/src/person.cpp"
+}
+]
