@@ -2,8 +2,8 @@
 
 ## 编译
 
-cmake .
-make
+# cmake .
+# make
 
 ## 说明
 可在 [_maps.h](https://github.com/liubailin2017/box/blob/master/_maps.h) 文件中编辑地图
