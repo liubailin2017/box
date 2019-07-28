@@ -1,1 +1,0 @@
-/usr/bin/g++-7  -g  -rdynamic CMakeFiles/box.dir/main.cpp.o CMakeFiles/box.dir/adapt.cpp.o  -o box -lSDL2 -lSDL2_image src/libmain.a -lSDL2 -lSDL2_image 
