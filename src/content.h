@@ -28,6 +28,7 @@ public:
     int popf();
     int msize();
     void back();
+    void init();
 
     ~content();
 };

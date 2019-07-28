@@ -1,6 +1,11 @@
 #include"person.h"
 #include"content.h"
+
+#include"../SDLdraw/palette.h"
+#include"../SDLdraw/drawlist.h"
 #include<iostream>
+
+extern palette global_palette;
 
 person::person():block::block() {
     __type = PERSON;
@@ -16,10 +21,12 @@ void person::display(int t){
     t -= BLOCK;
     switch(t) {
         case PERSON :
-            std::cout<<B1;
+    //        std::cout<<B1;
+            drawperson(&global_palette);
             break;
         case INTEND + PERSON:
-            std::cout<<B9;
+    //        std::cout<<B9;
+            drawperson_intend(&global_palette);
             break;
     }
 }

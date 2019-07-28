@@ -1,6 +1,12 @@
 #include "box.h"
 #include "content.h"
 #include <iostream>
+
+#include"../SDLdraw/palette.h"
+#include"../SDLdraw/drawlist.h"
+extern palette global_palette;
+
+
 box::box():block::block() {
     __type = BOX;
 }
@@ -43,16 +49,20 @@ bool box::move(direct d) {
             break;
     }
 }
+
 void box::display(int t) {
     switch (t) {
     case  BLOCK+INTEND+BOX:
-        std::cout<<B10;
+    //    std::cout<<B10;
+        drawbox_intend(&global_palette);
         break;
     case BLOCK+BOX:
-        std::cout<<B2;
+    //    std::cout<<B2;
+        drawbox(&global_palette);
         break;
     default:
-        std::cout<<Er;
+        drawspace(&global_palette);
+        std::cout<<"a err have occured on box.cpp"<<std::endl;
         break;
     }
 }
@@ -70,7 +80,8 @@ int wall::type() {
     return __type;
 }
 void wall::display(int t) {
-    std::cout<<B4;
+//    std::cout<<B4;
+    drawwall(&global_palette);
 }
 bool wall::canpush() {
     return false;
@@ -89,7 +100,8 @@ int intend::type() {
 
 void intend::display(int t) {
    if(cover == nullptr) {
-       std::cout<<B8;
+   //    std::cout<<B8;
+   drawintend(&global_palette);
    }else {
        cover->display(t+cover->type());
    }

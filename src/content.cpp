@@ -19,14 +19,22 @@ void content::back() {
         _p()->pull();
     }
 }
-
-content::content(map *m):m(m){
+void content::init(){
+    std::cout<<"content.cpp"<<m->_w()<<m->_h()<<std::endl;
     for(int i = 0; i< (m->_w())*(m->_h()); i++) {
         m->blocks()[i].setContent(this);
         if(m->blocks()[i].cover != nullptr && m->blocks()[i].cover->type() == PERSON){
+            if(p) {
+                delete p;
+                if(p->lay) delete  p;
+            }
             p = (person *)(m->blocks()[i].cover);
         }
     }
+    memery.clear();
+}
+content::content(map *m):m(m),p(NULL){
+    init();
 }
 
 content::~content(){
@@ -45,16 +53,16 @@ person *content::_p(){
 void content::display() {
     for(int i = 0; i < m->_w() * m->_h(); i++) {
         m->blocks()[i].display(0);
-        if((i+1) % m->_w() == 0) std::cout<<std::endl;
+        //if((i+1) % m->_w() == 0) std::cout<<std::endl;
     }
 }
 
-map::map():w(28),h(16) {
-    b =(block*) new block[w*h];
+map::map(){//max size 448 as  28*16
+    b = NULL;
 }
 
 map::~map() {
-    delete[] b;
+    if(b) delete[] b;
 }
 
 int map::_w() { return w; }
@@ -65,8 +73,13 @@ block* map::blocks(){
 }
 
 void map::read(int d[]) {
+    if(b) delete[] b;
+    b =(block*) new block[448];
+    w=d[0];
+    h=d[1];
+    int offset = 2;
     for(int i = 0; i< w*h; i++) {
-        switch (d[i]) {
+        switch (d[i+offset]) {
             case BLOCK:
                 break;
             case PERSON:

@@ -1,13 +1,22 @@
 #include"block.h"
 #include<iostream>
 
+#include"../SDLdraw/palette.h"
+#include"../SDLdraw/drawlist.h"
+extern palette global_palette;
+
+
 block::block():root(this),rear(this),lay(nullptr),cover(nullptr),__type(BLOCK) {
 }
 
 block::~block() {
     if(cover != nullptr){
-        if(cover->type() != PERSON)
-            delete cover;
+        if(cover->type() == PERSON) {
+            cover->_lay() = NULL;
+        }
+        else{
+             delete cover;
+        }
     }
 }
 
@@ -52,7 +61,8 @@ block* block::_rmcover() {
 
 void block::display(int t) {
     if(cover == nullptr) {
-        std::cout<<B0;
+    //    std::cout<<B0;
+        drawspace(&global_palette);
     }else{
         cover->display(t + cover->type());
     }
