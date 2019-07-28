@@ -1,0 +1,2 @@
+/usr/bin/ar qc libmain.a  CMakeFiles/main.dir/block.cpp.o CMakeFiles/main.dir/box.cpp.o CMakeFiles/main.dir/content.cpp.o CMakeFiles/main.dir/person.cpp.o
+/usr/bin/ranlib libmain.a
