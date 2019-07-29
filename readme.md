@@ -29,7 +29,8 @@
 
 ## 依赖
 
-     [SDL2](http://www.libsdl.org/download-2.0.php) [SDL2_image](http://www.libsdl.org/projects/SDL_image/)
+[SDL2](http://www.libsdl.org/download-2.0.php)
+[SDL2_image](http://www.libsdl.org/projects/SDL_image/)
 
 ## 说明
 
@@ -41,7 +42,7 @@
 
 ## 特征
 
-    可在 [_maps.h](https://github.com/liubailin2017/box/blob/graph/src/_maps.h) 文件中编辑地图
+可在 [_maps.h](https://github.com/liubailin2017/box/blob/graph/src/_maps.h) 文件中编辑地图
 
 ## 演示
 
