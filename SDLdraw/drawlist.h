@@ -1,16 +1,16 @@
 class palette;
 void drawlist_init_img();
 
-int drawperson(palette *p) ;
+void drawperson(palette *p) ;
 
-int drawperson_intend(palette *p) ;
+void drawperson_intend(palette *p) ;
 
-int drawbox(palette *p) ;
+void drawbox(palette *p) ;
 
-int drawbox_intend(palette *p) ;
+void drawbox_intend(palette *p) ;
 
-int drawintend(palette *p) ;
+void drawintend(palette *p) ;
 
-int drawwall(palette *p) ;
+void drawwall(palette *p) ;
 
-int drawspace(palette *p);
+void drawspace(palette *p);

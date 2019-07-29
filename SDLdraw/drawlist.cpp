@@ -11,44 +11,44 @@ SDL_Surface* sufaceB10;// "★"
 SDL_Surface* sufaceB9;// "♂"
 void drawlist_init_img() {
     if(sufaceB0 = IMG_Load("img/space.png"))
-        std::cout<<SDL_GetError();
+        std::cout<<SDL_GetError()<<std::endl;
     if(sufaceB1 =  IMG_Load("img/person.png"))
-        std::cout<<SDL_GetError();
-    if(sufaceB2 =  IMG_Load("img/box.png"))
-        std::cout<<SDL_GetError();
+        std::cout<<SDL_GetError()<<std::endl;
+    if(sufaceB2 =  IMG_Load("img/box.png") )
+        std::cout<<SDL_GetError()<<std::endl;
     if(sufaceB4 =  IMG_Load("img/wall.png"))
-        std::cout<<SDL_GetError();
+        std::cout<<SDL_GetError()<<std::endl;
     if(sufaceB8 =  IMG_Load("img/intend.png")) 
-        std::cout<<SDL_GetError();
+        std::cout<<SDL_GetError()<<std::endl;
     if(sufaceB10 = IMG_Load("img/box_intend.png"))
-        std::cout<<SDL_GetError();
+        std::cout<<SDL_GetError()<<std::endl;
     if(sufaceB9 =  IMG_Load("img/person_intend.png"))
-        std::cout<<SDL_GetError();
+        std::cout<<SDL_GetError()<<std::endl;
 }
 
-int drawperson(palette *p) {
+void drawperson(palette *p) {
         p->paint(sufaceB1);
 }
 
-int drawperson_intend(palette *p) {
+void drawperson_intend(palette *p) {
          p->paint(sufaceB9);
 }
 
-int drawbox(palette *p) {
+void drawbox(palette *p) {
      p->paint(sufaceB2);
 }
 
-int drawbox_intend(palette *p){
+void drawbox_intend(palette *p){
          p->paint(sufaceB10);
 }
-int drawintend(palette *p){
+void drawintend(palette *p){
      p->paint(sufaceB8);
 }
 
-int drawwall(palette *p) {
+void drawwall(palette *p) {
          p->paint(sufaceB4);
 }
 
-int drawspace(palette *p){
+void drawspace(palette *p){
          p->paint(NULL);
 }

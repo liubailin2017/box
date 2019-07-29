@@ -9,8 +9,8 @@ class map;
 class content
 {
 private:
-    person *p;
     map *m;
+    person *p;
     std::deque<int> memery;
 protected:
 

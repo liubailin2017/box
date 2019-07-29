@@ -8,6 +8,7 @@
 
 
 #include <unistd.h> 
+#include<time.h>
 #include<stdlib.h>
 #include<stdio.h>
 void   _mdelay(int   time)

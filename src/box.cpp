@@ -48,6 +48,7 @@ bool box::move(direct d) {
             c->_rear()->_cover(t);
             break;
     }
+    return true;
 }
 
 void box::display(int t) {

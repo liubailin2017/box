@@ -1,10 +1,14 @@
 #include"content.h"
 #include<iostream>
 direct btranf(direct d) {
-    if(d == RIGHT) return LEFT;
-    if(d == LEFT) return RIGHT;
-    if(d == UP ) return DOWN;
-    if(d = DOWN) return UP;
+    if(d == RIGHT)
+        return LEFT;
+    else if(d == LEFT)
+        return RIGHT;
+    else if(d == UP ) 
+        return DOWN;
+    else /* if(d = DOWN)*/
+        return UP;
 }
 
 void content::back() {
@@ -20,7 +24,6 @@ void content::back() {
     }
 }
 void content::init(){
-    std::cout<<"content.cpp"<<m->_w()<<m->_h()<<std::endl;
     for(int i = 0; i< (m->_w())*(m->_h()); i++) {
         m->blocks()[i].setContent(this);
         if(m->blocks()[i].cover != nullptr && m->blocks()[i].cover->type() == PERSON){

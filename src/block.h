@@ -19,7 +19,7 @@ protected:
 public:
 
     block();
-    ~block();
+    virtual ~block();
 
     block* & _root();
     block* & _rear();

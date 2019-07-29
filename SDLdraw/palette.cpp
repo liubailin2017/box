@@ -17,6 +17,7 @@ palette& palette::operator=(const palette &plt){
     c = plt.c;
     SDL_FreeSurface(surface);
     surface = SDL_CreateRGBSurface(0,box_w*x,box_h*y,32,rmask,gmask,bmask,amask);
+    return *this;
 }
 
 palette::~palette(){

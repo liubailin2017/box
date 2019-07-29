@@ -65,7 +65,6 @@ int main(int argc,char* agrv[]) {
             switch (event.type)
             {
             case SDL_KEYDOWN:
-            
                 break;
             case SDL_KEYUP:
                 break;
