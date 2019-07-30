@@ -52,20 +52,21 @@ bool box::move(direct d) {
 }
 
 void box::display(int t) {
-    switch (t) {
-    case  BLOCK+INTEND+BOX:
-    //    std::cout<<B10;
-        drawbox_intend(&global_palette);
-        break;
-    case BLOCK+BOX:
-    //    std::cout<<B2;
-        drawbox(&global_palette);
-        break;
-    default:
-        drawspace(&global_palette);
-        std::cout<<"a err have occured on box.cpp"<<std::endl;
-        break;
-    }
+    drawobj(&global_palette,this);
+    // switch (t) {
+    // case  BLOCK+INTEND+BOX:
+    // //    std::cout<<B10;
+    //     drawbox_intend(&global_palette);
+    //     break;
+    // case BLOCK+BOX:
+    // //    std::cout<<B2;
+    //     drawbox(&global_palette);
+    //     break;
+    // default:
+    //     drawspace(&global_palette);
+    //     std::cout<<"a err have occured on box.cpp"<<std::endl;
+    //     break;
+    // }
 }
 bool box::canpush() {
     return true;
@@ -82,7 +83,8 @@ int wall::type() {
 }
 void wall::display(int t) {
 //    std::cout<<B4;
-    drawwall(&global_palette);
+// drawwall(&global_palette);
+    drawobj(&global_palette,this);
 }
 bool wall::canpush() {
     return false;
@@ -101,9 +103,11 @@ int intend::type() {
 
 void intend::display(int t) {
    if(cover == nullptr) {
+       drawobj(&global_palette,this);
    //    std::cout<<B8;
-   drawintend(&global_palette);
+   //   drawintend(&global_palette);
    }else {
+       drawobj(&global_palette,this);
        cover->display(t+cover->type());
    }
 }

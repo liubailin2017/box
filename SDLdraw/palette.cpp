@@ -1,7 +1,7 @@
 #include"palette.h"
 #include<iostream>
 palette::palette(int x,int y,int box_w,int box_h):x(x),y(y),box_w(box_w),box_h(box_h),c(0){
-    surface = SDL_CreateRGBSurface(0,box_w*x,box_h*y,32,rmask,gmask,bmask,amask);
+    surface = SDL_CreateRGBSurface(0,box_w*x,box_h*y,32,rmask,gmask,bmask,0);
     if(surface == NULL) {
         std::cout<<"SDL_CreateRGBsuface create failure on palette.cpp"<<std::endl;
     }
@@ -16,7 +16,7 @@ palette& palette::operator=(const palette &plt){
     box_h = plt.box_h;
     c = plt.c;
     SDL_FreeSurface(surface);
-    surface = SDL_CreateRGBSurface(0,box_w*x,box_h*y,32,rmask,gmask,bmask,amask);
+    surface = SDL_CreateRGBSurface(0,box_w*x,box_h*y,32,rmask,gmask,bmask,0);
     return *this;
 }
 
@@ -36,17 +36,31 @@ bool palette::isfinsh(){
 void palette::reset() {
     c = 0;
 }
-bool palette::paint(SDL_Surface *s) {
+void palette::setsize(int w,int h) {
+    box_w = w;
+    box_h = h;
+    SDL_Surface*tmp = surface;
+    surface = SDL_CreateRGBSurface(0,box_w*x,box_h*y,32,rmask,gmask,bmask,0);
+    SDL_BlitScaled(tmp,NULL,surface,NULL);
+    SDL_FreeSurface(tmp);
+}
+bool palette::paint_(SDL_Surface *s) {
     if(!isfinsh()) {
         if(s){
             SDL_Rect trg={c%x*box_w,c/x*box_h,box_w,box_h};
             SDL_Rect src = {0,0,s->w,s->h};
             SDL_BlitScaled(s,&src,surface,&trg);
         }
+        return true;
+    }
+    return false;
+}
+
+bool palette::paint(SDL_Surface *s) {
+    if(paint_(s)){
         c++;
         return true;
     }
-    std::cout<<"pain faiure on palette.cpp"<<std::endl;
     return false;
 }
 SDL_Surface* palette::getSuface() {

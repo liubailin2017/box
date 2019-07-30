@@ -3,7 +3,7 @@
 #include<SDL2/SDL.h>
 #include<SDL2/SDL_image.h>
 #include<math.h>
-#define PI  (3.14159)
+
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
 int    rmask = 0xff000000;
 int    gmask = 0x00ff0000;
@@ -17,52 +17,59 @@ int    amask = 0xff000000;
 #endif
 
 
-#include"../SDLdraw/palette.h"
-
 int main(int argc,char* agrv[]) {
-    
+  
     int isq = false;
     SDL_Init(SDL_INIT_EVERYTHING);
-    IMG_Init(IMG_INIT_JPG);
-    SDL_Surface *bg = IMG_Load("bg.jpeg");
+    IMG_Init(IMG_INIT_PNG);
+    SDL_Surface *bg = IMG_Load("101.png");
     if(!bg) {
         std::cout<<SDL_GetError()<<std::endl;
     };
     SDL_Window *w = SDL_CreateWindow("Box",
                                     SDL_UNSUPPORTED,SDLK_UNDERSCORE,
-                                    bg->w,bg->h,
+                                    320,240,
                                     SDL_WINDOW_ALLOW_HIGHDPI);
     SDL_ShowWindow(w);
 
-    SDL_Surface *prs= IMG_Load("img/person.png");
+    SDL_Surface *prs= IMG_Load("img/intend.png");
     if(!prs) {
         std::cout<<SDL_GetError()<<std::endl;
     };
 
-    palette p(3,3,100,100);
-    for(int i = 0; i< 9; i++)
-        if(!p.paint(prs))
-            std::cout<<"paint failure"<<std::endl;
-    
+
     SDL_Surface* win = SDL_GetWindowSurface(w);
 
-     if(SDL_BlitSurface(bg,NULL,win,NULL)) {
-        std::cout<<SDL_GetError()<<std::endl;
-    };
-    if(SDL_BlitSurface(p.getSuface(),NULL,win,NULL)) {
-        std::cout<<SDL_GetError()<<std::endl;
-    };
-
+   
     SDL_UpdateWindowSurface(w);
+    SDL_Rect trg={50,50,320,240};
+    SDL_Rect src = {0,0,prs->w,prs->h};
+           
+    SDL_Event event;
 
+    SDL_Surface* surface = SDL_CreateRGBSurface(0,320,240,32,rmask,gmask,bmask,amask); 
+    SDL_SetSurfaceBlendMode(bg,SDL_BLENDMODE_BLEND);
+    
+    SDL_SetSurfaceBlendMode(surface,SDL_BLENDMODE_BLEND);
 
-    SDL_Event event;   
+    // for(int i = 0; i< 320*240; i++) {
+    //     ((Uint32 *)surface->pixels)[i] = 0xFF0000FF;
+    // }
+
+    if(SDL_BlitScaled(bg,NULL,surface,NULL)) {
+        std::cout<<"2"<<SDL_GetError()<<std::endl;
+    };
+    
+
+    if(SDL_BlitScaled(surface,NULL,win,NULL)) {
+        std::cout<<"3"<<SDL_GetError()<<std::endl;
+    };
+ 
+    SDL_UpdateWindowSurface(w);
+ 
     while (!isq)
     {
 
-
- 
- 
         while(SDL_PollEvent(&event)) {
             switch (event.type)
             {

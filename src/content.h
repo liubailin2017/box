@@ -5,7 +5,6 @@
 #include "box.h"
 #include <stack>
 class map;
-
 class content
 {
 private:

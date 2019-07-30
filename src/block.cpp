@@ -6,7 +6,7 @@
 extern palette global_palette;
 
 
-block::block():root(this),rear(this),lay(nullptr),cover(nullptr),__type(BLOCK) {
+block::block():__type(BLOCK),root(this),rear(this),lay(nullptr),cover(nullptr) {
 }
 
 block::~block() {
@@ -60,10 +60,12 @@ block* block::_rmcover() {
 }
 
 void block::display(int t) {
+  
     if(cover == nullptr) {
-    //    std::cout<<B0;
-        drawspace(&global_palette);
+        drawobj(&global_palette,this);
+        //    std::cout<<B0;
     }else{
+        drawobj(&global_palette,this);
         cover->display(t + cover->type());
     }
 }

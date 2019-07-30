@@ -25,10 +25,11 @@ int    amask = 0xff000000;
 public:
     void reset();
     bool paint(SDL_Surface *s);
+    bool paint_(SDL_Surface *s); // use this function if you don't want to move into next point;
     SDL_Surface* getSuface();
     palette(int x,int y,int box_w,int box_h);
     palette(int x,int y);
-
+    void setsize(int w,int h);
     palette& operator=(const palette &plt);
 
     palette();

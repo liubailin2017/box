@@ -1,5 +1,8 @@
 #include"content.h"
 #include<iostream>
+
+#include"../SDLdraw/drawlist.h"
+
 direct btranf(direct d) {
     if(d == RIGHT)
         return LEFT;
@@ -115,8 +118,11 @@ void content::actinput(direct d){
         std::cout<<"content::actinput: nullptr err"<<std::endl;
         return;
     }
+    p->befor_move(d);
+    SDLdraw_updateWindow();
     p->move(d);
 }
+
 bool content::isfinsh() {
     bool isf = true;
     int n = m->_w() * m->_h();

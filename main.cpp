@@ -5,10 +5,8 @@
 #include<SDL2/SDL_image.h>
 #include<math.h>
 
-
-#define PI  (3.14159)
-#define WIDTH 960
-#define HEIGHT 640
+int _WIDTH =960;
+int _HEIGHT =640;
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
 int    rmask = 0xff000000;
 int    gmask = 0x00ff0000;
@@ -30,29 +28,29 @@ int    amask = 0xff000000;
 
 #include"SDLdraw/palette.h"
 #include"SDLdraw/drawlist.h"
+
 palette global_palette;
+SDL_Window* global_w; 
 
 #include"src/_maps.h"
 int main(int argc,char* agrv[]) {
     char flag[100]={0};
     int isq = false;
     SDL_Init(SDL_INIT_EVERYTHING);
-    IMG_Init(IMG_INIT_JPG);
+    IMG_Init(IMG_INIT_PNG);
     drawlist_init_img();
     FILE *f = fopen("data.sav","rb+");
     if(f){
         fread(flag,sizeof(flag),1,f);
         fclose(f);
     }
-    SDL_Surface *bg = IMG_Load("bg.png");
-    if(!bg) {
-        std::cout<<SDL_GetError()<<std::endl;
-    };
 
     SDL_Window* w = SDL_CreateWindow("hello,world",
                                     SDL_UNSUPPORTED,SDLK_UNDERSCORE,
-                                    WIDTH,HEIGHT,
-                                    SDL_WINDOW_SHOWN);
+                                    _WIDTH,_HEIGHT,
+                                    SDL_WINDOW_RESIZABLE|SDL_WINDOW_SHOWN);
+    global_w = w;
+
     SDL_Surface* win_surface = SDL_GetWindowSurface(w);
     std::string title;            
     SDL_Event event;
@@ -61,18 +59,29 @@ int main(int argc,char* agrv[]) {
     int mleve  = sizeof(_MAPS_def)/(_SIZE*sizeof(int));
     map m;   
     m.read(_MAPS_def[leve]);
-    palette p(m._w(),m._h(),WIDTH/m._w(),HEIGHT/m._h());
+    palette p(m._w(),m._h(),_WIDTH/m._w(),_HEIGHT/m._h());
     global_palette  = p;
     title = "Level :"+std::to_string(leve+1)+"|autor:liubailin src:https://github.com/liubailin2017/box/tree/graph|"+flag[leve];
     SDL_SetWindowTitle(w,title.c_str());
     content c(&m);
+
     c.display();
- 
+    int cwid,chei;
     while (!isq)
     {
         while(SDL_PollEvent(&event)) {
+            
+                SDL_GetWindowSize(w,&_WIDTH,&_HEIGHT);
+                if( !(cwid == _WIDTH && _HEIGHT == chei)) {
+                    global_palette.setsize(_WIDTH/m._w(),_HEIGHT/m._h());
+                    cwid = _WIDTH;
+                    chei =_HEIGHT;
+                    std::cout<<"resize"<<std::endl;
+                }
             switch (event.type)
             {
+            
+          
             case SDL_KEYDOWN:
                 switch (event.key.keysym.sym)
                 {
@@ -95,7 +104,7 @@ int main(int argc,char* agrv[]) {
                         if(leve < mleve-1) { 
                             leve++;
                             m.read(_MAPS_def[leve]);
-                            palette p(m._w(),m._h(),WIDTH/m._w(),HEIGHT/m._h());
+                            palette p(m._w(),m._h(),_WIDTH/m._w(),_HEIGHT/m._h());
                             global_palette = p;
                             c.init();
                             title = "level:"+std::to_string(leve+1)+"    "+flag[leve];
@@ -106,7 +115,7 @@ int main(int argc,char* agrv[]) {
                         if(leve>0) {
                             leve--;
                             m.read(_MAPS_def[leve]);
-                            palette p(m._w(),m._h(),WIDTH/m._w(),HEIGHT/m._h());
+                            palette p(m._w(),m._h(),_WIDTH/m._w(),_HEIGHT/m._h());
                             global_palette = p;
                             c.init();
                             title = "level:"+std::to_string(leve+1)+"    "+flag[leve];
@@ -122,7 +131,7 @@ int main(int argc,char* agrv[]) {
                         leve++;
                         hleve = hleve>leve? hleve:leve;
                         m.read(_MAPS_def[leve]);
-                        palette p(m._w(),m._h(),WIDTH/m._w(),HEIGHT/m._h());
+                        palette p(m._w(),m._h(),_WIDTH/m._w(),_HEIGHT/m._h());
                         global_palette = p;
                         c.init();
                         title = "level:"+std::to_string(leve+1)+"    "+flag[leve];
@@ -130,7 +139,6 @@ int main(int argc,char* agrv[]) {
                 }
 
                 global_palette.reset();
-                SDL_BlitScaled(bg,NULL,global_palette.getSuface(),NULL);
                 c.display();
 
                 break;
@@ -141,13 +149,13 @@ int main(int argc,char* agrv[]) {
                 break;
             }
         }
-        SDL_BlitSurface(global_palette.getSuface(),NULL,win_surface,NULL);
-        SDL_UpdateWindowSurface(w);
+      SDLdraw_updateWindow();
     }
     
     SDL_DestroyWindow(w);
     
     f = fopen("data.sav","wb+");
+
     if(f){
         fwrite(flag,sizeof(flag),1,f);
         fclose(f);

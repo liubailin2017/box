@@ -7,7 +7,7 @@
 
 extern palette global_palette;
 
-person::person():block::block() {
+person::person():block::block(),status(FD1) {
     __type = PERSON;
 }
 person::~person() {
@@ -19,20 +19,23 @@ person::~person() {
 
 void person::display(int t){
     t -= BLOCK;
-    switch(t) {
-        case PERSON :
-    //        std::cout<<B1;
-            drawperson(&global_palette);
-            break;
-        case INTEND + PERSON:
-    //        std::cout<<B9;
-            drawperson_intend(&global_palette);
-            break;
-    }
+
+    drawobj(&global_palette,this);
+
+    // switch(t) {
+    //     case PERSON :
+    // //        std::cout<<B1;
+    //         drawperson(&global_palette);
+    //         break;
+    //     case INTEND + PERSON:
+    // //        std::cout<<B9;
+    //         drawperson_intend(&global_palette);
+    //         break;
+    // }
 }
+
 bool person::back_move(direct d) {
      int ism =false;
-    int isp = false;
     content * cnt = root ->getContent();
     
     if(cnt == nullptr) {
@@ -82,6 +85,38 @@ bool person::back_move(direct d) {
     return ism;
 }
 
+void person::befor_move(direct d) {
+ switch (d) {
+        case UP:
+            if(status == FU1){
+                status = FU2;
+            }else {
+                status = FU1;
+            };
+            break;
+        case RIGHT:
+            if(status == FR0) {
+                status = FR1;
+            }else {
+                status = FR0;
+            }
+            break;
+        case DOWN:
+            if(status==FD1) {
+                status = FD2;
+            }else {
+                status = FD1;
+            }
+            break;
+        case LEFT:
+            if(status == FL0) {
+                status = FL1;
+            }else {
+                status = FL0;
+            }
+            break;
+    }
+}
 bool person::move(direct d){
     int ism =false;
     int isp = false;
@@ -137,6 +172,24 @@ bool person::move(direct d){
     if(ism)
         root->getContent()->pushm(s);
     return ism;
+}
+
+
+void person::after_move(direct d) { 
+switch (d) {
+        case UP:
+                status = FU0;          
+            break;
+        case RIGHT: 
+                status = FR0;
+            break;
+        case DOWN: 
+                status = FD0;
+            break;
+        case LEFT:
+                status = FL0;
+            break;
+    }
 }
 
 bool person::push() {
@@ -224,3 +277,6 @@ int person::type() {
     return __type;
 }
 
+int person::_status() { 
+    return status;
+}
