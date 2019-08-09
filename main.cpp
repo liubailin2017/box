@@ -131,7 +131,7 @@ void loadleve(int leve,content &c) {
     palette p(c.getmap()->_w(),c.getmap()->_h(),_WIDTH/c.getmap()->_w(),_HEIGHT/c.getmap()->_h());
     global_palette = p;
     c.init();
-    title = "level:"+std::to_string(leve+1)+"    "+flag[leve];
+    // title = "level:"+std::to_string(leve+1)+"    "+flag[leve];
     SDL_SetWindowTitle(global_w,title.c_str());
 }
 

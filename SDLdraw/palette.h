@@ -19,13 +19,13 @@ int    amask = 0xff000000;
     int y;
     int box_w;
     int box_h;
-    int c;
+    int c; // current 
     SDL_Surface *surface;
     bool isfinsh();
 public:
     void reset();
     bool paint(SDL_Surface *s);
-    bool paint_(SDL_Surface *s); // use this function if you don't want to move into next point;
+    bool paint_(SDL_Surface *s); // use this function if you want not to move into next point;
     SDL_Surface* getSuface();
     palette(int x,int y,int box_w,int box_h);
     palette(int x,int y);

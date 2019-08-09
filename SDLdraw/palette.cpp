@@ -22,7 +22,7 @@ palette& palette::operator=(const palette &plt){
 
 palette::~palette(){
     if(surface)
-        SDL_free(surface);
+        SDL_FreeSurface(surface);
     surface = NULL;
 }
 
