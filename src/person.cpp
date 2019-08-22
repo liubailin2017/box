@@ -5,7 +5,8 @@
 #include"../SDLdraw/drawlist.h"
 #include<iostream>
 
-extern palette global_palette;
+#include"../GlobalData.h"
+extern GameGloabalResouce GloabalData;
 
 person::person():block::block(),status(FD1) {
     __type = PERSON;
@@ -20,7 +21,7 @@ person::~person() {
 void person::display(int t){
     t -= BLOCK;
 
-    drawobj(&global_palette,this);
+    drawobj(&GloabalData.global_palette,this);
 
     // switch(t) {
     //     case PERSON :

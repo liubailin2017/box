@@ -3,8 +3,9 @@
 
 #include"../SDLdraw/palette.h"
 #include"../SDLdraw/drawlist.h"
-extern palette global_palette;
 
+#include"../GlobalData.h"
+extern GameGloabalResouce GloabalData;
 
 block::block():__type(BLOCK),root(this),rear(this),lay(nullptr),cover(nullptr) {
 }
@@ -62,10 +63,10 @@ block* block::_rmcover() {
 void block::display(int t) {
   
     if(cover == nullptr) {
-        drawobj(&global_palette,this);
+        drawobj(&GloabalData.global_palette,this);
         //    std::cout<<B0;
     }else{
-        drawobj(&global_palette,this);
+        drawobj(&GloabalData.global_palette,this);
         cover->display(t + cover->type());
     }
 }

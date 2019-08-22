@@ -32,9 +32,10 @@ void content::init(){
         if(m->blocks()[i].cover != nullptr && m->blocks()[i].cover->type() == PERSON){
             if(p) {
                 delete p;
-                if(p->lay) delete  p;
+                //if(p->lay) delete  p;
             }
             p = (person *)(m->blocks()[i].cover);
+            std::cout<<"find person"<<std::endl;
         }
     }
     memery.clear();
@@ -63,8 +64,7 @@ void content::display() {
     }
 }
 
-map::map(){//max size 448 as  28*16
-    b = NULL;
+map::map(): b(NULL),w(0),h(0){//max size 448 as  28*16
 }
 
 map::~map() {
@@ -79,10 +79,10 @@ block* map::blocks(){
 }
 
 void map::read(int d[]) {
-    if(b) delete[] b;
-    b =(block*) new block[448];
     w=d[0];
     h=d[1];
+    if(b) delete[] b;
+    b =(block*) new block[w*h];
     int offset = 2;
     for(int i = 0; i< w*h; i++) {
         switch (d[i+offset]) {
@@ -119,7 +119,6 @@ void content::actinput(direct d){
         return;
     }
     p->befor_move(d);
-    SDLdraw_updateWindow();
     p->move(d);
 }
 

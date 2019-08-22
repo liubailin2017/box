@@ -8,9 +8,6 @@
 #include<iostream>
 #include<SDL2/SDL_image.h>
 
-extern SDL_Window* global_w;
-extern palette global_palette;
-
 static SDL_Surface* sufaceB0;
 static SDL_Surface* sufaceB1;// "♀"
 static SDL_Surface* sufaceB2;// "□"
@@ -20,8 +17,6 @@ static SDL_Surface* sufaceB10;// "★"
 static SDL_Surface* sufaceB9;// "♂"
 
 static SDL_Surface* surface_b1[10]={0};
-
-
 
 void drawlist_init_img() {
     if(!(sufaceB0 = IMG_Load("img/space.png")))
@@ -118,8 +113,13 @@ void drawobj(palette *p,block* obj){
             break;
     }
 }
-void SDLdraw_updateWindow() {
-        SDL_Surface* win_surface  = SDL_GetWindowSurface(global_w);
-        SDL_BlitSurface(global_palette.getSuface(),NULL,win_surface,NULL);
-        SDL_UpdateWindowSurface(global_w);
+
+#include"../GlobalData.h"
+
+extern GameGloabalResouce GloabalData;
+
+void SDLdraw_update() {
+        SDL_Surface* win_surface  = SDL_GetWindowSurface(GloabalData.global_w);
+        SDL_BlitSurface(GloabalData.global_palette.getSuface(),NULL,win_surface,NULL);
+//        SDL_UpdateWindowSurface(GloabalData.global_w);
 }

@@ -6,7 +6,7 @@ void drawlist_init_img();
 
 void drawobj(palette* p,block* obj);
 
-void SDLdraw_updateWindow();
+void SDLdraw_update();
 // void drawperson(palette* p);
 
 // void drawperson_intend(palette* p);

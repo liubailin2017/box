@@ -4,7 +4,10 @@
 
 #include"../SDLdraw/palette.h"
 #include"../SDLdraw/drawlist.h"
-extern palette global_palette;
+
+#include"../GlobalData.h"
+extern GameGloabalResouce GloabalData;
+
 
 
 box::box():block::block() {
@@ -52,7 +55,7 @@ bool box::move(direct d) {
 }
 
 void box::display(int t) {
-    drawobj(&global_palette,this);
+    drawobj(&GloabalData.global_palette,this);
     // switch (t) {
     // case  BLOCK+INTEND+BOX:
     // //    std::cout<<B10;
@@ -84,7 +87,7 @@ int wall::type() {
 void wall::display(int t) {
 //    std::cout<<B4;
 // drawwall(&global_palette);
-    drawobj(&global_palette,this);
+    drawobj(&GloabalData.global_palette,this);
 }
 bool wall::canpush() {
     return false;
@@ -103,11 +106,11 @@ int intend::type() {
 
 void intend::display(int t) {
    if(cover == nullptr) {
-       drawobj(&global_palette,this);
+       drawobj(&GloabalData.global_palette,this);
    //    std::cout<<B8;
    //   drawintend(&global_palette);
    }else {
-       drawobj(&global_palette,this);
+       drawobj(&GloabalData.global_palette,this);
        cover->display(t+cover->type());
    }
 }
