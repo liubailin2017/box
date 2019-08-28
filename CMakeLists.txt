@@ -29,4 +29,4 @@ link_libraries(mingw32 SDL2main SDL2 SDL2_image)
 
 #link_libraries(SDL2 SDL2_image)
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/output)
-add_executable(box main.cpp adapt.cpp)
+add_executable(box main.cpp adapt.cpp mainhand.cpp)

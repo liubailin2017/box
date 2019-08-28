@@ -15,6 +15,7 @@
 #include "SDLC/Extends/Image.h"
 
 class GameGloabalResouce{   
+    
     public:
     palette global_palette;
     SDL_Window* global_w; 
@@ -29,6 +30,7 @@ class GameGloabalResouce{
     int mleve;
 
     SDLC_Component topbar;
+    void loadMainHandle();
     GameGloabalResouce();
 
 };

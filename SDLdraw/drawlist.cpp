@@ -35,7 +35,6 @@ void drawlist_init_img() {
         std::cout<<SDL_GetError()<<std::endl;
 
     for(int i = 0; i< 10; i++) {
-        
         std::string filename("img/Character");
         filename+=((char)('0'+i));
         filename+=".png";
@@ -48,36 +47,35 @@ void drawPerson(palette *p,person *prsn) {
 
     switch(prsn->_status()) {
         case FU0:
-            p->paint(surface_b1[7]);
+            p->paint(surface_b1[7],PERSON);
             break;
         case FU1:
-            p->paint(surface_b1[8]);
+            p->paint(surface_b1[8],PERSON);
             break;
         case FU2:
-            p->paint(surface_b1[9]);
+            p->paint(surface_b1[9],PERSON);
             break;
         case FD0:
-            p->paint(surface_b1[4]);
+            p->paint(surface_b1[4],PERSON);
             break;
         case FD1:
-            p->paint(surface_b1[5]);
+            p->paint(surface_b1[5],PERSON);
             break;
         case FD2:
-            p->paint(surface_b1[6]);
+            p->paint(surface_b1[6],PERSON);
             break;
         case FL0:
-            p->paint(surface_b1[0]);
+            p->paint(surface_b1[0],PERSON);
             break;
         case FL1:
-            p->paint(surface_b1[1]);
+            p->paint(surface_b1[1],PERSON);
             break;
         case FR0:
-            p->paint(surface_b1[2]);            
+            p->paint(surface_b1[2],PERSON);            
             break;
         case FR1:
-            p->paint(surface_b1[3]);            
+            p->paint(surface_b1[3],PERSON);            
             break;
-
     }
 }
 
@@ -86,28 +84,28 @@ void drawobj(palette *p,block* obj){
     {
         case BLOCK:
             if(obj->_cover())
-                p->paint_(sufaceB0);
+                p->paint_(sufaceB0,BLOCK);
             else
-                p->paint(sufaceB0);
+                p->paint(sufaceB0,BLOCK);
             break;
         case PERSON:
             drawPerson(p,(person*)obj);
             break;
         case BOX:
             if(obj->_lay()->type()==INTEND) {
-                p->paint(sufaceB10);
+                p->paint(sufaceB10,BOX);
             }else {
-                p->paint(sufaceB2);
+                p->paint(sufaceB2,BOX);
             }
             break;
         case WALL:
-                p->paint(sufaceB4);
+                p->paint(sufaceB4,WALL);
             break;
         case INTEND:
             if(obj->_cover())
-                p->paint_(sufaceB8);
+                p->paint_(sufaceB8,INTEND);
             else
-                p->paint(sufaceB8);
+                p->paint(sufaceB8,INTEND);
             break;
         default:
             break;
