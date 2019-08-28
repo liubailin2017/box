@@ -16,6 +16,7 @@ protected:
     person *_p();
 
 public:
+    person* _persion();
     map* getmap();
     content(map *m);
     void display();

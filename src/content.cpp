@@ -22,7 +22,6 @@ void content::back() {
     
     _p()->back_move(d);
     if(ispull){
-        std::cout <<"pull"<<std::endl;
         _p()->pull();
     }
 }
@@ -48,7 +47,9 @@ content::~content(){
     if(p!= nullptr)
         delete p;
 }
-
+person* content::_persion() {
+    return p;
+}
 map* content::getmap(){
     return m;
 }

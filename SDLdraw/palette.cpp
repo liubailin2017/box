@@ -49,9 +49,13 @@ bool palette::isfinsh(){
 }
 #include<string.h>
 void palette::reset() {
-    memset(data,0,c);
+    if(c == 0)
+        memset(data,0,w*h);
+    else
+        memset(data,0,c);
     c = 0;
 }
+
 void palette::setsize(int bw,int bh) {
     box_w = bw;
     box_h = bh;
@@ -81,9 +85,15 @@ bool palette::paint(SDL_Surface *s) {
     return false;
 }
 
+int datafilter(int s) {
+    if(s == 8 ) s = 0;
+    if(s == 1 ) s = 0;
+    return s;
+}
+
 bool palette::paint_(SDL_Surface *s,int d){
     if(paint_(s)) {
-       data[c] += d; 
+       data[c] += datafilter(d); 
        return true;
     }else {
         return false;

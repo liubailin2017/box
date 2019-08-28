@@ -4,6 +4,7 @@
 enum PERSON_STATUS{
         FU0=0,FU1,FU2,FD0=10,FD1,FD2,FL0=20,FL1,FR0=30,FR1
 };
+#include"../bfs.h"
 class person:public block {
 
     private :
@@ -21,6 +22,7 @@ class person:public block {
         virtual int type();
         virtual int _status();
         virtual bool pull(); //推返回就对应着拉
+        virtual tool::pos getPostion();
 };
 #endif
 

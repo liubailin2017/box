@@ -28,15 +28,7 @@ int _HEIGHT =640;
 GameGloabalResouce GloabalData;
 
 
-void main_init();
-void main_save();
-
-void loadleve(int leve,content &c);
-
-void draw_main(SDL_Surface *surface);
-bool hand_evet(const SDL_Event& event, SDLC_Component *cmp) ;
-bool main_hand(const SDL_Event& event, SDLC_Context *context);
-
+#include"mainhand.h"
 
 int main(int argc,char* agrv[]) {
     int ticket ;
@@ -88,5 +80,6 @@ GameGloabalResouce::GameGloabalResouce() :m(map()),c(content(&m)),leve(0),contex
 
 void GameGloabalResouce::loadMainHandle() {
     context.setListener(draw_main);
-    context.setListener(main_hand); 
+    context.setListener(main_hand);
+    context.setInterval(5,mainstrick);
 }

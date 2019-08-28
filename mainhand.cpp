@@ -1,3 +1,7 @@
+#include<iostream>
+#include "mainhand.h"
+
+MainHandResouce mainHandleRes;
 
 #include "SDLC/SDLC_log.h"
 #include "SDLC/SDLC_Context.h"
@@ -17,14 +21,6 @@
 
 #include"src/_maps.h"
 
-/* mainhand.h*/
-void main_init();
-void main_save();
-void loadleve(int leve,content &c);
-void draw_main(SDL_Surface *surface);
-bool hand_evet(const SDL_Event& event, SDLC_Component *cmp) ;
-bool main_hand(const SDL_Event& event, SDLC_Context *context);
-/*end mainhandl.h */
 
 extern int _WIDTH;
 extern int _HEIGHT;
@@ -34,7 +30,6 @@ void draw_main(SDL_Surface *surface) {
 
         SDLdraw_update();
 }
-int size_ = 50;
 
 bool hand_evet(const SDL_Event& event, SDLC_Component *cmp) {
     switch (event.type)
@@ -47,7 +42,14 @@ bool hand_evet(const SDL_Event& event, SDLC_Component *cmp) {
     }
     return true;
 }
-
+void print(tool::pos *s,char *map,int _W,int _H) {
+    if(!s) printf("null\n");
+    while(s) {
+        printf("(%d,%d)->",s->x,s->y);
+        s= s->pre;
+    }
+    printf("\n");
+}
 bool main_hand(const SDL_Event& event,SDLC_Context *context) {
     switch (event.type) {            
         case SDL_WINDOWEVENT:
@@ -98,45 +100,85 @@ bool main_hand(const SDL_Event& event,SDLC_Context *context) {
                     default:
                     
                     break;
-                }
-
-                if(GloabalData.c.isfinsh()){
-                    flag[GloabalData.leve] = '*';
-                        GloabalData.leve++;
-                        GloabalData.leve %= GloabalData.mleve;
-                        loadleve(GloabalData.leve,GloabalData.c);
-                }
-                GloabalData.global_palette.reset();
-                GloabalData.c.display();
-
-            for(int i = 0; i< GloabalData.global_palette.getW()* GloabalData.global_palette.getH();i++){
-                if(i% GloabalData.global_palette.getW() == 0){
-                    printf("|\n|");
-                }
-                printf("%2d", GloabalData.global_palette.getData()[i]);
             }
-            printf("\n--------update-----------");
+            
+            mainHandleRes.path = NULL;
+
+            if(GloabalData.c.isfinsh()){
+                flag[GloabalData.leve] = '*';
+                GloabalData.leve++;
+                GloabalData.leve %= GloabalData.mleve;
+                loadleve(GloabalData.leve,GloabalData.c);
+            }
+
+            GloabalData.global_palette.reset();
+            GloabalData.c.display();
 
             GloabalData.context.notifyUpdate();
             break;
+
         case SDL_MOUSEBUTTONDOWN:{
-            int boxw = GloabalData.global_palette.getBoxW();
-            int boxh = GloabalData.global_palette.getBoxH();
-            int x,y;
-            x = event.button.x/boxw;
-            y = event.button.y/boxh;
-            printf("%d ,%d \n",x,y);
+            if(event.button.button == 1) {
+                GloabalData.global_palette.reset();
+                GloabalData.c.display();
+                // for(int i = 0; i< GloabalData.global_palette.getW()* GloabalData.global_palette.getH();i++){
+                //     if(i% GloabalData.global_palette.getW() == 0){
+                //         printf("|\n|");
+                //     }
+                //     printf("%2d", GloabalData.global_palette.getData()[i]);
+                // }
+                // printf("\n--------update-----------\n");
+
+                int boxw = GloabalData.global_palette.getBoxW();
+                int boxh = GloabalData.global_palette.getBoxH();
+                int x,y;
+                x = event.button.x/boxw;
+                y = event.button.y/boxh;
+                int w = GloabalData.global_palette.getW();
+                int h = GloabalData.global_palette.getH();
+                mainHandleRes._bfs.set((char*)GloabalData.global_palette.getData(),w,h);
+                if(GloabalData.global_palette.getData()[w*y+x] == 2) GloabalData.global_palette.getData()[w*y+x] = 0;
+                tool::pos s = GloabalData.c._persion()->getPostion();
+                tool::pos t; t.x = x;t.y = y;
+                mainHandleRes.qpos.clean();
+                mainHandleRes.path = mainHandleRes._bfs.BFS(s,t,mainHandleRes.qpos);
+                //print(mainHandleRes.path,(char*)GloabalData.global_palette.getData(),w,h);
+            }else if(event.button.button == 3){
+                GloabalData.c.back();
+                GloabalData.global_palette.reset();
+                GloabalData.c.display();
+                GloabalData.context.notifyUpdate(); 
+            }
         }
         break;
         case SDL_QUIT: 
             GloabalData.isq =true;
             break;
         default:
-                break;
+            break;
     }
     return true;
 }
 
+void mainstrick(SDLC_Component *cmp) {
+    if(cmp) return;
+
+    if(mainHandleRes.path && mainHandleRes.path->pre) {
+        GloabalData.c.actinput((direct)mainHandleRes.path->pre->action(*(mainHandleRes.path)));
+        mainHandleRes.path = mainHandleRes.path->pre;
+    }
+
+    if(GloabalData.c.isfinsh()){
+        flag[GloabalData.leve] = '*';
+        GloabalData.leve++;
+        GloabalData.leve %= GloabalData.mleve;
+        loadleve(GloabalData.leve,GloabalData.c);
+    }
+    
+    GloabalData.global_palette.reset();
+    GloabalData.c.display();
+    GloabalData.context.notifyUpdate();
+}
 
 void loadleve(int leve,content &c) {
     std::string title;
@@ -165,4 +207,7 @@ void main_save() {
         fwrite(flag,sizeof(flag),1,f);
         fclose(f);
     }
+}
+
+MainHandResouce::MainHandResouce(): path(NULL){
 }

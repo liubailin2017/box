@@ -150,6 +150,12 @@ void SDLC_Context::setListener(HandleFun handler) {
 void SDLC_Context::setListener(UpdateBg handler) {
     updateBg = handler;
 }
+void SDLC_Context::setInterval(int i,StrickHandler h) {
+    if(i >= -1) {
+        interval = i+1;
+        strickHandler = h;
+    }
+}
 void SDLC_Context::update(SDL_Window *w) {
     window = w;
     update();

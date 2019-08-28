@@ -281,3 +281,18 @@ int person::type() {
 int person::_status() { 
     return status;
 }
+
+#include "../bfs.h"
+tool::pos person::getPostion() {
+    tool::pos postion;
+    content * cnt = root ->getContent();
+    if(cnt == nullptr) {
+        std::cout<< "person::pull:null content"<<std::endl;
+        return postion;
+    }
+    int w = cnt->getmap()->_w();
+    int c = _root() - cnt->getmap()->blocks();
+    postion.x = c%w;
+    postion.y = c/w;
+    return postion;
+}
