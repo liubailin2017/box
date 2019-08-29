@@ -18,6 +18,11 @@
 
 ![加载图片请稍候...](readme_img/prtsc.gif)
 
+## 依赖
+
+    [SDL2](http://www.libsdl.org/download-2.0.php)
+    [SDL2_image](http://www.libsdl.org/projects/SDL_image/)
+
 ## 编译
 
 ### windows
@@ -50,7 +55,7 @@
     cmake .
     make
 
-## 依赖
+## 下载
 
-[SDL2](http://www.libsdl.org/download-2.0.php)
-[SDL2_image](http://www.libsdl.org/projects/SDL_image/)
+    [windows](https://github.com/liubailin2017/box/releases/download/ver1.1-g/box-windows.zip)
+    [linux](https://github.com/liubailin2017/box/releases/download/ver1.1-g/box-linux.zip)
