@@ -114,13 +114,15 @@ void map::read(int d[]) {
 }
 
 
-void content::actinput(direct d){
+bool content::actinput(direct d){
     if(p==nullptr) {
         std::cout<<"content::actinput: nullptr err"<<std::endl;
-        return;
+        return false;
     }
     p->befor_move(d);
-    p->move(d);
+    bool result = p->move(d);
+ //   std::cout << result<<std::endl;
+    return result;
 }
 
 bool content::isfinsh() {

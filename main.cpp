@@ -81,5 +81,5 @@ GameGloabalResouce::GameGloabalResouce() :m(map()),c(content(&m)),leve(0),contex
 void GameGloabalResouce::loadMainHandle() {
     context.setListener(draw_main);
     context.setListener(main_hand);
-    context.setInterval(5,mainstrick);
+    context.setInterval(1,mainstrick);
 }

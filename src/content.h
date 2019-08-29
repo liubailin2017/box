@@ -20,7 +20,7 @@ public:
     map* getmap();
     content(map *m);
     void display();
-    void actinput(direct d);
+    bool actinput(direct d);
     bool isfinsh();
     
     void pushm(int d);

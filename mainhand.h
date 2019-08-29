@@ -19,6 +19,9 @@ struct MainHandResouce{
     tool::queue<tool::pos> qpos;
     tool::bfs _bfs;
     tool::pos *path;
+    tool::queue<tool::pos> qpath;
+    int path_isend;
+    tool::pos Mouse_pre;
     MainHandResouce();
 };
 

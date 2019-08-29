@@ -88,6 +88,12 @@ class queue{
         else
             return t + (l+tmpsize+1) % tmpsize;
     }
+    T* _peekrear() {
+        if(isEmpty())
+            return nullptr;
+        else
+            return t + (r+tmpsize) % tmpsize;
+    }
 
     bool pop() {
         if(isEmpty()) {

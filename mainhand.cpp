@@ -25,10 +25,85 @@ MainHandResouce mainHandleRes;
 extern int _WIDTH;
 extern int _HEIGHT;
 extern GameGloabalResouce GloabalData;
+#include<math.h>
+int rounding(const float a){return (int) (a + 0.5);}
+int Putpixel(SDL_Surface *surface, int Px, int Py,Uint32 color)
+{
+    switch(surface->format->BytesPerPixel)
+    {
+    case 4 :
+    {
+        Uint32 *bufp;
+        if( Px < surface->pitch/4 && Px >= 0 &&
+                Py < surface->h && Py >= 0)
+        {
+            if(SDL_MUSTLOCK(surface))
+                if(SDL_LockSurface(surface) < 0)
+                    return 0;
+            bufp = (Uint32 *)surface->pixels + Px + Py * surface->pitch/4;
+            *bufp = color;
+            if(SDL_MUSTLOCK(surface))
+            {
+                SDL_UnlockSurface(surface);
+            }
+            return 1 ;    /*  ********** !è¿å ************/
+        }
+        else
+            return 0 ;
+    }
+    break;
+    default :
+        printf("Unsupported");
+    }
+    return 0;
+}
+void line(SDL_Surface *surface,int x0, int y0, int xEnd, int yEnd,Uint32 color,int width)
+{
+    int dx = xEnd - x0, dy = yEnd - y0, steps, k;
+    float xInc, yInc, x = (float)x0, y = (float)y0;
+    int wy = 1, wx = 1;
+    if(fabs(dx)>fabs(dy))
+    {
+        wy = width;
+         steps = fabs(dx);
+    }
+    else
+    {
+        wx = width;
+         steps = fabs(dy);
+    }
+ //   printf("x0:%d ,y0:%d x1:%d y1:%d ,steps:%d\n",x0,y0,xEnd,yEnd,steps);
+
+    xInc = (float)(dx)/(float)(steps);
+    yInc = (float)(dy)/(float)(steps);
+    Putpixel(surface,rounding(x),rounding(y),color);
+    for(k=0;k<steps;k++)
+    {
+         x += xInc;
+         y += yInc;
+         for(int i = 0; i<wx;i++)
+         {
+            for(int j = 0; j < wy ;j ++)
+            {
+                Putpixel(surface,rounding(x+i-wx/2),rounding(y+j-wy/2),color);
+            }
+         }
+    }
+}
 
 void draw_main(SDL_Surface *surface) {
-
-        SDLdraw_update();
+    SDLdraw_update();
+    tool::pos *cur = mainHandleRes.path;
+    tool::pos *p = NULL;
+    if(cur) p = cur->pre;
+    int bw = GloabalData.global_palette.getBoxW();
+    int bh = GloabalData.global_palette.getBoxH();
+    
+    while(p) {
+        line(surface,cur->x * bw+bw/2,cur->y*bh+bh/2,p->x*bw+bw/2,p->y*bh+bh/2,0xff00ff00,1);
+        cur = p;
+        p = p->pre;
+    }
 }
 
 bool hand_evet(const SDL_Event& event, SDLC_Component *cmp) {
@@ -143,12 +218,35 @@ bool main_hand(const SDL_Event& event,SDLC_Context *context) {
                 mainHandleRes.qpos.clean();
                 mainHandleRes.path = mainHandleRes._bfs.BFS(s,t,mainHandleRes.qpos);
                 //print(mainHandleRes.path,(char*)GloabalData.global_palette.getData(),w,h);
+                mainHandleRes.path_isend = false;
+                mainHandleRes.Mouse_pre.x = x;
+                mainHandleRes.Mouse_pre.y = y;
             }else if(event.button.button == 3){
                 GloabalData.c.back();
                 GloabalData.global_palette.reset();
                 GloabalData.c.display();
                 GloabalData.context.notifyUpdate(); 
             }
+        }
+        break;
+        case SDL_MOUSEBUTTONUP:
+            mainHandleRes.path_isend = true;
+        break;
+        case SDL_MOUSEMOTION:{
+            if(mainHandleRes.path_isend) break;
+            int boxw = GloabalData.global_palette.getBoxW();
+            int boxh = GloabalData.global_palette.getBoxH();
+            int x,y;
+            x = event.button.x/boxw;
+            y = event.button.y/boxh;
+            tool::pos mouse_cur;
+            mouse_cur.x = x; mouse_cur.y = y;
+            if(!(mainHandleRes.Mouse_pre == mouse_cur)) {
+                    mainHandleRes.Mouse_pre = mouse_cur;
+                    mainHandleRes.qpath.push(mouse_cur);
+                    std::cout << "postion:"<<mouse_cur.x<<","<<mouse_cur.y<<std::endl;
+            }
+
         }
         break;
         case SDL_QUIT: 
@@ -166,6 +264,11 @@ void mainstrick(SDLC_Component *cmp) {
     if(mainHandleRes.path && mainHandleRes.path->pre) {
         GloabalData.c.actinput((direct)mainHandleRes.path->pre->action(*(mainHandleRes.path)));
         mainHandleRes.path = mainHandleRes.path->pre;
+    }else if(!mainHandleRes.qpath.isEmpty()) {
+        tool::pos next = mainHandleRes.qpath.peek();
+        tool::pos cur = GloabalData.c._persion()->getPostion();
+        GloabalData.c.actinput((direct)next.action(cur));
+        mainHandleRes.qpath.pop();
     }
 
     if(GloabalData.c.isfinsh()){
@@ -209,5 +312,6 @@ void main_save() {
     }
 }
 
-MainHandResouce::MainHandResouce(): path(NULL){
+MainHandResouce::MainHandResouce(): path(NULL),path_isend(true){
 }
+
