@@ -60,4 +60,4 @@
 
 ### [windows](https://github.com/liubailin2017/box/releases/download/ver1.1-g/box-windows.zip)
 
-### [linux](https://github.com/liubailin2017/box/releases/download/ver1.1-g/box-linux.zip)
+### [linux](https://github.com/liubailin2017/box/releases/download/ver1.1-g/box-linux.tar)
