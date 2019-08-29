@@ -12,7 +12,7 @@
 
 ## 特征
 
-    在 [_maps.h](https://github.com/liubailin2017/box/blob/graph/src/_maps.h) 文件中编辑地图
+    在[_maps.h](https://github.com/liubailin2017/box/blob/graph/src/_maps.h)文件中编辑地图
 
 ## 演示
 
@@ -20,8 +20,9 @@
 
 ## 依赖
 
-    [SDL2](http://www.libsdl.org/download-2.0.php)
-    [SDL2_image](http://www.libsdl.org/projects/SDL_image/)
+### [SDL2](http://www.libsdl.org/download-2.0.php)
+
+### [SDL2_image](http://www.libsdl.org/projects/SDL_image/)
 
 ## 编译
 
@@ -57,5 +58,6 @@
 
 ## 下载
 
-    [windows](https://github.com/liubailin2017/box/releases/download/ver1.1-g/box-windows.zip)
-    [linux](https://github.com/liubailin2017/box/releases/download/ver1.1-g/box-linux.zip)
+### [windows](https://github.com/liubailin2017/box/releases/download/ver1.1-g/box-windows.zip)
+
+### [linux](https://github.com/liubailin2017/box/releases/download/ver1.1-g/box-linux.zip)
