@@ -177,6 +177,7 @@ bool main_hand(const SDL_Event& event,SDLC_Context *context) {
                     break;
             }
             
+            mainHandleRes.qpath.clean();
             mainHandleRes.path = NULL;
 
             if(GloabalData.c.isfinsh()){
@@ -225,7 +226,9 @@ bool main_hand(const SDL_Event& event,SDLC_Context *context) {
                 GloabalData.c.back();
                 GloabalData.global_palette.reset();
                 GloabalData.c.display();
-                GloabalData.context.notifyUpdate(); 
+                GloabalData.context.notifyUpdate();
+                mainHandleRes.path = NULL;
+                mainHandleRes.qpath.clean();
             }
         }
         break;
