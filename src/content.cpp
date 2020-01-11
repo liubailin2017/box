@@ -83,6 +83,7 @@ block* map::blocks(){
 void map::read(int d[]) {
     w=d[0];
     h=d[1];
+    printf("%d %d\n",w,h);
     if(b) delete[] b;
     b =(block*) new block[w*h];
     int offset = 2;

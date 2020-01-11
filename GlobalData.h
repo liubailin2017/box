@@ -27,11 +27,21 @@ class GameGloabalResouce{
     bool isq = false;
 
     SDLC_Context context;
-    int mleve;
 
+    struct {
+        int **bmap;
+        int cnt_map; //地图个数
+    }bmap;
+    /* 加载地图
+        这里可以加载默认的地图，也可从文件中加载
+    */
+    void bmapload();
     SDLC_Component topbar;
     void loadMainHandle();
     GameGloabalResouce();
 
 };
+
+extern GameGloabalResouce GloabalData;
+
 #endif

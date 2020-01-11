@@ -97,7 +97,7 @@ bool main_hand(const SDL_Event& event,SDLC_Context *context) {
                     GloabalData.c.back();
                     break;
                 case SDLK_PAGEUP:
-                    if(GloabalData.leve < GloabalData.mleve-1) { 
+                    if(GloabalData.leve < GloabalData.bmap.cnt_map-1) { 
                         ++GloabalData.leve;
                         loadleve(GloabalData.leve,GloabalData.c);
                     }
@@ -119,7 +119,7 @@ bool main_hand(const SDL_Event& event,SDLC_Context *context) {
             if(GloabalData.c.isfinsh()){
                 flag[GloabalData.leve] = '*';
                 GloabalData.leve++;
-                GloabalData.leve %= GloabalData.mleve;
+                GloabalData.leve %= GloabalData.bmap.cnt_map;
                 loadleve(GloabalData.leve,GloabalData.c);
             }
 
@@ -183,7 +183,7 @@ bool main_hand(const SDL_Event& event,SDLC_Context *context) {
             if(!(mainHandleRes.Mouse_pre == mouse_cur)) {
                     mainHandleRes.Mouse_pre = mouse_cur;
                     mainHandleRes.qpath.push(mouse_cur);
-                    std::cout << "postion:"<<mouse_cur.x<<","<<mouse_cur.y<<std::endl;
+                    //std::cout << "postion:"<<mouse_cur.x<<","<<mouse_cur.y<<std::endl;
             }
 
         }
@@ -213,7 +213,7 @@ void mainstrick(SDLC_Component *cmp) {
     if(GloabalData.c.isfinsh()){
         flag[GloabalData.leve] = '*';
         GloabalData.leve++;
-        GloabalData.leve %= GloabalData.mleve;
+        GloabalData.leve %= GloabalData.bmap.cnt_map;
         loadleve(GloabalData.leve,GloabalData.c);
     }
     
@@ -227,7 +227,7 @@ void mainstrick(SDLC_Component *cmp) {
 void loadleve(int leve,content &c) {
     std::string title;
     /*step 1 */
-    c.getmap()->read(_MAPS_def[leve]);
+    c.getmap()->read(GloabalData.bmap.bmap[leve]);
     /*step 2 */
     palette p(c.getmap()->_w(),c.getmap()->_h(),_WIDTH/c.getmap()->_w(),_HEIGHT/c.getmap()->_h());
     GloabalData.global_palette = p;
@@ -244,7 +244,6 @@ void main_init() {
         fread(flag,sizeof(flag),1,f);
         fclose(f);
     }
-    GloabalData.mleve = sizeof(_MAPS_def)/(_SIZE*sizeof(int));
 
 }
 
