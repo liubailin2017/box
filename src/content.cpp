@@ -25,20 +25,21 @@ void content::back() {
         _p()->pull();
     }
 }
+
 void content::init(){
     for(int i = 0; i< (m->_w())*(m->_h()); i++) {
-        m->blocks()[i].setContent(this);
-        if(m->blocks()[i].cover != nullptr && m->blocks()[i].cover->type() == PERSON){
+        m->blocks()[i].setContent(this); 
+        if(m->blocks()[i].cover != nullptr && m->blocks()[i].cover->type() == PERSON) {
             if(p) {
                 delete p;
                 //if(p->lay) delete  p;
             }
             p = (person *)(m->blocks()[i].cover);
-            std::cout<<"find person"<<std::endl;
         }
     }
     memery.clear();
 }
+
 content::content(map *m):m(m),p(NULL){
     init();
 }

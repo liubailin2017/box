@@ -46,7 +46,7 @@ int main(int argc,char* agrv[]) {
     loadleve(GloabalData.leve, GloabalData.c);
     GloabalData.global_palette.reset();
     GloabalData.c.display();
-
+    
     ticket = SDL_GetTicks();
     while (!GloabalData.isq)
     {
