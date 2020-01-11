@@ -97,8 +97,33 @@ void fromDef(int *len/* output */, int* **bmap /* output */) {
     }
     *len = _LEN;
 }
-void fromFile(int *len/* output */, int* **bmap /* output */) {
-
+#include<stdio.h>
+void fromFile(int* len/* output */, int* **bmap /* output */) {
+    FILE *fmap = fopen("map.txt","r");
+    if(!fmap) {
+       fromDef( len, bmap);
+       return ;
+    }
+    fscanf(fmap,"%d,",len);
+    *bmap = new int*[*len];
+    for(int i = 0; i< *len; i++) {
+        int w;
+        fscanf(fmap,"%d,",&w);
+        int h;
+        fscanf(fmap,"%d,",&h);
+        (*bmap)[i] = new int[w*h+2];
+        (*bmap)[i][0] = w;
+        (*bmap)[i][1] = h;
+        for(int j = 0 ;j < w*h; j++) {
+            int t;
+            if(j%w == 0) printf("\n"); 
+            fscanf(fmap,"%d,",&t);
+            (*bmap)[i][j+2] = t;
+            printf("%d,",t);
+         
+        }
+    }
+    fclose(fmap);
 }
 
 void GameGloabalResouce::bmapload() {
@@ -110,6 +135,7 @@ void GameGloabalResouce::bmapload() {
         bmap.bmap = nullptr;
         bmap.cnt_map = 0;
     }
-    fromDef(&bmap.cnt_map,&bmap.bmap);
-  
+    //fromDef(&bmap.cnt_map,&bmap.bmap);
+    fromFile(&bmap.cnt_map,&bmap.bmap);
+    
 }
