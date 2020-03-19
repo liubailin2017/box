@@ -1,5 +1,5 @@
 ## c++推箱子
-
+[图形界面版](https://github.com/liubailin2017/box/tree/graph)
 ## 编译
 没编写makefile 请直接用命令编译
 
