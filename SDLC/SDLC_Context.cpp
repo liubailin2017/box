@@ -162,7 +162,7 @@ void SDLC_Context::update(SDL_Window *w) {
 }
 void SDLC_Context::update() {
         if(!(surface = SDL_GetWindowSurface(window))) {
-            SDLC_LOG_.notice(_2C "SDLC_Context:surface is null");
+            SDLC_LOG_.notice(_2C "SDLC_Context(update()):surface is null");
             width = 0;
             height = 0;
             return ;

@@ -5,7 +5,11 @@
 class SDLC_Component;
 
 class SDLC_Context;
+/* 
+事件处理回调
+*/
 typedef bool (*HandleFun)(const SDL_Event &event,SDLC_Context *context);
+
 typedef void (*UpdateBg)(SDL_Surface* surface);
 class SDLC_Context {
 private :
@@ -23,28 +27,46 @@ private :
     SDLC_Component *focusCmp;
     UpdateBg updateBg;
     HandleFun onhandle;
+
     StrickHandler strickHandler;
+
     int interval;
     int intervalc;
+
 public:
+
     int generateId();
     bool fliterEvent(const SDL_Event& event);
+    
+    /* 事件分发给字控件 */
     bool dispatch(const SDL_Event& event);
     void update(SDL_Window *w);
     void update();
 
+    /*  添加组件 */
     SDLC_Component* addComponent(SDLC_Component *component);
     SDLC_Component *findById(int id);
     SDLC_Component *removeById(int id);
+    /* 设置主要的处理监听 */
     void setListener(HandleFun handler);
+    /* 设置更新背景时的监听 */
     void setListener(UpdateBg handler);
+
+    /* 设置定时调用函数 
+    每调用i次strick() 回调一次 h回调函数 */
     void setInterval(int i,StrickHandler h);
 
+    /* 驱动时钟 */
+    void strick();
+
     SDLC_Context(SDL_Window *w);
+
     void notifyUpdate();
+
     void updateWindow();
 
-    void strick();
+
+
     friend class SDLC_Component;
 };
 

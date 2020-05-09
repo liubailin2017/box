@@ -39,7 +39,7 @@ class GameGloabalResouce{
     SDLC_Component topbar;
     void loadMainHandle();
     GameGloabalResouce();
-
+    void changeHandle(int id);
 };
 
 extern GameGloabalResouce GloabalData;

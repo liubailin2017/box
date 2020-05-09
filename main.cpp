@@ -29,7 +29,7 @@ GameGloabalResouce GloabalData;
 
 
 #include"mainhand.h"
-
+#include"snakehand.h"
 int main(int argc,char* agrv[]) {
     int ticket ;
 
@@ -41,6 +41,7 @@ int main(int argc,char* agrv[]) {
                                     _WIDTH,_HEIGHT,
                                     SDL_WINDOW_RESIZABLE|SDL_WINDOW_SHOWN);
     main_init();
+    snake_init();
     GloabalData.loadMainHandle();
     SDL_Event event;
     loadleve(GloabalData.leve, GloabalData.c);
@@ -52,7 +53,7 @@ int main(int argc,char* agrv[]) {
     {
         while(SDL_PollEvent(&event)) {
             GloabalData.context.dispatch(event);
-            if(event.type==SDL_KEYDOWN) break;
+            
         }
 
         int t = SDL_GetTicks();
@@ -76,12 +77,35 @@ GameGloabalResouce::GameGloabalResouce() :m(map()),c(content(&m)),leve(0),contex
     topbar.setListener(hand_evet);
     context.addComponent(&topbar);
     bmapload();
-}
 
+}
+#include"snakehand.h"
 void GameGloabalResouce::loadMainHandle() {
     context.setListener(draw_main);
     context.setListener(main_hand);
     context.setInterval(1,mainstrick);
+    // snake_init();
+    // context.setListener(snake_draw_main);
+    // context.setListener(snake_main_hand);
+    // context.setInterval(10,snake_strick);
+}
+
+void GameGloabalResouce::changeHandle(int id) {
+    switch (id)
+    {
+    case 1:
+        context.setListener(draw_main);
+        context.setListener(main_hand);
+        context.setInterval(1,mainstrick);
+        break;
+    case 2:
+        context.setListener(snake_draw_main);
+        context.setListener(snake_main_hand);
+        context.setInterval(10,snake_strick);
+    break;
+    default:
+        break;
+    }
 }
 
 #include"src/_maps.h"

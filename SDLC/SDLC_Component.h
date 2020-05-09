@@ -60,12 +60,15 @@ public:
     Uint32 getBgcolor();
     void setMovable(bool v);
     void setRaise(bool v);
+    
+    void strick();
     void setInterval(int i,StrickHandler h);
     void setListener(Handler handler);
+
     void setOutHandler(OutHandler outHandler);
     void setInHandler(InHandler outHandler);
 
-    void strick();
+
     int getId();
     /* api */
     bool fliterEvent(const SDL_Event& event) ;

@@ -26,12 +26,14 @@ struct MainHandResouce{
 };
 
 extern MainHandResouce mainHandleRes;
+/* 添加模块只需要实现下面3个函数 */
+void draw_main(SDL_Surface *surface);
+bool main_hand(const SDL_Event& event, SDLC_Context *context);
+void mainstrick(SDLC_Component *cmp);
 
 void main_init();
 void main_save();
 void loadleve(int leve,content &c);
-void draw_main(SDL_Surface *surface);
 bool hand_evet(const SDL_Event& event, SDLC_Component *cmp) ;
-bool main_hand(const SDL_Event& event, SDLC_Context *context);
-void mainstrick(SDLC_Component *cmp);
+
 #endif

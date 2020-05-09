@@ -42,25 +42,6 @@ void draw_main(SDL_Surface *surface) {
     }
 }
 
-bool hand_evet(const SDL_Event& event, SDLC_Component *cmp) {
-    switch (event.type)
-    {
-        case SDL_MOUSEBUTTONDOWN:
-            cmp->raise();
-            break;
-        default:
-            break;
-    }
-    return true;
-}
-void print(tool::pos *s,char *map,int _W,int _H) {
-    if(!s) printf("null\n");
-    while(s) {
-        printf("(%d,%d)->",s->x,s->y);
-        s= s->pre;
-    }
-    printf("\n");
-}
 bool main_hand(const SDL_Event& event,SDLC_Context *context) {
     switch (event.type) {            
         case SDL_WINDOWEVENT:
@@ -108,6 +89,9 @@ bool main_hand(const SDL_Event& event,SDLC_Context *context) {
                         loadleve(GloabalData.leve,GloabalData.c);
                     }
                     break;
+                case SDLK_TAB:
+                    GloabalData.changeHandle(2);
+                break;
                     default:
                     
                     break;
@@ -223,6 +207,26 @@ void mainstrick(SDLC_Component *cmp) {
 }
 
 
+
+bool hand_evet(const SDL_Event& event, SDLC_Component *cmp) {
+    switch (event.type)
+    {
+        case SDL_MOUSEBUTTONDOWN:
+            cmp->raise();
+            break;
+        default:
+            break;
+    }
+    return true;
+}
+void print(tool::pos *s,char *map,int _W,int _H) {
+    if(!s) printf("null\n");
+    while(s) {
+        printf("(%d,%d)->",s->x,s->y);
+        s= s->pre;
+    }
+    printf("\n");
+}
 
 void loadleve(int leve,content &c) {
     std::string title;

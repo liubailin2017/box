@@ -13,18 +13,18 @@ extern bool isContain(int x ,int y,int rx,int ry, int rw,int rh);
 bool SDLC_Component::defaultmouseButtonHandler(const SDL_Event& event,SDLC_Component *cmp) {
 
     if(mouseButtonHandler &&  mouseButtonHandler(event,this)) {
-    if(event.type == SDL_MOUSEBUTTONDOWN) {
-        std::cout <<"DOWN id:"<<cmp->getId()<<std::endl;
-    }
-    if(event.type == SDL_MOUSEBUTTONUP) { 
-        std::cout <<"UP id:"<<cmp->getId()<<std::endl;
-    }
-    // if(event.type == SDL_MOUSEMOTION) {
-    //    std::cout << "MOTION ID:"<< cmp->getId() <<std::endl;
-    // }
+        if(event.type == SDL_MOUSEBUTTONDOWN) {
+            std::cout <<"DOWN id:"<<cmp->getId()<<std::endl;
+        }
+        if(event.type == SDL_MOUSEBUTTONUP) { 
+            std::cout <<"UP id:"<<cmp->getId()<<std::endl;
+        }
+        // if(event.type == SDL_MOUSEMOTION) {
+        //    std::cout << "MOTION ID:"<< cmp->getId() <<std::endl;
+        // }
         return true;
     }else {
-        return false;
+        return true;
     }
 }
 

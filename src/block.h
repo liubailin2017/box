@@ -15,7 +15,7 @@ protected:
     block *rear;
 
     block *lay;
-    block *cover;
+    block *cover; 
 public:
 
     block();
