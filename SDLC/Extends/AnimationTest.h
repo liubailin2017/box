@@ -8,5 +8,7 @@ public:
     int cur;
     virtual void updateSurface();
     AnimationTest(SDLC_Context *context);
+    virtual void defaultStrickHandler(SDLC_Component *cmp);
+
     friend void animation(SDLC_Component *cmp);
 };

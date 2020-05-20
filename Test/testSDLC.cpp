@@ -3,6 +3,7 @@
 #include<stdio.h>
 #include<SDL2/SDL.h>
 #include<SDL2/SDL_image.h>
+
 #include<math.h>
 
 int _WIDTH =960;
@@ -11,7 +12,8 @@ int _HEIGHT =640;
 #include "SDLC_log.h"
 #include "SDLC_Context.h"
 #include "SDLC_Component.h"
-#include "Extends/Image.h"
+#include "Extends/SDLC_Button.h"
+#include "Extends/AnimationTest.h"
 bool onmove(const SDL_Event &event,SDLC_Component *cmp) {
 
      switch (event.type)
@@ -32,6 +34,8 @@ int main(int argc,char* agrv[]) {
     int ticket ;
 
     SDL_Init(SDL_INIT_EVERYTHING);
+    IMG_Init(IMG_INIT_PNG);
+    
     SDL_Window* global_w = SDL_CreateWindow("hello,world",
                                     SDL_UNSUPPORTED,SDLK_UNDERSCORE,
                                     _WIDTH,_HEIGHT,
@@ -41,12 +45,12 @@ int main(int argc,char* agrv[]) {
 
 
      for(int i = 0; i < 3; i++) {
-          SDLC_Component *sdlc_i = new SDLC_Component(&context,0,0,100,100,0xff00ff00);
- 
+          SDLC_Component *sdlc_i = new SDLC_Button(&context,i*120,50,100,50,0xff00ff00);
           sdlc_i->setMovable(true);
-          context.addComponent(sdlc_i);
+        context.addComponent(sdlc_i);
 
      }
+
 
     SDL_Event event;
     ticket = SDL_GetTicks();

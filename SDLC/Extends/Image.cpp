@@ -2,11 +2,8 @@
 #include "SDL2/SDL_image.h"
 
 #include"iostream"
-void Image::ondraw(SDL_Surface* surface) {
-}
 
 void Image::updateSurface() { 
-    setSize(200,200);
     SDLC_Component::updateSurface();
 
     if(img) {

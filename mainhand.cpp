@@ -16,7 +16,7 @@ MainHandResouce mainHandleRes;
 
 #include"SDLdraw/palette.h"
 #include"SDLdraw/drawlist.h"
-#include"SDLdraw/sdltool.h"
+#include"SDLC/sdltool.h"
 
 #include"GlobalData.h"
 

@@ -35,6 +35,7 @@ int main(int argc,char* agrv[]) {
 
     SDL_Init(SDL_INIT_EVERYTHING);
     IMG_Init(IMG_INIT_PNG);
+    
     drawlist_init_img();
     GloabalData.global_w= SDL_CreateWindow("hello,world",
                                     SDL_UNSUPPORTED,SDLK_UNDERSCORE,
@@ -75,7 +76,7 @@ int main(int argc,char* agrv[]) {
 GameGloabalResouce::GameGloabalResouce() :m(map()),c(content(&m)),leve(0),context(SDLC_Context(NULL)),topbar(SDLC_Component(&context,0,0,_WIDTH,_HEIGHT/10,0x7712ff55)) {
     topbar.setMovable(true);
     topbar.setListener(hand_evet);
-    context.addComponent(&topbar);
+//    context.addComponent(&topbar);
     bmapload();
 
 }

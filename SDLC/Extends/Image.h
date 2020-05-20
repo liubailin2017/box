@@ -7,8 +7,6 @@ class Image : public SDLC_Component
 private:
   SDL_Surface *img;
 public:
-
-    virtual void ondraw(SDL_Surface* surface);
     virtual void updateSurface();
     Image(SDLC_Context *context);
     Image(SDLC_Context *context,int w,int d);

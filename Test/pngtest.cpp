@@ -28,7 +28,7 @@ int main(int argc,char* agrv[]) {
     };
     SDL_Window *w = SDL_CreateWindow("Box",
                                     SDL_UNSUPPORTED,SDLK_UNDERSCORE,
-                                    320,240,
+                                    640,320,
                                     SDL_WINDOW_ALLOW_HIGHDPI);
     SDL_ShowWindow(w);
 
@@ -47,16 +47,19 @@ int main(int argc,char* agrv[]) {
            
     SDL_Event event;
 
-    SDL_Surface* surface = SDL_CreateRGBSurface(0,320,240,32,rmask,gmask,bmask,amask); 
-    SDL_SetSurfaceBlendMode(bg,SDL_BLENDMODE_BLEND);
+    SDL_Surface* surface = SDL_CreateRGBSurface(0,640,320,32,rmask,gmask,bmask,amask); 
+    // SDL_SetSurfaceBlendMode(bg,SDL_BLENDMODE_BLEND);
     
-    SDL_SetSurfaceBlendMode(surface,SDL_BLENDMODE_BLEND);
+    // SDL_SetSurfaceBlendMode(surface,SDL_BLENDMODE_BLEND);
 
-    // for(int i = 0; i< 320*240; i++) {
+    // for(int i = 0; i< 640*320; i++) {
     //     ((Uint32 *)surface->pixels)[i] = 0xFF0000FF;
     // }
 
     if(SDL_BlitScaled(bg,NULL,surface,NULL)) {
+        std::cout<<"2"<<SDL_GetError()<<std::endl;
+    };
+    if(SDL_BlitScaled(prs,&src,surface,&trg)) {
         std::cout<<"2"<<SDL_GetError()<<std::endl;
     };
     

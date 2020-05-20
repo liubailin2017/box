@@ -3,6 +3,7 @@
 #include"SDLC_Component.h"
 #include"SDLC_Context.h"
 #include"SDLC_log.h"
+
 static int    rmask = 0x000000ff;
 static int    gmask = 0x0000ff00;
 static int    bmask = 0x00ff0000;
@@ -12,13 +13,19 @@ extern bool isContain(int x ,int y,int rx,int ry, int rw,int rh);
 
 bool SDLC_Component::defaultmouseButtonHandler(const SDL_Event& event,SDLC_Component *cmp) {
 
-    if(mouseButtonHandler &&  mouseButtonHandler(event,this)) {
+    if(canRaise == true) { 
         if(event.type == SDL_MOUSEBUTTONDOWN) {
-            std::cout <<"DOWN id:"<<cmp->getId()<<std::endl;
+            raise();
         }
-        if(event.type == SDL_MOUSEBUTTONUP) { 
-            std::cout <<"UP id:"<<cmp->getId()<<std::endl;
-        }
+    }
+
+    if(mouseButtonHandler &&  mouseButtonHandler(event,this)) {
+        // if(event.type == SDL_MOUSEBUTTONDOWN) {
+        //     std::cout <<"DOWN id:"<<cmp->getId()<<std::endl;
+        // }
+        // if(event.type == SDL_MOUSEBUTTONUP) { 
+        //     std::cout <<"UP id:"<<cmp->getId()<<std::endl;
+        // }
         // if(event.type == SDL_MOUSEMOTION) {
         //    std::cout << "MOTION ID:"<< cmp->getId() <<std::endl;
         // }
@@ -29,7 +36,7 @@ bool SDLC_Component::defaultmouseButtonHandler(const SDL_Event& event,SDLC_Compo
 }
 
 void SDLC_Component::defaultOutHandler(SDLC_Component *cmp) {
-    std::cout << "out of ID:"<< cmp->getId() <<std::endl;
+    std::cout << "out  ID:"<< cmp->getId() <<std::endl;
     if(cmp->outHandler) outHandler(cmp);
 }
 
@@ -56,10 +63,21 @@ void SDLC_Component::setMovable(bool v) {
 void SDLC_Component::setRaise(bool v) {
     canRaise = v;
 }
+
 void SDLC_Component::setbgcolor(Uint32 bg) {
     this ->bgcolor = bg;
+    if(SDL_MUSTLOCK(surface)) {
+        SDL_LockSurface(surface);
+    }
+    for(int i = 0; i< surface->w*surface->h; i++) {
+        *((Uint32*)(surface->pixels)+i) = bgcolor;
+    }
+    if(SDL_MUSTLOCK(surface)) {
+        SDL_UnlockSurface(surface);
+    }
     context->notifyUpdate();
 }
+
 Uint32 SDLC_Component::getBgcolor() {
     return bgcolor;
 }
@@ -84,26 +102,26 @@ int SDLC_Component::aby() {
 
 bool SDLC_Component::dispatch(const SDL_Event& event) {
 
-    if(brother) {
+    if(brother) { /* 先交给兄弟结点 */
         if(brother -> dispatch(event)) {
             return true;
         }
     }
-
-    if(child ) {
+    
+    if(child && fliterEvent(event)) { /*兄弟结点没有处理 交给子结点 */
         if(child -> dispatch(event)) {
             return true;
         }
     }
 
-    if(fliterEvent(event) && handleEvent(event)) {
+    if(1 == fliterEvent(event) && handleEvent(event)) { /* 所有结点没有处理 判断是否本结点处理 */
         return true;
     }
 
     return false;
 }
 
-bool SDLC_Component::fliterEvent(const SDL_Event& event) {
+int SDLC_Component::fliterEvent(const SDL_Event& event) {
     int bx = 0,by = 0;
     int tx = 0,ty = 0;
     Uint32 *bufp = NULL;
@@ -116,13 +134,17 @@ bool SDLC_Component::fliterEvent(const SDL_Event& event) {
         if(isContain(bx,by,tx,ty,width,height)) {
             bufp = (Uint32 *)surface->pixels + (bx-tx) + (by-ty) * surface->pitch/4;
             if(*bufp & 0xff000000) {
-                return true;
+                upLock = event.button.button;
+                return 1;
+            }else  {
+                return 2; /* 当前点为透明 */
             }
         }
     }
 
     if(event.type == SDL_MOUSEBUTTONUP && upLock == event.button.button) {
-        return true;
+        upLock = 0;
+        return 1;
     }
 
     if(event.type == SDL_MOUSEMOTION ) {
@@ -133,22 +155,22 @@ bool SDLC_Component::fliterEvent(const SDL_Event& event) {
         if(isContain(bx,by,tx,ty,width,height)) {
             bufp = (Uint32 *)surface->pixels + (bx-tx) + (by-ty) * surface->pitch/4;
             if(*bufp & 0xff000000) {
-                return true;
+                return 1;
             }
         }
     }
 
-    return false;
+    return 0;
 }
 
 bool SDLC_Component::handleEvent(const SDL_Event& event) {
     
-    if(defaultmouseButtonHandler(event,this)) {
+    if(defaultmouseButtonHandler(event,this)) { /* 交给默认鼠标事件处理器 */
 
         if(event.type == SDL_MOUSEMOTION) {
             // out event 
-            SDLC_Component *t = context->curCmp;
-            if(t) {
+            SDLC_Component *t = context->curCmp; 
+            if(t) { 
                 while(t && ! t->findById(id)){
                     t->defaultOutHandler(t);
                     t = t->header()->parent;
@@ -158,17 +180,6 @@ bool SDLC_Component::handleEvent(const SDL_Event& event) {
             t = context->curCmp;
             SDLC_Component * t_ = this;
             while(t_) {
-                /*
-                if(t){
-                    if(! t_->findById(t->id)) {         
-                        break;
-                    }else {
-                        if(t->inHandler) t->inHandler(t);
-                    }
-                }else {
-                      if(t->inHandler) t->inHandler(t);
-                }
-                */
                 if(t && t_->findById(t->id)) {       
                     break;
                 }else {
@@ -187,13 +198,6 @@ bool SDLC_Component::handleEvent(const SDL_Event& event) {
             }
         }
 
-        if(event.type == SDL_MOUSEBUTTONDOWN) {
-            upLock = event.button.button;
-        }
-
-        if(event.type == SDL_MOUSEBUTTONUP) {
-            upLock = 0;
-        }
 
         return true;
     }
@@ -258,16 +262,9 @@ SDLC_Component* SDLC_Component::header()
 
 
 
+
 void SDLC_Component::updateSurface() {
-    if(SDL_MUSTLOCK(surface)) {
-        SDL_LockSurface(surface);
-    }
-    for(int i = 0; i< surface->w*surface->h; i++) {
-        *((Uint32*)(surface->pixels)+i) = bgcolor;
-    }
-    if(SDL_MUSTLOCK(surface)) {
-        SDL_UnlockSurface(surface);
-    }
+    setbgcolor(bgcolor);
 }
 
 void SDLC_Component::setPostion(int x,int y) {
@@ -395,13 +392,14 @@ void SDLC_Component::strick() {
         tmp->strick();
         tmp = tmp->brother;
     }
-    if(interval == 0)
-        return;
-    if(!intervalc) {    
+
+    if(0 == intervalc) {    
         defaultStrickHandler(this);
+    }    
+    if(interval != 0) {
+        intervalc += 1;
+        intervalc %= interval; 
     }
-    intervalc += 1;
-    intervalc %= interval;
 }
 
 void SDLC_Component::raise() {
