@@ -12,7 +12,7 @@ int _HEIGHT =640;
 #include "SDLC/SDLC_Context.h"
 #include "SDLC/SDLC_Component.h"
 #include "SDLC/Extends/Image.h"
-
+#include "SDLC/Extends/SDLC_Button.h"
 #include"src/base.h"
 #include"src/block.h"
 #include"src/person.h"
@@ -25,7 +25,7 @@ int _HEIGHT =640;
 
 #include"GlobalData.h"
 
-GameGloabalResouce GloabalData;
+GameGloabalResouce GloabalData; /* 全局变量初始化 */
 
 
 #include"mainhand.h"
@@ -33,14 +33,10 @@ GameGloabalResouce GloabalData;
 int main(int argc,char* agrv[]) {
     int ticket ;
 
-    SDL_Init(SDL_INIT_EVERYTHING);
-    IMG_Init(IMG_INIT_PNG);
+
     
     drawlist_init_img();
-    GloabalData.global_w= SDL_CreateWindow("hello,world",
-                                    SDL_UNSUPPORTED,SDLK_UNDERSCORE,
-                                    _WIDTH,_HEIGHT,
-                                    SDL_WINDOW_RESIZABLE|SDL_WINDOW_SHOWN);
+
     main_init();
     snake_init();
     GloabalData.loadMainHandle();
@@ -71,42 +67,6 @@ int main(int argc,char* agrv[]) {
     SDL_DestroyWindow(GloabalData.global_w);
     main_save();
     return 0;
-}
-
-GameGloabalResouce::GameGloabalResouce() :m(map()),c(content(&m)),leve(0),context(SDLC_Context(NULL)),topbar(SDLC_Component(&context,0,0,_WIDTH,_HEIGHT/10,0x7712ff55)) {
-    topbar.setMovable(true);
-    topbar.setListener(hand_evet);
-//    context.addComponent(&topbar);
-    bmapload();
-
-}
-#include"snakehand.h"
-void GameGloabalResouce::loadMainHandle() {
-    context.setListener(draw_main);
-    context.setListener(main_hand);
-    context.setInterval(1,mainstrick);
-    // snake_init();
-    // context.setListener(snake_draw_main);
-    // context.setListener(snake_main_hand);
-    // context.setInterval(10,snake_strick);
-}
-
-void GameGloabalResouce::changeHandle(int id) {
-    switch (id)
-    {
-    case 1:
-        context.setListener(draw_main);
-        context.setListener(main_hand);
-        context.setInterval(1,mainstrick);
-        break;
-    case 2:
-        context.setListener(snake_draw_main);
-        context.setListener(snake_main_hand);
-        context.setInterval(10,snake_strick);
-    break;
-    default:
-        break;
-    }
 }
 
 #include"src/_maps.h"
@@ -149,6 +109,75 @@ void fromFile(int* len/* output */, int* **bmap /* output */) {
         }
     }
     fclose(fmap);
+}
+#include"menu_event.h"
+GameGloabalResouce::GameGloabalResouce():global_w(SDL_CreateWindow("hello,world",
+                                        SDL_UNSUPPORTED,SDLK_UNDERSCORE,
+                                        _WIDTH,_HEIGHT,
+                                        SDL_WINDOW_RESIZABLE|SDL_WINDOW_SHOWN)),
+                                    isInit(SDLC_Init()),
+                                    context(SDLC_Context(global_w)),
+                                    topbar(Toolbar(&context)),
+                                    m(map()),
+                                    c(content(&m)),
+                                    leve(0),
+                                    isq(false),img_help(Helpbar(&context))
+{
+  
+    context.addComponent(&topbar);
+    SDLC_Component *sc = new SDLC_Button(&context,"重新开始",0xff223355);
+    sc->setListener(&event_replay_level);
+    topbar.addComponent(sc);
+    sc = new SDLC_Button(&context,"上一关",0xff223355);
+    sc->setListener(&event_pre_level); 
+    topbar.addComponent(sc);
+    sc = new SDLC_Button(&context,"下一关",0xff223355);  
+    sc->setListener(&event_next_level);
+    topbar.addComponent(sc);
+    sc = new SDLC_Button(&context,"地图编辑器",0x22333333);
+    topbar.addComponent(sc);
+    sc = new SDLC_Button(&context,"帮助",0xff009922);  
+    sc->setListener(&event_help);
+    topbar.addComponent(sc);
+    sc = new SDLC_Button(&context,"切换游戏",0xff993322);  
+    sc->setListener(&event_change_game);
+    topbar.addComponent(sc);
+    sc = new SDLC_Button(&context," ",0xff000000);  
+    topbar.addComponent(sc);
+    sc = new SDLC_Button(&context,"后退一步",0xff33ff22);  
+    sc->setListener(&event_back);
+    topbar.addComponent(sc);
+    bmapload();
+    context.addComponent(&img_help); 
+}
+ 
+#include"snakehand.h"
+void GameGloabalResouce::loadMainHandle() {
+    context.setListener(draw_main);
+    context.setListener(main_hand);
+    context.setInterval(1,mainstrick);
+    // snake_init();
+    // context.setListener(snake_draw_main);
+    // context.setListener(snake_main_hand);
+    // context.setInterval(10,snake_strick);
+}
+
+void GameGloabalResouce::changeHandle(int id) {
+    switch (id)
+    {
+    case 1:
+        context.setListener(draw_main);
+        context.setListener(main_hand);
+        context.setInterval(1,mainstrick);
+        break;
+    case 2:
+        context.setListener(snake_draw_main);
+        context.setListener(snake_main_hand);
+        context.setInterval(10,snake_strick);
+    break;
+    default:
+        break;
+    }
 }
 
 void GameGloabalResouce::bmapload() {

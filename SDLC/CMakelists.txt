@@ -7,7 +7,7 @@ include_directories(D:/lib/SDL2_image-2.0.5/i686-w64-mingw32/include)
 include_directories(D:/lib/SDL2-2.0.10/i686-w64-mingw32/include)
 include_directories(D:/lib/SDL2_image-2.0.5/i686-w64-mingw32/include/SDL2)
 include_directories(D:/lib/SDL2-2.0.10/i686-w64-mingw32/include/SDL2)
-include_directories(D:/lib/SDL2_ttf/i686-w64-mingw32/include/SDL2)
+include_directories(D:/lib/SDL2_ttf/i686-w64-mingw32/include)
 
 file(GLOB_RECURSE SDLC_source "./*.cpp" "../Extends/*.cpp")
 

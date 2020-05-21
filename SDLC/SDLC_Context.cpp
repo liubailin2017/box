@@ -2,6 +2,17 @@
 #include"SDLC_Component.h"
 #include"SDLC_log.h"
 #include"iostream"
+#include<SDL2/SDL.h>
+#include<SDL2/SDL_image.h>
+#include<SDL2/SDL_ttf.h>
+
+bool SDLC_Init() {
+    SDL_Init(SDL_INIT_EVERYTHING);
+    IMG_Init(IMG_INIT_PNG);
+    TTF_Init();
+    return true;
+}
+
 bool isContain(int x ,int y,int rx,int ry, int rw,int rh) { 
     if(x > rx && x < rx + rw && y > ry && y < ry + rh) {
         return true;
@@ -78,6 +89,12 @@ bool SDLC_Context::dispatch(const SDL_Event& event) {
     return false;
 }
 
+int SDLC_Context::getWidth() {
+    return width;
+}
+int SDLC_Context::getHeight() {
+    return height;
+}
 
 int SDLC_Context::generateId() {
     return cid++;
@@ -211,6 +228,7 @@ void SDLC_Context::updateWindow() {
 void SDLC_Context::notifyUpdate() {
     shouldRepatint = true;
 }
+
 void SDLC_Context::strick() {
     SDLC_Component *tmp = components;
     while(tmp) {

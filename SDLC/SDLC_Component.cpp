@@ -122,10 +122,13 @@ bool SDLC_Component::dispatch(const SDL_Event& event) {
 }
 
 int SDLC_Component::fliterEvent(const SDL_Event& event) {
+
+    if(!isvisible) return 0;
+
     int bx = 0,by = 0;
     int tx = 0,ty = 0;
     Uint32 *bufp = NULL;
-
+    
     if(event.type == SDL_MOUSEBUTTONDOWN) {
         bx = event.button.x;
         by = event.button.y;
@@ -218,7 +221,6 @@ void SDLC_Component::setListener(Handler handler) {
 
 void SDLC_Component::display() {
     updateSurface();
-//  ondraw(surface);
     SDLC_Component *tmp = this->child;
     while(tmp) {
         tmp->display();
@@ -261,8 +263,6 @@ SDLC_Component* SDLC_Component::header()
 }
 
 
-
-
 void SDLC_Component::updateSurface() {
     setbgcolor(bgcolor);
 }
@@ -279,6 +279,7 @@ void SDLC_Component::setSize(int width,int height) {
     SDL_SetSurfaceBlendMode(surface,SDL_BLENDMODE_BLEND);
     this->width = width;
     this->height = height;
+    updateSurface();
     context->notifyUpdate();
     SDL_FreeSurface(tmp);
 }

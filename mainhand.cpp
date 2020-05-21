@@ -49,9 +49,7 @@ bool main_hand(const SDL_Event& event,SDLC_Context *context) {
         {
             case SDL_WINDOWEVENT_RESIZED:
                         _WIDTH = event.window.data1;
-                        _HEIGHT = event.window.data2;
-                        GloabalData.topbar.setSize(_WIDTH,_HEIGHT/10);
-                        GloabalData.topbar.setPostion(0,0);
+                        _HEIGHT = event.window.data2; 
                         GloabalData.global_palette.setsize(_WIDTH/ GloabalData.m._w(),_HEIGHT/ GloabalData.m._h());
                         break;
             default:
@@ -89,9 +87,7 @@ bool main_hand(const SDL_Event& event,SDLC_Context *context) {
                         loadleve(GloabalData.leve,GloabalData.c);
                     }
                     break;
-                case SDLK_TAB:
-                    GloabalData.changeHandle(2);
-                break;
+
                     default:
                     
                     break;
@@ -208,17 +204,6 @@ void mainstrick(SDLC_Component *cmp) {
 
 
 
-bool hand_evet(const SDL_Event& event, SDLC_Component *cmp) {
-    switch (event.type)
-    {
-        case SDL_MOUSEBUTTONDOWN:
-            cmp->raise();
-            break;
-        default:
-            break;
-    }
-    return true;
-}
 void print(tool::pos *s,char *map,int _W,int _H) {
     if(!s) printf("null\n");
     while(s) {

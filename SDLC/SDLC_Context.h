@@ -34,13 +34,20 @@ private :
     int intervalc;
 
 public:
+    SDLC_Context(SDL_Window *w);
 
+    int getWidth();
+    int getHeight();
+    
     int generateId();
     bool fliterEvent(const SDL_Event& event);
     
     /* 事件分发给字控件 */
     bool dispatch(const SDL_Event& event);
+
+    /* 更新上下文的 window */
     void update(SDL_Window *w);
+    /* 更新 width height 以及surface 用于在窗口大小变更时调用 */
     void update();
 
     /*  添加组件 */
@@ -59,8 +66,6 @@ public:
     /* 驱动时钟 */
     void strick();
 
-    SDLC_Context(SDL_Window *w);
-
     void notifyUpdate();
 
     void updateWindow();
@@ -69,5 +74,5 @@ public:
 
     friend class SDLC_Component;
 };
-
+bool SDLC_Init();
 #endif

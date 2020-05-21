@@ -3,7 +3,7 @@
 
 #include"iostream"
 
-void Image::updateSurface() { 
+void SDLC_Image::updateSurface() { 
     SDLC_Component::updateSurface();
 
     if(img) {
@@ -11,7 +11,8 @@ void Image::updateSurface() {
     }
 }
 
-void Image::load(char name[]) {
+void SDLC_Image::load(char name[]) {
+    if(img) SDL_free(img);
     img = IMG_Load(name);
     if(!img) {
        std::cout << IMG_GetError() << std::endl;
@@ -22,7 +23,12 @@ void Image::load(char name[]) {
 }
 
 
-Image::Image(SDLC_Context *context):Image(context,0,0) { }
-Image::Image(SDLC_Context *context,int w,int d):Image(context,0,0,w,d){}
-Image::Image(SDLC_Context *context,int x,int y,int w,int d):Image(context,x,y,w,d,0x00000000){}
-Image::Image(SDLC_Context *context,int x,int y,int w,int d,Uint32 bg):SDLC_Component(context,x,y,w,d,bg){};
+SDLC_Image::SDLC_Image(SDLC_Context *context):SDLC_Image(context,0,0) { }
+SDLC_Image::SDLC_Image(SDLC_Context *context,int w,int d):SDLC_Image(context,0,0,w,d){}
+SDLC_Image::SDLC_Image(SDLC_Context *context,int x,int y,int w,int d):SDLC_Image(context,x,y,w,d,0x00000000){}
+SDLC_Image::SDLC_Image(SDLC_Context *context,int x,int y,int w,int d,Uint32 bg):SDLC_Component(context,x,y,w,d,bg),img(NULL){};
+
+SDLC_Image::~SDLC_Image() {
+    if(img) SDL_free(img);
+    img = NULL;
+};

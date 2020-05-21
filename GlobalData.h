@@ -13,20 +13,25 @@
 #include "SDLC/SDLC_Context.h"
 #include "SDLC/SDLC_Component.h"
 #include "SDLC/Extends/Image.h"
-
+#include "SDLC/Extends/toolbar.h"
+#include "SDLC/Extends/helpbar.h"
 class GameGloabalResouce{   
     
     public:
-    palette global_palette;
-    SDL_Window* global_w; 
 
+    int isInit; 
+    SDL_Window* global_w; 
+    SDLC_Context context;
+    Toolbar topbar;
+    Helpbar img_help;
     map m; 
     content c;
-    
-    int leve;
-    bool isq = false;
 
-    SDLC_Context context;
+    int leve;
+    bool isq;
+
+
+    palette global_palette;
 
     struct {
         int **bmap;
@@ -36,7 +41,7 @@ class GameGloabalResouce{
         这里可以加载默认的地图，也可从文件中加载
     */
     void bmapload();
-    SDLC_Component topbar;
+
     void loadMainHandle();
     GameGloabalResouce();
     void changeHandle(int id);

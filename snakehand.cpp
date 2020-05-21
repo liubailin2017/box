@@ -321,13 +321,7 @@ bool snake_main_hand(const SDL_Event& event,SDLC_Context *context) {
                         break;
                 }
             }/* ---------------------*/
-                switch (event.key.keysym.sym){
-                    case SDLK_TAB:
-                        GloabalData.changeHandle(1); 
-                    break;  
-                }
  
-                break;
             case SDL_KEYUP:
                 break;
             case SDL_MOUSEBUTTONDOWN:

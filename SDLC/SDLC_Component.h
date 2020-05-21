@@ -96,10 +96,10 @@ public:
     1 处理事件
     2 鼠标事件 当前点为透明
     */
-    int fliterEvent(const SDL_Event& event) ;
+    virtual int fliterEvent(const SDL_Event& event) ;
     /* 事件分发 */
-    bool dispatch(const SDL_Event& event);
-    bool handleEvent(const SDL_Event& event);
+    virtual bool dispatch(const SDL_Event& event);
+    virtual bool handleEvent(const SDL_Event& event);
 
     /* 可见性 */
     virtual bool visible();
