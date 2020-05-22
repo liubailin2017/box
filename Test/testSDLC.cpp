@@ -15,21 +15,9 @@ int _HEIGHT =640;
 #include "Extends/SDLC_Button.h"
 #include "Extends/AnimationTest.h"
 #include"Extends/toolbar.h"
-bool onmove(const SDL_Event &event,SDLC_Component *cmp) {
+#include"Extends/SDLC_Label.h"
+char bf[1024];
 
-     switch (event.type)
-     {
-     case SDL_MOUSEMOTION:
-          cmp->setbgcolor(0xff00ff00);
-          break;
-     default:
-          break;
-     }
-     return true;
-}
-void mainstrick(SDLC_Component *cmp) {
-  
-}
 int isq = 0;
 int main(int argc,char* agrv[]) {
     int ticket ;
@@ -39,19 +27,13 @@ int main(int argc,char* agrv[]) {
                                     _WIDTH,_HEIGHT,
                                     SDL_WINDOW_RESIZABLE|SDL_WINDOW_SHOWN);
     SDLC_Context context(global_w);
-    context.setInterval(1,mainstrick);
-        SDLC_Component *tb = new Toolbar(&context);
-      
-        context.addComponent(tb);
-    char *title[] = {"开始游戏","继续游戏","保存"};
-     for(int i = 0; i < 3; i++) {
-          SDLC_Component *sdlc_i = new SDLC_Button(&context,title[i],0xFF00FF00);
-          sdlc_i->setMovable(true);
-          sdlc_i->setPostion(100,i*50);
-        tb->addComponent(sdlc_i);
-     }
-    ((SDLC_Button*)context.findById(2))->setText("你好，世界!");
+    context.setInterval(1,NULL);
 
+    SDLC_Label *lb = new SDLC_Label(&context,24,"别再说你只知道薰衣草了，罗马尼亚有种花和日本樱花齐名，却不为人知");  
+    context.addComponent(lb);
+    lb->setPostion((context.getWidth()-lb->getWidth())/2,(context.getHeight()-lb->getHeight())/2);
+    SDLC_Button btn(&context,"HELLO,WORLD",0xff00ff00);
+    context.addComponent(&btn);
     SDL_Event event;
     ticket = SDL_GetTicks();
     while (!isq)

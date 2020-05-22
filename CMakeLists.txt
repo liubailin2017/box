@@ -29,6 +29,9 @@ link_libraries(SDLC)
 
 link_libraries(mingw32 SDL2main SDL2 SDL2_image SDL2_ttf)
 
+file(GLOB_RECURSE Box_source  main.cpp  mainhand.cpp bfs.cpp snakehand.cpp menu_event.cpp edithand.cpp)
+
 #link_libraries(SDL2 SDL2_image)
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/output)
-add_executable(box main.cpp  mainhand.cpp bfs.cpp snakehand.cpp menu_event.cpp)
+
+add_executable(box ${Box_source})

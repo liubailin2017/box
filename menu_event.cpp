@@ -30,17 +30,38 @@ bool event_help(const SDL_Event& event,SDLC_Component *cmp ) {
         return true;
 }
  
-bool event_change_game(const SDL_Event& event,SDLC_Component *cmp ) {
-    if(event.type != SDL_MOUSEBUTTONDOWN) return false;
-    static int id = 1;
-    GloabalData.changeHandle(id+1);
-    id += 1;
-    id = id % 2;
-    return true;
-}
-
 bool event_back(const SDL_Event& event,SDLC_Component *cmp ){
     if(event.type != SDL_MOUSEBUTTONDOWN) return false;
     GloabalData.c.back();
     return true;   
+}
+static int id = 1;
+bool event_change_game(const SDL_Event& event,SDLC_Component *cmp ) {
+    if(event.type != SDL_MOUSEBUTTONDOWN) return false;
+
+    if(id == 1) {
+        id = 2;
+    }else if(id == 2) {
+        id = 1;
+    }
+
+    GloabalData.changeHandle(id);
+    
+    return true;
+}
+
+#include"edithand.h"
+bool event_edit(const SDL_Event& event,SDLC_Component *cmp ) {
+    if(event.type != SDL_MOUSEBUTTONDOWN) return false;
+
+    if(id == 1) {
+        id = 3; 
+        edit_hand_init();
+    }else if(id == 3) {
+        edit_hand_exit();
+        id = 1;
+    }
+    
+    GloabalData.changeHandle(id);
+    return true;
 }

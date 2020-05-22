@@ -4,12 +4,11 @@
 Toolbar::Toolbar(SDLC_Context* context):SDLC_Component(context),height1(20),height2(100),nx(10),ny(20),maxh(0) {
     status = 1;
     setSize(_context()->getWidth(),height1);    
-    setbgcolor(0x8800ff66);
+    setbgcolor(0x88666666);
 }
 
 void Toolbar::defaultOutHandler(SDLC_Component *cmp) {
     status = 1;
-    printf("status %d \n",status);
     SDLC_Component::defaultOutHandler(cmp);
 }
 void Toolbar::updateSurface(){
@@ -17,9 +16,9 @@ void Toolbar::updateSurface(){
 }
 void Toolbar::defaultInHandler(SDLC_Component *cmp) {
     status  = 2;
-    printf("stauts %d\n",status);
     SDLC_Component::defaultInHandler(cmp);
 }
+
 void Toolbar::addComponent(SDLC_Component *cmp) {
     SDLC_Component::addComponent(cmp);
     cmp->setPostion(nx,ny);

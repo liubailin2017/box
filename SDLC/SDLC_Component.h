@@ -66,6 +66,7 @@ public:
     int getY();
     int getWidth();
     int getHeight();
+    
     SDLC_Context* _context();
 
     /* 尾结点 */
@@ -73,18 +74,21 @@ public:
     /* 长兄节点 */
     SDLC_Component* header();
 
-    bool movable();
-    void setbgcolor(Uint32 bg);
-    Uint32 getBgcolor();
+    virtual bool movable();
+    
+    /* 设置背景色 */
+    virtual void setbgcolor(Uint32 bg);
+    virtual Uint32 getBgcolor();
+
     void setMovable(bool v);
     void setRaise(bool v);
     /*  时钟 */
     void strick();
     void setInterval(int i,StrickHandler h); 
-    void setListener(Handler handler);
 
-    void setOutHandler(OutHandler outHandler);
-    void setInHandler(InHandler outHandler);
+    virtual void setListener(Handler handler);
+    virtual void setOutHandler(OutHandler outHandler);
+    virtual void setInHandler(InHandler outHandler);
 
 
     int getId();
@@ -119,7 +123,7 @@ public:
     virtual void updateSurface();
 
     /* 把当前surface 更新到 上下文的surface上面 */
-    void display();
+    virtual void display();
     virtual SDLC_Component *findById(int id);
     virtual SDLC_Component *removeById(int id);
 

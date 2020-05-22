@@ -2,8 +2,7 @@
 #define _h_sankehand
 #include "SDLC/SDLC_log.h"
 #include "SDLC/SDLC_Context.h"
-#include "SDLC/SDLC_Component.h"
-#include "SDLC/Extends/Image.h"
+#include "SDLC/SDLC_Component.h" 
 void snake_init();
 void snake_destory();
 void snake_strick(SDLC_Component *cmp);

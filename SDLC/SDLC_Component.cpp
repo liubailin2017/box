@@ -377,14 +377,13 @@ int SDLC_Component::getY() { return y; }
 int SDLC_Component::getWidth() { return width; }
 int SDLC_Component::getHeight() { return height; }
 
-/**
- * magic  i == i + 1 
- * */
+ 
 void SDLC_Component::setInterval(int i,StrickHandler h) {
-    if(i >= -1) {
-        interval = i+1;
-        strickHandler = h;
+    if(i >= 0) {
+        interval = i;
+        strickHandler = h;    
     }
+
 }
 
 void SDLC_Component::strick() {
@@ -396,11 +395,11 @@ void SDLC_Component::strick() {
 
     if(0 == intervalc) {    
         defaultStrickHandler(this);
-    }    
-    if(interval != 0) {
-        intervalc += 1;
-        intervalc %= interval; 
     }
+    
+    intervalc += 1;
+    intervalc %= (interval+1); 
+    
 }
 
 void SDLC_Component::raise() {

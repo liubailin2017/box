@@ -113,13 +113,7 @@ bool main_hand(const SDL_Event& event,SDLC_Context *context) {
             if(event.button.button == 1) {
                 GloabalData.global_palette.reset();
                 GloabalData.c.display();
-                // for(int i = 0; i< GloabalData.global_palette.getW()* GloabalData.global_palette.getH();i++){
-                //     if(i% GloabalData.global_palette.getW() == 0){
-                //         printf("|\n|");
-                //     }
-                //     printf("%2d", GloabalData.global_palette.getData()[i]);
-                // }
-                // printf("\n--------update-----------\n");
+
 
                 int boxw = GloabalData.global_palette.getBoxW();
                 int boxh = GloabalData.global_palette.getBoxH();
@@ -134,7 +128,6 @@ bool main_hand(const SDL_Event& event,SDLC_Context *context) {
                 tool::pos t; t.x = x;t.y = y;
                 mainHandleRes.qpos.clean();
                 mainHandleRes.path = mainHandleRes._bfs.BFS(s,t,mainHandleRes.qpos);
-                //print(mainHandleRes.path,(char*)GloabalData.global_palette.getData(),w,h);
                 mainHandleRes.path_isend = false;
                 mainHandleRes.Mouse_pre.x = x;
                 mainHandleRes.Mouse_pre.y = y;
@@ -165,7 +158,6 @@ bool main_hand(const SDL_Event& event,SDLC_Context *context) {
                     mainHandleRes.qpath.push(mouse_cur);
                     //std::cout << "postion:"<<mouse_cur.x<<","<<mouse_cur.y<<std::endl;
             }
-
         }
         break;
         case SDL_QUIT: 
@@ -220,20 +212,20 @@ void loadleve(int leve,content &c) {
     /*step 2 */
     palette p(c.getmap()->_w(),c.getmap()->_h(),_WIDTH/c.getmap()->_w(),_HEIGHT/c.getmap()->_h());
     GloabalData.global_palette = p;
+    GloabalData.global_palette.reset();
+    GloabalData.c.display();
     /*step 3 */
     c.init();
     title = "level:"+std::to_string(leve+1)+"    "+flag[leve];
     SDL_SetWindowTitle(GloabalData.global_w,title.c_str());
 }
 
-void main_init() {
-    GloabalData.context.update(GloabalData.global_w);
+void main_init() { 
     FILE *f = fopen("data.sav","rb+");
     if(f){
         fread(flag,sizeof(flag),1,f);
         fclose(f);
     }
-
 }
 
 void main_save() {

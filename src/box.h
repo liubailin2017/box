@@ -28,7 +28,7 @@ public:
     virtual bool cancover();
     virtual bool move(direct d);
 };
- 
+
 class intend:public block
 {
 private:

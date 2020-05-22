@@ -114,10 +114,7 @@ void drawobj(palette *p,block* obj){
 
 #include"../GlobalData.h"
 
-extern GameGloabalResouce GloabalData;
-
 void SDLdraw_update() {
         SDL_Surface* win_surface  = SDL_GetWindowSurface(GloabalData.global_w);
         SDL_BlitSurface(GloabalData.global_palette.getSuface(),NULL,win_surface,NULL);
-//        SDL_UpdateWindowSurface(GloabalData.global_w);
 }

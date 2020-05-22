@@ -2,7 +2,7 @@
 #define _H_BLOCK_
 #include "base.h"
 class content;
-class block //其实这是一个双向链表
+class block /* 其实这是一个双向链表 */
 {
 
 private:

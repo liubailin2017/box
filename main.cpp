@@ -32,17 +32,17 @@ GameGloabalResouce GloabalData; /* 全局变量初始化 */
 #include"snakehand.h"
 int main(int argc,char* agrv[]) {
     int ticket ;
+    SDL_Event event;
 
-
-    
     drawlist_init_img();
 
     main_init();
     snake_init();
+
     GloabalData.loadMainHandle();
-    SDL_Event event;
+
     loadleve(GloabalData.leve, GloabalData.c);
-    GloabalData.global_palette.reset();
+ 
     GloabalData.c.display();
     
     ticket = SDL_GetTicks();
@@ -50,7 +50,6 @@ int main(int argc,char* agrv[]) {
     {
         while(SDL_PollEvent(&event)) {
             GloabalData.context.dispatch(event);
-            
         }
 
         int t = SDL_GetTicks();
@@ -123,7 +122,6 @@ GameGloabalResouce::GameGloabalResouce():global_w(SDL_CreateWindow("hello,world"
                                     leve(0),
                                     isq(false),img_help(Helpbar(&context))
 {
-  
     context.addComponent(&topbar);
     SDLC_Component *sc = new SDLC_Button(&context,"重新开始",0xff223355);
     sc->setListener(&event_replay_level);
@@ -135,6 +133,7 @@ GameGloabalResouce::GameGloabalResouce():global_w(SDL_CreateWindow("hello,world"
     sc->setListener(&event_next_level);
     topbar.addComponent(sc);
     sc = new SDLC_Button(&context,"地图编辑器",0x22333333);
+    sc->setListener(&event_edit);
     topbar.addComponent(sc);
     sc = new SDLC_Button(&context,"帮助",0xff009922);  
     sc->setListener(&event_help);
@@ -150,34 +149,36 @@ GameGloabalResouce::GameGloabalResouce():global_w(SDL_CreateWindow("hello,world"
     bmapload();
     context.addComponent(&img_help); 
 }
- 
+
 #include"snakehand.h"
+#include"edithand.h"
 void GameGloabalResouce::loadMainHandle() {
-    context.setListener(draw_main);
-    context.setListener(main_hand);
-    context.setInterval(1,mainstrick);
-    // snake_init();
-    // context.setListener(snake_draw_main);
-    // context.setListener(snake_main_hand);
-    // context.setInterval(10,snake_strick);
+    context.setListener(&draw_main);
+    context.setListener(&main_hand);
+    context.setInterval(1,&mainstrick);
 }
 
 void GameGloabalResouce::changeHandle(int id) {
+ 
     switch (id)
     {
-    case 1:
-        context.setListener(draw_main);
-        context.setListener(main_hand);
-        context.setInterval(1,mainstrick);
-        break;
-    case 2:
-        context.setListener(snake_draw_main);
-        context.setListener(snake_main_hand);
-        context.setInterval(10,snake_strick);
-    break;
-    default:
-        break;
+        case 1:
+        GloabalData.loadMainHandle();
+            break;
+        case 2:
+            context.setListener(&snake_draw_main);
+            context.setListener(&snake_main_hand);
+            context.setInterval(10,&snake_strick);
+            break;
+        case 3:
+            context.setListener(&edit_draw_main);
+            context.setListener(&edit_main_hand);
+            context.setInterval(0,&edit_strick);
+            break;
+        default:
+            break;
     }
+
 }
 
 void GameGloabalResouce::bmapload() {

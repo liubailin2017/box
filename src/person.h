@@ -8,12 +8,13 @@ enum PERSON_STATUS{
 class person:public block {
 
     private :
-        direct _inter_push_dir;
-        PERSON_STATUS status;
-        virtual bool push();
+        direct _inter_push_dir; /* 人物方向 */
+        PERSON_STATUS status; /* 状态 上下左右 ... */
+        virtual bool push();  /* 朝人物方向推 */
     public:
         person();
         virtual ~person();
+        /* 把当前对象绘制到模版上 */
         virtual void display(int t);
         virtual void befor_move(direct d);
         virtual bool move(direct d);
@@ -21,7 +22,7 @@ class person:public block {
         virtual bool back_move(direct d);
         virtual int type();
         virtual int _status();
-        virtual bool pull(); //推返回就对应着拉
+        virtual bool pull(); /* 推返回就对应着拉 */
         virtual tool::pos getPostion();
 };
 #endif
