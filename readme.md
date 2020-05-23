@@ -26,7 +26,7 @@
 ## 演示
 
 ![加载图片请稍候...](readme_img/prtsc.gif)
-
+[B站](https://www.bilibili.com/video/BV1Sa4y1e7nv)
 ## 依赖
 
 ### [SDL2](http://www.libsdl.org/download-2.0.php)
