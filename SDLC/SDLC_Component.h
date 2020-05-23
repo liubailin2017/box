@@ -5,7 +5,16 @@ class SDLC_Component;
 class SDLC_Context;
 
 #include"SDLC_Event.h"
-
+    /*
+    如图 控件结构 
+    1
+    |
+    2----3-----4---D
+    |    |     |
+    5-6  7-8-9 E-F
+    |            |
+    A-B-C        G
+    */
 class SDLC_Component
 {
 protected:
@@ -50,6 +59,7 @@ protected:
     bool canRaise;
 
 public:
+    bool isRoot; /* 是否为根控件 */
     /* 
         默认的事件处理(所有的事件都是通过这些函数间接调用事件处理器)
         当其它继承自这个基本组件的衍生组件时可重写这些函数实现自己的效果 
@@ -124,8 +134,8 @@ public:
 
     /* 把当前surface 更新到 上下文的surface上面 */
     virtual void display();
-    virtual SDLC_Component *findById(int id);
-    virtual SDLC_Component *removeById(int id);
+    virtual SDLC_Component *findById(int id); /* 在儿子节点下查找 */
+    virtual SDLC_Component *removeById(int id); 
 
 
     virtual void raise();

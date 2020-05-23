@@ -2,8 +2,8 @@
 #define _menu_event_h
 #include "SDLC/SDLC_Event.h" 
 #include"GlobalData.h"
-
-bool event_next_level(const SDL_Event& event,SDLC_Component *cmp );
+/* 这是上面 工具条上的菜单 回调函数 */
+bool event_next_level(const SDL_Event& event,SDLC_Component *cmp ); 
 
 bool event_pre_level(const SDL_Event& event,SDLC_Component *cmp );
 

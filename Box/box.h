@@ -24,9 +24,9 @@ public:
     virtual int type();
     virtual void display(int t );
     
-    virtual bool canpush();
-    virtual bool cancover();
-    virtual bool move(direct d);
+    virtual bool canpush(); /* 不能推动 */
+    virtual bool cancover(); /* 不能覆盖 */
+    virtual bool move(direct d); 
 };
 
 class intend:public block

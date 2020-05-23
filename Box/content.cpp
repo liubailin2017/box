@@ -3,6 +3,7 @@
 
 #include"../SDLdraw/drawlist.h"
 
+/* 返回反方向 */
 direct btranf(direct d) {
     if(d == RIGHT)
         return LEFT;
@@ -91,24 +92,24 @@ void map::read(int d[]) {
             case BLOCK:
                 break;
             case PERSON:
-                b[i].rear->_cover(new person);
+                b[i]._rear()->_cover(new person);
                 break;
             case BOX:
-                b[i].rear->_cover(new box); 
+                b[i]._rear()->_cover(new box); 
                 break;
             case WALL:
                 b[i]._cover(new wall); 
                 break;
             case INTEND:
-                b[i].rear->_cover(new intend);
+                b[i]._rear()->_cover(new intend);
                 break;
             case PERSON + INTEND :
-                b[i].rear->_cover(new intend); 
-                b[i].rear->_cover(new person);
+                b[i]._rear()->_cover(new intend); 
+                b[i]._rear()->_cover(new person);
                 break;
             case BOX + INTEND :
-                b[i].rear->_cover(new intend); 
-                b[i].rear->_cover(new box);
+                b[i]._rear()->_cover(new intend); 
+                b[i]._rear()->_cover(new box);
                 break;
         }
     }

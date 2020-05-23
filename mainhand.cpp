@@ -1,34 +1,32 @@
 #include<iostream>
 #include "mainhand.h"
 
-MainHandResouce mainHandleRes;
+struct MainHandResouce mainHandleRes;
 
 #include "SDLC/SDLC_log.h"
 #include "SDLC/SDLC_Context.h"
 #include "SDLC/SDLC_Component.h"
 #include "SDLC/Extends/Image.h"
 
-#include"src/base.h"
-#include"src/block.h"
-#include"src/person.h"
-#include"src/box.h"
-#include"src/content.h"
+#include"box/base.h"
+#include"box/block.h"
+#include"box/person.h"
+#include"box/box.h"
+#include"box/content.h"
 
 #include"SDLdraw/palette.h"
 #include"SDLdraw/drawlist.h"
 #include"SDLC/sdltool.h"
 
+#include"box/_maps.h"
+
 #include"GlobalData.h"
-
-#include"src/_maps.h"
-
-
 extern int _WIDTH;
 extern int _HEIGHT;
 extern GameGloabalResouce GloabalData;
 
 void draw_main(SDL_Surface *surface) {
-    SDLdraw_update();
+    SDLdraw_update(surface);
     tool::pos *cur = mainHandleRes.path;
     tool::pos *p = NULL;
     if(cur) p = cur->pre;
@@ -78,13 +76,13 @@ bool main_hand(const SDL_Event& event,SDLC_Context *context) {
                 case SDLK_PAGEUP:
                     if(GloabalData.leve < GloabalData.bmap.cnt_map-1) { 
                         ++GloabalData.leve;
-                        loadleve(GloabalData.leve,GloabalData.c);
+                        selectLeve(GloabalData.leve,GloabalData.c);
                     }
                     break;
                 case SDLK_PAGEDOWN:
                     if(GloabalData.leve>0) {
                         GloabalData.leve--;
-                        loadleve(GloabalData.leve,GloabalData.c);
+                        selectLeve(GloabalData.leve,GloabalData.c);
                     }
                     break;
 
@@ -100,7 +98,7 @@ bool main_hand(const SDL_Event& event,SDLC_Context *context) {
                 flag[GloabalData.leve] = '*';
                 GloabalData.leve++;
                 GloabalData.leve %= GloabalData.bmap.cnt_map;
-                loadleve(GloabalData.leve,GloabalData.c);
+                selectLeve(GloabalData.leve,GloabalData.c);
             }
 
             GloabalData.global_palette.reset();
@@ -186,7 +184,7 @@ void mainstrick(SDLC_Component *cmp) {
         flag[GloabalData.leve] = '*';
         GloabalData.leve++;
         GloabalData.leve %= GloabalData.bmap.cnt_map;
-        loadleve(GloabalData.leve,GloabalData.c);
+        selectLeve(GloabalData.leve,GloabalData.c);
     }
     
     GloabalData.global_palette.reset();
@@ -203,37 +201,6 @@ void print(tool::pos *s,char *map,int _W,int _H) {
         s= s->pre;
     }
     printf("\n");
-}
-
-void loadleve(int leve,content &c) {
-    std::string title;
-    /*step 1 */
-    c.getmap()->read(GloabalData.bmap.bmap[leve]);
-    /*step 2 */
-    palette p(c.getmap()->_w(),c.getmap()->_h(),_WIDTH/c.getmap()->_w(),_HEIGHT/c.getmap()->_h());
-    GloabalData.global_palette = p;
-    GloabalData.global_palette.reset();
-    GloabalData.c.display();
-    /*step 3 */
-    c.init();
-    title = "level:"+std::to_string(leve+1)+"    "+flag[leve];
-    SDL_SetWindowTitle(GloabalData.global_w,title.c_str());
-}
-
-void main_init() { 
-    FILE *f = fopen("data.sav","rb+");
-    if(f){
-        fread(flag,sizeof(flag),1,f);
-        fclose(f);
-    }
-}
-
-void main_save() {
-    FILE* f = fopen("data.sav","wb+");
-    if(f){
-        fwrite(flag,sizeof(flag),1,f);
-        fclose(f);
-    }
 }
 
 MainHandResouce::MainHandResouce(): path(NULL),path_isend(true){

@@ -4,11 +4,11 @@
 #include"bfs.h"
 #include<SDL2/SDL.h>
 
-#include"src/base.h"
-#include"src/block.h"
-#include"src/person.h"
-#include"src/box.h"
-#include"src/content.h"
+#include"box/base.h"
+#include"box/block.h"
+#include"box/person.h"
+#include"box/box.h"
+#include"box/content.h"
 
 #include "SDLC/SDLC_log.h"
 #include "SDLC/SDLC_Context.h"
@@ -31,9 +31,6 @@ void draw_main(SDL_Surface *surface);
 bool main_hand(const SDL_Event& event, SDLC_Context *context);
 void mainstrick(SDLC_Component *cmp);
 
-void main_init();
-void main_save();
-void loadleve(int leve,content &c);
 bool hand_evet(const SDL_Event& event, SDLC_Component *cmp) ;
 
 #endif

@@ -1,9 +1,9 @@
 #include"drawlist.h"
 #include"palette.h"
 
-#include"../src/person.h"
+#include"../box/person.h"
 
-#include"../src/block.h"
+#include"../box/block.h"
 
 #include<iostream>
 #include<SDL2/SDL_image.h>
@@ -114,7 +114,6 @@ void drawobj(palette *p,block* obj){
 
 #include"../GlobalData.h"
 
-void SDLdraw_update() {
-        SDL_Surface* win_surface  = SDL_GetWindowSurface(GloabalData.global_w);
+void SDLdraw_update(SDL_Surface* win_surface ) {
         SDL_BlitSurface(GloabalData.global_palette.getSuface(),NULL,win_surface,NULL);
 }

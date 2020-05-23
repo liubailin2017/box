@@ -3,19 +3,17 @@
 #include"SDLdraw/palette.h"
 #include"SDLdraw/drawlist.h"
 
-#include"src/base.h"
-#include"src/block.h"
-#include"src/person.h"
-#include"src/box.h"
-#include"src/content.h"
+#include"Box/base.h"
+#include"Box/block.h"
+#include"Box/person.h"
+#include"Box/box.h"
+#include"Box/content.h"
 
-#include "SDLC/SDLC_log.h"
-#include "SDLC/SDLC_Context.h"
-#include "SDLC/SDLC_Component.h"
-#include "SDLC/Extends/Image.h"
+#include "SDLC/Extends/SDLC_Button.h"
 #include "SDLC/Extends/toolbar.h"
 #include "SDLC/Extends/helpbar.h"
-class GameGloabalResouce{   
+/* 全局对象，用于初始化环境 */
+struct GameGloabalResouce{   
     
     public:
 
@@ -24,15 +22,13 @@ class GameGloabalResouce{
     SDLC_Context context;
     Toolbar topbar;
     Helpbar img_help;
+    
+    palette global_palette;
     map m; 
     content c;
 
     int leve;
     bool isq;
-
-
-    palette global_palette;
-
     struct {
         int **bmap;
         int cnt_map; //地图个数
@@ -47,6 +43,9 @@ class GameGloabalResouce{
     void changeHandle(int id);
 };
 
-extern GameGloabalResouce GloabalData;
+extern struct GameGloabalResouce GloabalData;
 
+void fromFile(int* len/* output */, int* **bmap /* output */); /* 从文件加载 */
+void fromDef(int *len/* output */, int* **bmap /* output */) ; /* 加载默认地图 */
+void selectLeve(int leve,content &c); /* 选择关卡 */
 #endif

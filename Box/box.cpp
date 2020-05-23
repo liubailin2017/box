@@ -6,7 +6,6 @@
 #include"../SDLdraw/drawlist.h"
 
 #include"../GlobalData.h"
-extern GameGloabalResouce GloabalData;
 
 
 

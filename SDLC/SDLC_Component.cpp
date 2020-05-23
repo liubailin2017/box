@@ -364,10 +364,11 @@ SDLC_Component* SDLC_Component::removeById(int id) {
             }
         }
     }
-    tmp->brother = NULL;
-    tmp->parent = NULL;
-    tmp->prebrother = NULL;
-    tmp->id = 0;
+
+    parent = NULL;
+    prebrother = NULL;
+    child = NULL;
+    id = 0;
     return tmp;
 }
 
@@ -459,16 +460,46 @@ SDLC_Component::SDLC_Component(SDLC_Context *context,int x,int y,int w,int h,Uin
     }
     if(SDL_MUSTLOCK(surface)) {SDL_UnlockSurface(surface);}
 }
-    
+
+    /*
+
+    Root
+    |
+    2----3-----4---D
+    |    |     |
+    5-6  7-8-9 E-F
+    |            |
+    A-B-C        G
+
+    */
+static int  cnt = 0;
 SDLC_Component::~SDLC_Component(){
-        if(id) {
+
+        if(parent || prebrother) {
             removeById(id);
         }
+        
         if(child) {
+
+            /* 使儿子失联  */
             child -> parent = NULL;
+            delete child;          
+            child = NULL;
         }
+
         if(brother) {
-            brother = prebrother = NULL;
+            if(parent || prebrother) { /*  如果测能联系 */
+                brother->prebrother = prebrother;
+                brother->parent = parent;                
+            } else { /* 使兄弟失联  */
+                brother ->prebrother = NULL;
+                delete brother;
+                brother = NULL;
+            }
+
         }
+        cnt ++;
+        printf("delete cnt : %d, id:%d\n",cnt,id);
         SDL_FreeSurface(surface);
+
 }

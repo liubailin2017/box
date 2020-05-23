@@ -4,7 +4,7 @@ bool event_next_level(const SDL_Event& event,SDLC_Component *cmp ) {
     if(event.type != SDL_MOUSEBUTTONDOWN) return false;
     if(GloabalData.leve < GloabalData.bmap.cnt_map-1) { 
         ++GloabalData.leve;
-        loadleve(GloabalData.leve,GloabalData.c);
+        selectLeve(GloabalData.leve,GloabalData.c);
     }
     return true;
 }
@@ -14,14 +14,14 @@ bool event_pre_level(const SDL_Event& event,SDLC_Component *cmp ) {
 
     if(GloabalData.leve > 0) { 
         --GloabalData.leve;
-        loadleve(GloabalData.leve,GloabalData.c);
+        selectLeve(GloabalData.leve,GloabalData.c);
     }
     return true;
 }
 
 bool event_replay_level(const SDL_Event& event,SDLC_Component *cmp ) {
         if(event.type != SDL_MOUSEBUTTONDOWN) return false;
-        loadleve(GloabalData.leve,GloabalData.c);
+        selectLeve(GloabalData.leve,GloabalData.c);
         return true;
 }
 bool event_help(const SDL_Event& event,SDLC_Component *cmp ) {

@@ -109,7 +109,7 @@ bool pos::operator==(const pos &t) {
     else
         return false;
 }
-#include"src/base.h"
+#include"box/base.h"
 pos::pos():x(-1),y(-1),pre(nullptr) {};
 int pos::action(const pos& cur) {
     if(cur.x - x == 1 && cur.y == y) {
