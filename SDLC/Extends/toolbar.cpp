@@ -4,7 +4,7 @@
 Toolbar::Toolbar(SDLC_Context* context):SDLC_Component(context),height1(20),height2(100),nx(10),ny(20),maxh(0) {
     status = 1;
     setSize(_context()->getWidth(),height1);    
-    setbgcolor(0x88666666);
+    setbgcolor(0x8866ff66);
 }
 
 void Toolbar::defaultOutHandler(SDLC_Component *cmp) {

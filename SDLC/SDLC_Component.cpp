@@ -19,20 +19,14 @@ bool SDLC_Component::defaultmouseButtonHandler(const SDL_Event& event,SDLC_Compo
         }
     }
 
-    if(mouseButtonHandler &&  mouseButtonHandler(event,this)) {
-        // if(event.type == SDL_MOUSEBUTTONDOWN) {
-        //     std::cout <<"DOWN id:"<<cmp->getId()<<std::endl;
-        // }
-        // if(event.type == SDL_MOUSEBUTTONUP) { 
-        //     std::cout <<"UP id:"<<cmp->getId()<<std::endl;
-        // }
-        // if(event.type == SDL_MOUSEMOTION) {
-        //    std::cout << "MOTION ID:"<< cmp->getId() <<std::endl;
-        // }
-        return true;
-    }else {
-        return true;
-    }
+    if(mouseButtonHandler == NULL) {
+        return true; /* 默认是被消耗 */
+    }else 
+        if(mouseButtonHandler(event,this)) {
+            return true;
+        }else {
+            return false;
+        }
 }
 
 void SDLC_Component::defaultOutHandler(SDLC_Component *cmp) {
@@ -146,11 +140,12 @@ int SDLC_Component::fliterEvent(const SDL_Event& event) {
     }
 
     if(event.type == SDL_MOUSEBUTTONUP && upLock == event.button.button) {
-        upLock = 0;
+        upLock = 0; /*SDL_MOUSEBUTTONUP 和  SDL_MOUSEBUTTONDOWN 成对出现 */
         return 1;
     }
 
-    if(event.type == SDL_MOUSEMOTION ) {
+                                        /* 没有正在移动的对象 */
+    if(event.type == SDL_MOUSEMOTION && NULL == context->curMvCmp) {
         bx = event.motion.x;
         by = event.motion.y;
         tx = abx();
@@ -168,40 +163,41 @@ int SDLC_Component::fliterEvent(const SDL_Event& event) {
 
 bool SDLC_Component::handleEvent(const SDL_Event& event) {
     
-    if(defaultmouseButtonHandler(event,this)) { /* 交给默认鼠标事件处理器 */
-
-        if(event.type == SDL_MOUSEMOTION) {
-            // out event 
-            SDLC_Component *t = context->curCmp; 
-            if(t) { 
-                while(t && ! t->findById(id)){
-                    t->defaultOutHandler(t);
-                    t = t->header()->parent;
-                }
-            }
-            // --- 
-            t = context->curCmp;
-            SDLC_Component * t_ = this;
-            while(t_) {
-                if(t && t_->findById(t->id)) {       
-                    break;
-                }else {
-                    t_->defaultInHandler(t_);
-                }
-                t_ = t_->header()->parent;
-            }
-            context ->curCmp = this;
-            //move for cmp
-            if(_movable && context->curMvCmp == NULL && upLock == 1 ){
-                context->curMvCmp = this;
-                context->status[0] = event.button.x;
-                context->status[1] = event.button.y;
-                context->status[2] = x;
-                context->status[3] = y;
+    if(event.type == SDL_MOUSEMOTION) {
+        /* 产生out 事件 */
+        SDLC_Component *t = context->curCmp; 
+        if(t) { 
+            while(t &&  t->findById(id) == NULL ){
+                t->defaultOutHandler(t);
+                t = t->header()->parent;
             }
         }
+        // --- 
+        t = context->curCmp;
+        SDLC_Component * t_ = this;
+        while( t_ ) {
+            if(t && t_->findById(t->id)) {       
+                break;
+            }else {
+                t_->defaultInHandler(t_);
+            }
+            t_ = t_->header()->parent;
+        }
+        context ->curCmp = this;
+    }
 
+    if(event.type == SDL_MOUSEBUTTONDOWN && context->curMvCmp == NULL && _movable ) {
+        context->curMvCmp = this;
+        printf("down id %d \n",id);
+        if(context->curMvCmp == this && upLock == 1 ) {
+            context->status[0] = event.button.x;
+            context->status[1] = event.button.y;
+            context->status[2] = x;
+            context->status[3] = y;
+        }
+    }
 
+    if(defaultmouseButtonHandler(event,this)) { /* 交给默认鼠标事件处理器 */
         return true;
     }
 
@@ -311,7 +307,7 @@ void SDLC_Component::addComponent(SDLC_Component *cmp) {
         setchild(cmp);
     }
 }
-    
+
 void SDLC_Component::setchild(SDLC_Component *cmp) {
     if(cmp) {
         cmp->prebrother = NULL;
@@ -342,7 +338,7 @@ SDLC_Component* SDLC_Component::findById(int id) {
     while(tmp) {
         if( ( result = tmp->findById(id) ) ){
             return result;
-        };
+        }
         tmp = tmp->brother;
     }
     return result;
@@ -356,7 +352,7 @@ SDLC_Component* SDLC_Component::removeById(int id) {
     }else {
         if(tmp->parent) {
             tmp->parent->setchild(tmp->brother);
-        }else {
+        }else if(isRoot()) {
             context->components = tmp->brother;
             if(tmp->brother) {
                 tmp->brother -> parent = NULL;
@@ -367,7 +363,6 @@ SDLC_Component* SDLC_Component::removeById(int id) {
 
     parent = NULL;
     prebrother = NULL;
-    child = NULL;
     id = 0;
     return tmp;
 }
@@ -433,6 +428,10 @@ void SDLC_Component::raise() {
     context->notifyUpdate();
 }
 
+bool SDLC_Component::isRoot() {
+        return (context->components  == this);
+}
+
 SDLC_Component::SDLC_Component(SDLC_Context *context):SDLC_Component(context,0,0) {}
 SDLC_Component::SDLC_Component(SDLC_Context *context,int w,int h):SDLC_Component(context,0,0,w,h) {}
 SDLC_Component::SDLC_Component(SDLC_Context *context,int x,int y,int w,int h):SDLC_Component(context,x,y,w,h,0xffffffff){}
@@ -472,13 +471,16 @@ SDLC_Component::SDLC_Component(SDLC_Context *context,int x,int y,int w,int h,Uin
     A-B-C        G
 
     */
+#ifdef DEUBG
 static int  cnt = 0;
+#endif
+
 SDLC_Component::~SDLC_Component(){
 
-        if(parent || prebrother) {
+        if(isRoot() || parent || prebrother) {
             removeById(id);
         }
-        
+
         if(child) {
 
             /* 使儿子失联  */
@@ -498,8 +500,10 @@ SDLC_Component::~SDLC_Component(){
             }
 
         }
+#ifdef DEBUG
         cnt ++;
         printf("delete cnt : %d, id:%d\n",cnt,id);
+#endif
         SDL_FreeSurface(surface);
 
 }

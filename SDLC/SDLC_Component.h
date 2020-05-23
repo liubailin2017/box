@@ -59,7 +59,7 @@ protected:
     bool canRaise;
 
 public:
-    bool isRoot; /* 是否为根控件 */
+    bool isRoot();
     /* 
         默认的事件处理(所有的事件都是通过这些函数间接调用事件处理器)
         当其它继承自这个基本组件的衍生组件时可重写这些函数实现自己的效果 
