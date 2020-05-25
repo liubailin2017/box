@@ -65,7 +65,7 @@ public:
 
     /* 驱动时钟 */
     void strick();
-
+    void resetIntervalc();
     void notifyUpdate();
 
     void updateWindow();

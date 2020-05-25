@@ -4,9 +4,7 @@
 class SDLC_Component;
 #include<SDL2/SDL.h>
 /*
-    鼠标SDL_MOUSEBUTTONDOWN ,SDL_MOUSEBUTTONDOWN处理器  
-    通常情况鼠标SDL_MOUSEBUTTONDOWN 事件的处理请返回 true,
-    返回false 可能会影响事件分发链，产生异常
+    鼠标事件处理器  
  */
 typedef bool (*Handler)(const SDL_Event& event,SDLC_Component *cmp); 
 

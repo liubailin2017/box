@@ -29,8 +29,8 @@ public:
     SDLC_Button(SDLC_Context *context,char *text);
     SDLC_Button(SDLC_Context *context,char *text,Uint32 bg);
     SDLC_Button(SDLC_Context *context,char *text,int size, Uint32 bg);
-    SDLC_Button(SDLC_Context *context,int x,int y,int w,int d);
-    SDLC_Button(SDLC_Context *context,int x,int y,int w,int d,Uint32 bg);
+    // SDLC_Button(SDLC_Context *context,int x,int y,int w,int d);
+    // SDLC_Button(SDLC_Context *context,int x,int y,int w,int d,Uint32 bg);
     
     virtual bool defaultmouseButtonHandler(const SDL_Event& event,SDLC_Component *cmp);
     virtual void defaultOutHandler(SDLC_Component *cmp);

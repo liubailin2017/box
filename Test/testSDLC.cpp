@@ -19,9 +19,18 @@ int _HEIGHT =640;
 
 bool test_event(const SDL_Event& event,SDLC_Component *cmp ) {
     printf("type : %d \n",event.type);
+    return false;
+}
+bool up_event(const SDL_Event& event,SDLC_Component *cmp ) {
+    if(event.type == SDL_MOUSEBUTTONUP) { 
+        printf("up id : %d \n",cmp->getId());
+    }else if(event.type == SDL_MOUSEBUTTONDOWN) {
+        printf("down id : %d \n",cmp->getId());
+    }
     return true;
 }
-
+static int strick_thread(void *ptr);
+SDL_mutex *mutex;
 char bf[1024];
 int isq = 0;
 int main(int argc,char* agrv[]) {
@@ -37,9 +46,11 @@ int main(int argc,char* agrv[]) {
     SDLC_Label *lb = new SDLC_Label(&context,24,"别再说你只知道薰衣草了，罗马尼亚有种花和日本樱花齐名，却不为人知");  
     context.addComponent(lb);
     lb->setPostion((context.getWidth()-lb->getWidth())/2,(context.getHeight()-lb->getHeight())/2);
-    SDLC_Button *btn = new SDLC_Button(&context,"HELLO,WORLD",0xff00ff00);
+    SDLC_Button *btn = new SDLC_Button(&context,"HELLO,WORLD",0x5500ff00);
+    btn->setMovable(true);
     context.addComponent(btn);
-    SDLC_Component *container = new SDLC_Component(&context,500,500);
+    SDLC_Component *container = new SDLC_Component(&context,0,0,500,500,0x55aaff00);
+    container->setListener(up_event);
     context.addComponent(container);
     container->setMovable(true);
     for(int i = 0; i< 8 ;i++) {
@@ -47,40 +58,33 @@ int main(int argc,char* agrv[]) {
 
         c->setMovable(true);
         container->addComponent(c);
+        c->setListener(test_event);
 
     }
     Toolbar *tb = new Toolbar(&context);
             for(int j = 0; j< 30; j++){
                         SDLC_Button *btni =  new SDLC_Button(&context,"HELLO,WORLD",0xff00ff00);
                         tb->addComponent(btni);
-                        btni->setListener(test_event);
+                       btni->setListener(up_event);
     }
     context.addComponent(tb);
     SDL_Event event;
-    ticket = SDL_GetTicks();
+    mutex = SDL_CreateMutex();
+    SDL_Thread *thread = SDL_CreateThread(strick_thread, "strick_thread", (void *)&context);;
     while (!isq)
     {
-        while(SDL_PollEvent(&event)) {
-
+        if(SDL_PollEvent(&event)) {
             switch (event.type)
             {
             case SDL_QUIT:
                 isq = 1;
                 break;
             }
+            SDL_LockMutex(mutex);
             context.dispatch(event);
+            SDL_UnlockMutex(mutex);
         }
-
-        int t = SDL_GetTicks();
-        if(SDL_GetTicks() - ticket > 30) {
-
-                ticket = SDL_GetTicks();
-                context.updateWindow();
-                context.strick();
-        }
-        if(SDL_GetTicks()-t < 10){
-           SDL_Delay(10);
-        }
+        SDL_Delay(10);
     }
     
     SDL_DestroyWindow(global_w);
@@ -88,3 +92,20 @@ int main(int argc,char* agrv[]) {
     return 0;
 }
 
+static int strick_thread(void *ptr)
+{
+    int ticket = SDL_GetTicks();
+    SDLC_Context *context = (SDLC_Context *) ptr;
+    while (!isq)
+    {                
+        if(SDL_GetTicks() - ticket > 30) {
+            SDL_LockMutex(mutex);
+                ticket = SDL_GetTicks();
+                context->updateWindow();
+                context->strick();
+            SDL_UnlockMutex(mutex);
+        }
+    }
+    
+    return 0;
+}

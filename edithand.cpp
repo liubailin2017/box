@@ -5,7 +5,7 @@
 static SDLC_Label *msg = NULL;
 
 void edit_hand_init() {
-    msg = new SDLC_Label(&GloabalData.context,"地图编辑功能作者还未完成，请用记事本手动编辑map.txt 文件来编辑地图",24,0xff00ff00);  
+    msg = new SDLC_Label(&GloabalData.context,"地图编辑功能作者还未完成，请用记事本手动编辑map.txt 文件来编辑地图",24,0xff666666);  
     GloabalData.context.addComponent(msg);
     msg->setPostion((GloabalData.context.getWidth()-msg->getWidth())/2,(GloabalData.context.getHeight()-msg->getHeight())/2);
 }

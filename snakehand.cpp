@@ -189,6 +189,9 @@ void chageDirect(struct Scene *scene,enum DIRECT dir) {
     }
     scene ->curDir = dir;
     move(scene);
+    GloabalData.context.updateWindow();
+    GloabalData.ticket = SDL_GetTicks();
+    GloabalData.context.resetIntervalc();
 }
 
 int isStrikeWall(struct Scene *scene) {
@@ -280,7 +283,7 @@ void snake_draw_main(SDL_Surface *surface) {
     char title[256] = {0};
     draw(&snake_gl.scene,surface);
     sprintf(title,"贪食蛇 分数 : %5d",snake_gl.scene.score);
-    SDL_SetWindowTitle(GloabalData.global_w,title); 
+//    SDL_SetWindowTitle(GloabalData.global_w,title); 
 }
 
 void snake_strick(SDLC_Component *cmp){

@@ -14,7 +14,7 @@ bool SDLC_Init() {
 }
 
 bool isContain(int x ,int y,int rx,int ry, int rw,int rh) { 
-    if(x > rx && x < rx + rw && y > ry && y < ry + rh) {
+    if(x >= rx && x <= rx + rw && y >= ry && y <= ry + rh) {
         return true;
     }else {
         return false;
@@ -229,6 +229,9 @@ void SDLC_Context::notifyUpdate() {
     shouldRepatint = true;
 }
 
+void SDLC_Context::resetIntervalc(){
+    intervalc = 0;
+}
 void SDLC_Context::strick() {
     SDLC_Component *tmp = components;
     while(tmp) {
@@ -237,9 +240,9 @@ void SDLC_Context::strick() {
     }
     if(interval == 0 || !strickHandler)
         return;
-    if(!intervalc) {
-        strickHandler(NULL);
-    }
     intervalc += 1;
     intervalc %= interval;
+    if(0 == intervalc) {
+        strickHandler(NULL);
+    }
 }

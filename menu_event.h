@@ -16,4 +16,7 @@ bool event_change_game(const SDL_Event& event,SDLC_Component *cmp );
 bool event_edit(const SDL_Event& event,SDLC_Component *cmp );
 
 bool event_back(const SDL_Event& event,SDLC_Component *cmp );
+
+bool event_exit(const SDL_Event& event,SDLC_Component *cmp );
+
 #endif

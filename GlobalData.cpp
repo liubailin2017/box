@@ -2,6 +2,7 @@
 
 #include"GlobalData.h"
 
+#include"fini/fini.h"
 
 #include"snakehand.h"
 #include"edithand.h"
@@ -9,10 +10,14 @@
 int _WIDTH =960;
 int _HEIGHT =640;
 
-GameGloabalResouce::GameGloabalResouce():global_w(SDL_CreateWindow("hello,world",
+int strick_thread(void *ptr);
+
+GameGloabalResouce::GameGloabalResouce():
+                                    fini(FINI_Create("conf.ini")),
+                                    global_w(SDL_CreateWindow("推箱子",
                                         SDL_UNSUPPORTED,SDLK_UNDERSCORE,
-                                        _WIDTH,_HEIGHT,
-                                        SDL_WINDOW_RESIZABLE|SDL_WINDOW_SHOWN)),
+                                        _WIDTH=FINI_GetInt(fini,"WIDTH"),_HEIGHT=FINI_GetInt(fini,"HEIGHT"),FINI_GetInt(fini,"FULLSCREEN")==1?SDL_WINDOW_FULLSCREEN_DESKTOP:SDL_WINDOW_SHOWN/*
+                                        SDL_WINDOW_RESIZABLE|SDL_WINDOW_SHOWN*/)),
                                     isInit(SDLC_Init()), /*  加载 SDL2 */
                                     context(SDLC_Context(global_w)), 
                                     topbar(Toolbar(&context)),
@@ -21,36 +26,42 @@ GameGloabalResouce::GameGloabalResouce():global_w(SDL_CreateWindow("hello,world"
                                     leve(0),
                                     isq(false),img_help(Helpbar(&context))
 {
+
     context.addComponent(&topbar);
-    SDLC_Component *sc = new SDLC_Button(&context,"重新开始",0xff223355);
+    SDLC_Component *sc = new SDLC_Button(&context,FINI_GetStr(fini,"MENU1"),0xff223355);
     sc->setListener(&event_replay_level);
     topbar.addComponent(sc);
-    sc = new SDLC_Button(&context,"上一关",0xff223355);
+    sc = new SDLC_Button(&context,FINI_GetStr(fini,"MENU2"),0xff223355);
     sc->setListener(&event_pre_level); 
     topbar.addComponent(sc);
-    sc = new SDLC_Button(&context,"下一关",0xff223355);  
+    sc = new SDLC_Button(&context,FINI_GetStr(fini,"MENU3"),0xff223355);  
     sc->setListener(&event_next_level);
-    topbar.addComponent(sc);
-    sc = new SDLC_Button(&context,"地图编辑器",0x22333333);
-    sc->setListener(&event_edit);
-    topbar.addComponent(sc);
-    sc = new SDLC_Button(&context,"帮助",0xff009922);  
-    sc->setListener(&event_help);
-    topbar.addComponent(sc);
-    sc = new SDLC_Button(&context,"切换游戏",0xff993322);  
-    sc->setListener(&event_change_game);
     topbar.addComponent(sc);
     sc = new SDLC_Button(&context," ",0xff000000);  
     topbar.addComponent(sc);
-    sc = new SDLC_Button(&context,"后退一步",0xff33ff22);  
+    sc = new SDLC_Button(&context,FINI_GetStr(fini,"MENU4"),0x22333333);
+    sc->setListener(&event_edit);
+    topbar.addComponent(sc);
+    sc = new SDLC_Button(&context,FINI_GetStr(fini,"MENU5"),0xff553322);  
+    sc->setListener(&event_change_game);
+    topbar.addComponent(sc);
+    sc = new SDLC_Button(&context,FINI_GetStr(fini,"MENU6"),0xff334422);  
     sc->setListener(&event_back);
     topbar.addComponent(sc);
+    sc = new SDLC_Button(&context,FINI_GetStr(fini,"MENU7"),0xff006622);  
+    sc->setListener(&event_help);
+    topbar.addComponent(sc);
     context.addComponent(&img_help);
+     sc = new SDLC_Button(&context,FINI_GetStr(fini,"MENU8"),0xff0066ff);  
+    sc->setListener(&event_exit);
+    topbar.addComponent(sc);
     loadMainHandle();
     bmapload(); /* 地图加载 */  
     selectLeve(leve, c);
-
     snake_init();
+    
+    mutex = SDL_CreateMutex();
+    thread_strick = SDL_CreateThread(strick_thread,"strick_thread",NULL);
 }
 
 
@@ -112,7 +123,7 @@ void fromDef(int *len/* output */, int* **bmap /* output */) {
 
 #include<stdio.h>
 void fromFile(int* len/* output */, int* **bmap /* output */) {
-    FILE *fmap = fopen("map.txt","r");
+    FILE *fmap = fopen(FINI_GetStr(GloabalData.fini,"MAP"),"r");
     if(!fmap) {
        fromDef( len, bmap);
        return ;
@@ -149,6 +160,8 @@ void selectLeve(int leve,content &c) {
     GloabalData.c.display();
     /*step 3 */
     c.init();
-    title = "level:"+std::to_string(leve+1)+"    "+flag[leve];
-    SDL_SetWindowTitle(GloabalData.global_w,title.c_str());
+    title = "当前关卡:"+std::to_string(leve+1)+"    "+flag[leve];
+    GloabalData.topbar.setText(title.c_str());
+    // SDL_SetWindowTitle(GloabalData.global_w,title.c_str());
+    
 }

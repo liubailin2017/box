@@ -8,15 +8,14 @@
 void SDLC_Button::updateSurface() {
     switch (status)
     {
-    case STATUS_NOMAL:
-        SDLC_Component::setbgcolor(bgc);
-        break;
+
     case STATUS_IN:
     case STATUS_UP:
     case STATUS_SELECt:
         SDLC_Component::setbgcolor(bgc);
-        sdltool::line(surface,0,height,width,height,bgc_down,10);
+        sdltool::line(surface,0,height,width,height,bgc_in,10);
         break;
+    case STATUS_NOMAL:
     case STATUS_OUT:
         SDLC_Component::setbgcolor(bgc);
         break;
@@ -26,7 +25,6 @@ void SDLC_Button::updateSurface() {
     default:
         break;
     }
- 
     SDL_BlitSurface(surface_text,NULL,surface,NULL);
     context->notifyUpdate();
 }
@@ -37,19 +35,47 @@ SDLC_Button::SDLC_Button(SDLC_Context *context,char *text,Uint32 bg):SDLC_Button
 
 SDLC_Button::SDLC_Button(SDLC_Context *context,char *text,int size,Uint32 bg):SDLC_Label(context,size,text) {
     setbgcolor(bg);
-    bgc = bg;
+    bgc = bg; 
+
+
+        Uint32 tmp = bgc;
+        int r = tmp &0xff;
+        int g = (tmp >> 8) & 0xff; 
+        int b = (tmp >> 16) & 0xff;
+        int a = 0xff;
+
+        r  =  r > 20? r/10*6  : 0;
+        g  =  g > 20? g/10*6 : 0;
+        b  =  b > 20? b/10*6: 0;
+    
+        tmp = a;
+        tmp = tmp << 8;
+        
+        tmp += b;
+        tmp = tmp << 8;
+        
+        tmp += g;
+        tmp = tmp << 8;
+        
+        tmp += r;
+
+        bgc_down = tmp;
+
+
+    bgc_in = bgc_down;
 }
 
-SDLC_Button::SDLC_Button(SDLC_Context *context,int x,int y,int w,int d):SDLC_Button(context,x,y,w,d,0xffff00ff) {}
+// SDLC_Button::SDLC_Button(SDLC_Context *context,int x,int y,int w,int d):SDLC_Button(context,x,y,w,d,0xffff00ff) {}
 
-SDLC_Button::SDLC_Button(SDLC_Context *context,int x,int y,int w,int d,Uint32 bg):SDLC_Label(context,NULL),status(STATUS_NOMAL) {
-    bgc_down = 0xff777777;
-    bgc_in = 0xff999999;
-    setPostion(x,y);
-    setSize(w,d);
-    setbgcolor(bg);
-    bgc = bg;
-}
+// SDLC_Button::SDLC_Button(SDLC_Context *context,int x,int y,int w,int d,Uint32 bg):SDLC_Label(context,NULL),status(STATUS_NOMAL) {
+//     bgc_down = 0xAA0000FF;
+//     bgc_in = 0xAAFFFFFF;
+//     setPostion(x,y);
+//     setSize(w,d);
+//     setbgcolor(bg);
+//     bgc = bg;
+    
+// }
 
 SDLC_Button::~SDLC_Button() {
  }

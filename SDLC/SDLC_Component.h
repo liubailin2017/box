@@ -24,7 +24,10 @@ protected:
     int width;
     int height;
     bool isvisible;
+    
+    /* 锁定按下,当锁定时响应抬起事件 */
     int upLock;
+    
     SDL_Surface *surface;
 
     /* 控件上下文环境 */
@@ -110,9 +113,12 @@ public:
     1 处理事件
     2 鼠标事件 当前点为透明
     */
-    virtual int fliterEvent(const SDL_Event& event) ;
+    virtual int fliterEvent(const SDL_Event& event);
+
     /* 事件分发 */
     virtual bool dispatch(const SDL_Event& event);
+
+    /* 内部处理，比如内部实现移动，out/in事件等功能 */
     virtual bool handleEvent(const SDL_Event& event);
 
     /* 可见性 */
@@ -137,7 +143,7 @@ public:
     virtual SDLC_Component *findById(int id); /* 在儿子节点下查找 */
     virtual SDLC_Component *removeById(int id); 
 
-
+    /* 升到最上层 */
     virtual void raise();
 
     SDLC_Component(SDLC_Context *context);
@@ -146,7 +152,8 @@ public:
     SDLC_Component(SDLC_Context *context,int x,int y,int w,int d,Uint32 bg);
     
     ~SDLC_Component();
-    friend class SDLC_Context;
+
+    friend class SDLC_Context; 
 };
 
 #endif

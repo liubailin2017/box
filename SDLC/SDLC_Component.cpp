@@ -13,12 +13,6 @@ extern bool isContain(int x ,int y,int rx,int ry, int rw,int rh);
 
 bool SDLC_Component::defaultmouseButtonHandler(const SDL_Event& event,SDLC_Component *cmp) {
 
-    if(canRaise == true) { 
-        if(event.type == SDL_MOUSEBUTTONDOWN) {
-            raise();
-        }
-    }
-
     if(mouseButtonHandler == NULL) {
         return true; /* 默认是被消耗 */
     }else 
@@ -131,19 +125,28 @@ int SDLC_Component::fliterEvent(const SDL_Event& event) {
         if(isContain(bx,by,tx,ty,width,height)) {
             bufp = (Uint32 *)surface->pixels + (bx-tx) + (by-ty) * surface->pitch/4;
             if(*bufp & 0xff000000) {
-                upLock = event.button.button;
                 return 1;
             }else  {
-                return 2; /* 当前点为透明 */
+                return 2; /* 当前点为透明 (用来判断是否交给子控件,当前控件是透明的，而子控件不透明)*/
             }
         }
     }
 
-    if(event.type == SDL_MOUSEBUTTONUP && upLock == event.button.button) {
-        upLock = 0; /*SDL_MOUSEBUTTONUP 和  SDL_MOUSEBUTTONDOWN 成对出现 */
-        return 1;
+    if(event.type == SDL_MOUSEBUTTONUP) {
+        bx = event.button.x;
+        by = event.button.y;
+        tx = abx();
+        ty = aby();
+        if(isContain(bx,by,tx,ty,width,height)) {
+            bufp = (Uint32 *)surface->pixels + (bx-tx) + (by-ty) * surface->pitch/4;
+            if(*bufp & 0xff000000) {
+                return 1;
+            }else  {
+                upLock = 0; /* 消除up锁定 */
+                return 2;
+            }
+        }        
     }
-
                                         /* 没有正在移动的对象 */
     if(event.type == SDL_MOUSEMOTION && NULL == context->curMvCmp) {
         bx = event.motion.x;
@@ -157,12 +160,23 @@ int SDLC_Component::fliterEvent(const SDL_Event& event) {
             }
         }
     }
-
+    
     return 0;
 }
-
+/* 通过了过滤器才能到这个函数 */
 bool SDLC_Component::handleEvent(const SDL_Event& event) {
-    
+
+    if(event.type == SDL_MOUSEBUTTONUP ) {
+        if(upLock == event.button.button) {
+            upLock = 0; /*SDL_MOUSEBUTTONUP 和  SDL_MOUSEBUTTONDOWN 成对出现 */
+            return defaultmouseButtonHandler(event,this);            
+        }else {
+            return true;
+        }
+    }
+
+    if(false == defaultmouseButtonHandler(event,this)) return false; /* 先交给默认鼠标事件处理器 */
+
     if(event.type == SDL_MOUSEMOTION) {
         /* 产生out 事件 */
         SDLC_Component *t = context->curCmp; 
@@ -186,22 +200,22 @@ bool SDLC_Component::handleEvent(const SDL_Event& event) {
         context ->curCmp = this;
     }
 
-    if(event.type == SDL_MOUSEBUTTONDOWN && context->curMvCmp == NULL && _movable ) {
-        context->curMvCmp = this;
-        printf("down id %d \n",id);
-        if(context->curMvCmp == this && upLock == 1 ) {
+    if(event.type == SDL_MOUSEBUTTONDOWN) {
+        upLock = event.button.button;
+        if(canRaise == true) { 
+            raise();
+        }
+        if(context->curMvCmp == NULL && _movable && upLock == 1) {
+            context->curMvCmp = this;
             context->status[0] = event.button.x;
-            context->status[1] = event.button.y;
+            context->status[1] = event.button.y; 
             context->status[2] = x;
             context->status[3] = y;
         }
     }
 
-    if(defaultmouseButtonHandler(event,this)) { /* 交给默认鼠标事件处理器 */
-        return true;
-    }
-
-    return false;
+    return true;
+ 
 }
 
 void SDLC_Component::setOutHandler(OutHandler handler) {
