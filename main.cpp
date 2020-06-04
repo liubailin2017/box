@@ -4,7 +4,8 @@
 #include<SDL2/SDL.h>
 #include<SDL2/SDL_image.h>
 #include<math.h>
-
+#include<string.h>
+#include<time.h> 
 
 #include "SDLC/SDLC_log.h"
 #include "SDLC/SDLC_Context.h"
@@ -22,6 +23,7 @@
 #include"SDLdraw/drawlist.h"
 
 #include"GlobalData.h"
+
 
 GameGloabalResouce GloabalData; /* 全局变量初始化 */
 
@@ -41,7 +43,19 @@ void main_save() {
         fclose(f);
     }
 }
+void Log(char *msg ) {
+    FILE* f = fopen("log.txt","a");
+    time_t t= time(NULL);
+    char *str1 = ctime(&t);\
+    char *str2 = ": ";
+    fwrite(str1,strlen(str1)-1,1,f);
+    fwrite(str2,strlen(str2),1,f);
+    fwrite(msg,strlen(msg),1,f);
+    fclose(f);
+}
 int main(int argc,char* agrv[]) {
+ 
+    Log("开始游戏\n");
 
     SDL_Event event;
 
@@ -62,6 +76,8 @@ int main(int argc,char* agrv[]) {
 
     SDL_DestroyWindow(GloabalData.global_w);
     main_save();
+    Log("正常结束\n");
+
     return 0;
 }
 

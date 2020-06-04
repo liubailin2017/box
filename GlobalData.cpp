@@ -21,12 +21,13 @@ GameGloabalResouce::GameGloabalResouce():
                                     isInit(SDLC_Init()), /*  加载 SDL2 */
                                     context(SDLC_Context(global_w)), 
                                     topbar(Toolbar(&context)),
+                                    msgbox(SDLC_Msgbox(&context)),
                                     m(map()),
                                     c(content(&m)),
                                     leve(0),
                                     isq(false),img_help(Helpbar(&context))
 {
-
+    context.addComponent(&msgbox);
     context.addComponent(&topbar);
     SDLC_Component *sc = new SDLC_Button(&context,FINI_GetStr(fini,"MENU1"),0xff223355);
     sc->setListener(&event_replay_level);
@@ -36,8 +37,6 @@ GameGloabalResouce::GameGloabalResouce():
     topbar.addComponent(sc);
     sc = new SDLC_Button(&context,FINI_GetStr(fini,"MENU3"),0xff223355);  
     sc->setListener(&event_next_level);
-    topbar.addComponent(sc);
-    sc = new SDLC_Button(&context," ",0xff000000);  
     topbar.addComponent(sc);
     sc = new SDLC_Button(&context,FINI_GetStr(fini,"MENU4"),0x22333333);
     sc->setListener(&event_edit);

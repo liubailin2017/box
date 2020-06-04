@@ -12,6 +12,7 @@
 #include "SDLC/Extends/SDLC_Button.h"
 #include "SDLC/Extends/toolbar.h"
 #include "SDLC/Extends/helpbar.h"
+#include"SDLC/Extends/SDLC_Msgbox.h"
 #include "fini/fini.h"
 /* 全局对象，用于初始化环境 */
 struct GameGloabalResouce{   
@@ -23,6 +24,7 @@ struct GameGloabalResouce{
     SDLC_Context context;
     Toolbar topbar;
     Helpbar img_help;
+    SDLC_Msgbox msgbox;
     
     palette global_palette;
     map m; 

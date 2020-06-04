@@ -31,10 +31,12 @@ SDLC_Label::~SDLC_Label() {
 void SDLC_Label::setText(std::string text) {
     SDL_Color color = {text_color&0xff,text_color>>8 & 0xff ,text_color >> 16 & 0xff};
     this->text = text;
-
     if(surface_text) SDL_free(surface_text);
     surface_text = TTF_RenderUTF8_Solid(ttf,text.c_str(),color);
-    setSize(surface_text->w,surface_text->h);
+    if(surface_text)
+        setSize(surface_text->w,surface_text->h);
+    else
+        setSize(0,0);
 }
 
 void SDLC_Label::setFSize(int size)  {

@@ -62,6 +62,7 @@ protected:
     bool canRaise;
 
 public:
+
     bool isRoot();
     /* 
         默认的事件处理(所有的事件都是通过这些函数间接调用事件处理器)
@@ -79,7 +80,7 @@ public:
     int getY();
     int getWidth();
     int getHeight();
-    
+    SDLC_Component *getParent();
     SDLC_Context* _context();
 
     /* 尾结点 */

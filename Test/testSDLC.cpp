@@ -11,12 +11,14 @@ int _HEIGHT =640;
 
 #include "SDLC_log.h"
 #include "SDLC_Context.h"
-#include "SDLC_Component.h"
+#include "SDLC_Com_Radius.h"
 #include "Extends/SDLC_Button.h"
 #include "Extends/AnimationTest.h"
 #include"Extends/toolbar.h"
 #include"Extends/SDLC_Label.h"
-
+#include"Extends/SDLC_Msgbox.h"
+#include<string.h>
+#include<time.h> 
 bool test_event(const SDL_Event& event,SDLC_Component *cmp ) {
     printf("type : %d \n",event.type);
     return false;
@@ -28,6 +30,11 @@ bool up_event(const SDL_Event& event,SDLC_Component *cmp ) {
         printf("down id : %d \n",cmp->getId());
     }
     return true;
+}
+
+bool btnHander(const SDL_Event& event,SDLC_Component *cmp) {
+    SDLC_Button *btn = (SDLC_Button *)cmp;
+    printf("id %d \n",btn->btnflag);
 }
 static int strick_thread(void *ptr);
 SDL_mutex *mutex;
@@ -43,31 +50,16 @@ int main(int argc,char* agrv[]) {
     SDLC_Context context(global_w);
     context.setInterval(1,NULL);
 
-    SDLC_Label *lb = new SDLC_Label(&context,24,"别再说你只知道薰衣草了，罗马尼亚有种花和日本樱花齐名，却不为人知");  
+    SDLC_Label *lb = new SDLC_Label(&context,24,"别再说你只知道薰衣草了，罗马尼亚有种花和日本樱花齐名，却不为人知");
+    lb->setPostion((context.getWidth()-lb->getWidth())/2,(context.getHeight()-lb->getHeight())/2); 
     context.addComponent(lb);
-    lb->setPostion((context.getWidth()-lb->getWidth())/2,(context.getHeight()-lb->getHeight())/2);
-    SDLC_Button *btn = new SDLC_Button(&context,"HELLO,WORLD",0x5500ff00);
-    btn->setMovable(true);
-    context.addComponent(btn);
-    SDLC_Component *container = new SDLC_Component(&context,0,0,500,500,0x55aaff00);
-    container->setListener(up_event);
-    context.addComponent(container);
-    container->setMovable(true);
-    for(int i = 0; i< 8 ;i++) {
-        SDLC_Component *c =  new SDLC_Component(&context,i*10,i*10,100,100,0xff00ff00+i*0xf);
-
-        c->setMovable(true);
-        container->addComponent(c);
-        c->setListener(test_event);
-
-    }
-    Toolbar *tb = new Toolbar(&context);
-            for(int j = 0; j< 30; j++){
-                        SDLC_Button *btni =  new SDLC_Button(&context,"HELLO,WORLD",0xff00ff00);
-                        tb->addComponent(btni);
-                       btni->setListener(up_event);
-    }
-    context.addComponent(tb);
+ 
+    SDLC_Com_Radius *comr = new SDLC_Com_Radius(&context,100,100,100,100,0xff00ff00,50);
+    comr->setMovable(true);
+    context.addComponent(comr);
+    SDLC_Msgbox msg(&context);
+    context.addComponent(&msg);
+    msg.show("hello",btnHander);
     SDL_Event event;
     mutex = SDL_CreateMutex();
     SDL_Thread *thread = SDL_CreateThread(strick_thread, "strick_thread", (void *)&context);;
@@ -89,6 +81,7 @@ int main(int argc,char* agrv[]) {
     
     SDL_DestroyWindow(global_w);
 
+    
     return 0;
 }
 

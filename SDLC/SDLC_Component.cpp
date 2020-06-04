@@ -29,7 +29,8 @@ void SDLC_Component::defaultOutHandler(SDLC_Component *cmp) {
 }
 
 void SDLC_Component::defaultInHandler(SDLC_Component *cmp) {   
-    std::cout << "into ID:"<< cmp->getId() <<std::endl;
+    std::cout << "into ID:"<< cmp->getId()<<"uplock:"<< upLock<<std::endl;
+    
     if(cmp->inHandler) inHandler(cmp);
 }
 
@@ -54,16 +55,7 @@ void SDLC_Component::setRaise(bool v) {
 
 void SDLC_Component::setbgcolor(Uint32 bg) {
     this ->bgcolor = bg;
-    if(SDL_MUSTLOCK(surface)) {
-        SDL_LockSurface(surface);
-    }
-    for(int i = 0; i< surface->w*surface->h; i++) {
-        *((Uint32*)(surface->pixels)+i) = bgcolor;
-    }
-    if(SDL_MUSTLOCK(surface)) {
-        SDL_UnlockSurface(surface);
-    }
-    context->notifyUpdate();
+    SDLC_Component::updateSurface();
 }
 
 Uint32 SDLC_Component::getBgcolor() {
@@ -142,10 +134,12 @@ int SDLC_Component::fliterEvent(const SDL_Event& event) {
             if(*bufp & 0xff000000) {
                 return 1;
             }else  {
-                upLock = 0; /* 消除up锁定 */
                 return 2;
             }
-        }        
+        } else {
+            upLock = 0; /* 消除up锁定 */      
+        }
+
     }
                                         /* 没有正在移动的对象 */
     if(event.type == SDL_MOUSEMOTION && NULL == context->curMvCmp) {
@@ -171,7 +165,7 @@ bool SDLC_Component::handleEvent(const SDL_Event& event) {
             upLock = 0; /*SDL_MOUSEBUTTONUP 和  SDL_MOUSEBUTTONDOWN 成对出现 */
             return defaultmouseButtonHandler(event,this);            
         }else {
-            return true;
+            return false; /*  这里返回false 用来 刷新 uplock */ 
         }
     }
 
@@ -274,7 +268,15 @@ SDLC_Component* SDLC_Component::header()
 
 
 void SDLC_Component::updateSurface() {
-    setbgcolor(bgcolor);
+    if(SDL_MUSTLOCK(surface)) {
+        SDL_LockSurface(surface);
+    }
+    for(int i = 0; i< surface->w*surface->h; i++) {
+        *((Uint32*)(surface->pixels)+i) = bgcolor;
+    }
+    if(SDL_MUSTLOCK(surface)) {
+        SDL_UnlockSurface(surface);
+    }
 }
 
 void SDLC_Component::setPostion(int x,int y) {
@@ -386,7 +388,7 @@ int SDLC_Component::getX() { return x; }
 int SDLC_Component::getY() { return y; }
 int SDLC_Component::getWidth() { return width; }
 int SDLC_Component::getHeight() { return height; }
-
+SDLC_Component* SDLC_Component::getParent() { return parent; }
  
 void SDLC_Component::setInterval(int i,StrickHandler h) {
     if(i >= 0) {

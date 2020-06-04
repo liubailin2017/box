@@ -25,6 +25,8 @@ private:
   Uint32 bgc;
   int status;
 public:
+    int btnflag; /* 用于在回调函数的标识 */
+    void* arg;
     virtual void updateSurface();
     SDLC_Button(SDLC_Context *context,char *text);
     SDLC_Button(SDLC_Context *context,char *text,Uint32 bg);

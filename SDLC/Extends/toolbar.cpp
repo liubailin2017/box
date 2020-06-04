@@ -1,14 +1,15 @@
 #include"toolbar.h"
 
 
-Toolbar::Toolbar(SDLC_Context* context):SDLC_Component(context),height1(20),height2(100),nx(10),ny(0),maxh(0) {
+Toolbar::Toolbar(SDLC_Context* context):SDLC_Component(context),height1(25),height2(100),nx(10),ny(0),maxh(0) {
     setPostion(0,0);
     status = 1;
     setSize(_context()->getWidth(),height1);    
     setbgcolor(0x88667766);
     title = new SDLC_Label(context,18,"当前关卡：0");
-    title->setSize(width,title->getHeight());
     addComponent(title);
+    title->setPostion(( width - title->getWidth())/2,10);
+    ny = title->getHeight() + 10;
     nx = 10;
 }
 
@@ -26,14 +27,14 @@ void Toolbar::defaultInHandler(SDLC_Component *cmp) {
 
 void Toolbar::addComponent(SDLC_Component *cmp) {
     SDLC_Component::addComponent(cmp);
-    cmp->setPostion(nx,ny);
-    nx += cmp->getWidth() + 20;
-    if(maxh <cmp->getHeight()) maxh = cmp -> getHeight();
-    if(nx >= width) {
+    if(nx+cmp->getWidth() > width) {
         nx = 10;
         ny += maxh+30;
         maxh = 0;
     }
+    cmp->setPostion(nx,ny);
+    nx += cmp->getWidth() + 20;
+    if(maxh <cmp->getHeight()) maxh = cmp -> getHeight();
     height2= maxh +  ny+ 10; 
 }
 void Toolbar::defaultStrickHandler(SDLC_Component *cmp) {
