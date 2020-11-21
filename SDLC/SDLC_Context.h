@@ -19,6 +19,7 @@ private :
     int cid;
     int width;
     int height;
+    SDL_Point curPostion; /* 鼠标位置 */
     SDL_Surface *surface;
     SDL_Window *window;
     SDLC_Component *components;
@@ -69,7 +70,7 @@ public:
     void notifyUpdate();
 
     void updateWindow();
-
+    SDL_Point getCurPostion();
 
 
     friend class SDLC_Component;

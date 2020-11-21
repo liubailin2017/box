@@ -12,7 +12,6 @@ protected:
   TTF_Font* ttf;
   std::string text;
   Uint32 text_color;
-
 public:
     virtual void updateSurface();
     SDLC_Label(SDLC_Context *context,char *text);
@@ -20,10 +19,10 @@ public:
     SDLC_Label(SDLC_Context *context,char *text,Uint32 color); 
     SDLC_Label(SDLC_Context *context,char *text,int fsize,Uint32 color); 
 
-    void setText(std::string text);
+    virtual void setText(std::string text);
+
     void setFSize(int size);
     void setColor(Uint32 color);
-
     virtual ~SDLC_Label();
 };
 #endif

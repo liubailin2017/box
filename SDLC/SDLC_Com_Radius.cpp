@@ -14,7 +14,8 @@ int SDLC_Com_Radius::getRadius() {
 void ::SDLC_Com_Radius::updateSurface() {
     Uint32 mask_c = 0x00000000;
     SDLC_Component::updateSurface();
-    
+    int width = getWidth();
+    int height = getHeight();
     for(int i = 0; i <= radius; i++) {
         int x = radius - sqrt(radius*radius - i * i);
         sdltool::line(surface,0,radius-i,x,radius - i,mask_c,1);/* 左上 */ 

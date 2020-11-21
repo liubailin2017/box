@@ -11,12 +11,14 @@ int _HEIGHT =640;
 
 #include "SDLC_log.h"
 #include "SDLC_Context.h"
-#include "SDLC_Com_Radius.h"
+#include "SDLC_Example.h"
 #include "Extends/SDLC_Button.h"
 #include "Extends/AnimationTest.h"
 #include"Extends/toolbar.h"
 #include"Extends/SDLC_Label.h"
 #include"Extends/SDLC_Msgbox.h"
+#include"Extends/game/SDLC_Session.h"
+#include"Extends/Image.h"
 #include<string.h>
 #include<time.h> 
 bool test_event(const SDL_Event& event,SDLC_Component *cmp ) {
@@ -50,19 +52,29 @@ int main(int argc,char* agrv[]) {
     SDLC_Context context(global_w);
     context.setInterval(1,NULL);
 
-    SDLC_Label *lb = new SDLC_Label(&context,24,"别再说你只知道薰衣草了，罗马尼亚有种花和日本樱花齐名，却不为人知");
-    lb->setPostion((context.getWidth()-lb->getWidth())/2,(context.getHeight()-lb->getHeight())/2); 
-    context.addComponent(lb);
+    SDLC_Example *comr = new SDLC_Example(&context,50);
+   // SDLC_Label *lb = new SDLC_Label(&context,24,"别再说你只知道薰衣草了，罗马尼亚有种花和日本樱花齐名，却不为人知");
+    AnimationTest *ani = new AnimationTest(&context);
+    //lb->setPostion((context.getWidth()-lb->getWidth())/2,(context.getHeight()-lb->getHeight())/2); 
  
-    SDLC_Com_Radius *comr = new SDLC_Com_Radius(&context,100,100,100,100,0xff00ff00,50);
     comr->setMovable(true);
-    context.addComponent(comr);
     SDLC_Msgbox msg(&context);
-    context.addComponent(&msg);
+    SDLC_Image img(&context);
+    SDLC_Session session(&context,0);
+    
+    img.load("test.tga");
     msg.show("hello",btnHander);
+    context.addComponent(comr);
+    context.addComponent(&msg);
+  //  context.addComponent(lb);
+    context.addComponent(ani);
+    context.addComponent(&img);
+    context.addComponent(&session);
+    session.Show("hello,world");
     SDL_Event event;
     mutex = SDL_CreateMutex();
-    SDL_Thread *thread = SDL_CreateThread(strick_thread, "strick_thread", (void *)&context);;
+    SDL_Thread *thread = SDL_CreateThread(strick_thread, "strick_thread", (void *)&context);
+  
     while (!isq)
     {
         if(SDL_PollEvent(&event)) {

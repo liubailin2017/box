@@ -17,12 +17,15 @@ class SDLC_Context;
     */
 class SDLC_Component
 {
+private:
+    int width;
+    int height;
+
 protected:
     int id;
     int x;
     int y;
-    int width;
-    int height;
+
     bool isvisible;
     
     /* 锁定按下,当锁定时响应抬起事件 */

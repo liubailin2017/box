@@ -38,6 +38,8 @@ bool SDLC_Context::dispatch(const SDL_Event& event) {
                 }
                 break;
         case    SDL_MOUSEMOTION:
+                curPostion.x = event.motion.x;
+                curPostion.y = event.motion.y;
                 if(curMvCmp) {
                     int x,y;
                     x = (status[2] + event.motion.x - status[0]);
@@ -99,6 +101,11 @@ int SDLC_Context::getHeight() {
 int SDLC_Context::generateId() {
     return cid++;
 }
+
+SDL_Point SDLC_Context::getCurPostion() {
+    return curPostion;
+}
+
 
 SDLC_Component *SDLC_Context::addComponent(SDLC_Component *component) {
     if(!component) return NULL;
@@ -213,8 +220,10 @@ void SDLC_Context::updateWindow() {
     update();
     if(updateBg) {
         updateBg(surface);
-    }else {
-        memset(surface->pixels,0,surface->h*surface->pitch);
+    }else { // surface->h*surface->pitch 
+            //(surface->h)*(surface->pitch)
+            int size = surface->h*surface->pitch;
+        memset(surface->pixels,0,size);
     }
     SDLC_Component *tmp = this->components;
     while(tmp) {

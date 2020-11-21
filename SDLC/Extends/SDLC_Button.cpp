@@ -13,7 +13,7 @@ void SDLC_Button::updateSurface() {
     case STATUS_UP:
     case STATUS_SELECt:
         SDLC_Component::setbgcolor(bgc);
-        sdltool::line(surface,0,height,width,height,bgc_in,10);
+        sdltool::line(surface,0,getHeight(),getWidth(),getHeight(),bgc_in,10);
         break;
     case STATUS_NOMAL:
     case STATUS_OUT:

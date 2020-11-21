@@ -8,7 +8,7 @@ Toolbar::Toolbar(SDLC_Context* context):SDLC_Component(context),height1(25),heig
     setbgcolor(0x88667766);
     title = new SDLC_Label(context,18,"当前关卡：0");
     addComponent(title);
-    title->setPostion(( width - title->getWidth())/2,10);
+    title->setPostion(( getWidth() - title->getWidth())/2,10);
     ny = title->getHeight() + 10;
     nx = 10;
 }
@@ -27,7 +27,7 @@ void Toolbar::defaultInHandler(SDLC_Component *cmp) {
 
 void Toolbar::addComponent(SDLC_Component *cmp) {
     SDLC_Component::addComponent(cmp);
-    if(nx+cmp->getWidth() > width) {
+    if(nx+cmp->getWidth() > getWidth()) {
         nx = 10;
         ny += maxh+30;
         maxh = 0;

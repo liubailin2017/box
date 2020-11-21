@@ -13,6 +13,21 @@ extern bool isContain(int x ,int y,int rx,int ry, int rw,int rh);
 
 bool SDLC_Component::defaultmouseButtonHandler(const SDL_Event& event,SDLC_Component *cmp) {
 
+
+    if(event.type == SDL_MOUSEBUTTONDOWN) {
+        upLock = event.button.button;
+        if(canRaise == true) { 
+            raise();
+        }
+        if(/*context->curMvCmp == NULL && */_movable && upLock == 1) {
+            context->curMvCmp = this;
+            context->status[0] = event.button.x;
+            context->status[1] = event.button.y; 
+            context->status[2] = x;
+            context->status[3] = y;
+        }
+    }
+    
     if(mouseButtonHandler == NULL) {
         return true; /* 默认是被消耗 */
     }else 
@@ -21,6 +36,7 @@ bool SDLC_Component::defaultmouseButtonHandler(const SDL_Event& event,SDLC_Compo
         }else {
             return false;
         }
+        
 }
 
 void SDLC_Component::defaultOutHandler(SDLC_Component *cmp) {
@@ -149,7 +165,7 @@ int SDLC_Component::fliterEvent(const SDL_Event& event) {
         ty = aby();
         if(isContain(bx,by,tx,ty,width,height)) {
             bufp = (Uint32 *)surface->pixels + (bx-tx) + (by-ty) * surface->pitch/4;
-            if(*bufp & 0xff000000) {
+            if(bufp &&(*bufp & 0xff000000)) {
                 return 1;
             }
         }
@@ -192,20 +208,6 @@ bool SDLC_Component::handleEvent(const SDL_Event& event) {
             t_ = t_->header()->parent;
         }
         context ->curCmp = this;
-    }
-
-    if(event.type == SDL_MOUSEBUTTONDOWN) {
-        upLock = event.button.button;
-        if(canRaise == true) { 
-            raise();
-        }
-        if(context->curMvCmp == NULL && _movable && upLock == 1) {
-            context->curMvCmp = this;
-            context->status[0] = event.button.x;
-            context->status[1] = event.button.y; 
-            context->status[2] = x;
-            context->status[3] = y;
-        }
     }
 
     return true;
@@ -514,7 +516,6 @@ SDLC_Component::~SDLC_Component(){
                 delete brother;
                 brother = NULL;
             }
-
         }
 #ifdef DEBUG
         cnt ++;

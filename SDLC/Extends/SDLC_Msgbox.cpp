@@ -29,7 +29,7 @@ SDLC_Msgbox::SDLC_Msgbox(SDLC_Context *context):SDLC_Com_Radius(context,200,120)
     setRadius(10);
     setMovable(true);
     SDLC_Label *slb = new SDLC_Label(context,18,"");
-    slb->setPostion((width- slb->getWidth())/2,10);
+    slb->setPostion((getWidth()- slb->getWidth())/2,10);
     
     addComponent(slb);
     label = slb;
@@ -47,7 +47,7 @@ SDLC_Msgbox::SDLC_Msgbox(SDLC_Context *context):SDLC_Com_Radius(context,200,120)
         btn->setPostion(200-btn->getWidth()-10,80);
         btn2 = (SDLC_Button*)btn;
         addComponent(btn);
-    setPostion((context->getWidth() - width)/2,(context->getHeight()-height)/2);
+    setPostion((context->getWidth() - getWidth())/2,(context->getHeight()-getHeight())/2);
     this->setvisible(false);
 }
 
@@ -64,7 +64,7 @@ void SDLC_Msgbox::show(char *msg,Handler cb) {
     label->setText(msg);
     btn1->setListener(cb);
     btn2->setListener(cb);
-    label->setPostion((width- label->getWidth())/2,10);
+    label->setPostion((getWidth()- label->getWidth())/2,10);
     
     setvisible(true);
     raise();
