@@ -60,7 +60,7 @@ int main(int argc,char* agrv[]) {
     comr->setMovable(true);
     SDLC_Msgbox *msg = new SDLC_Msgbox(&context);
     SDLC_Image *img = new SDLC_Image(&context);
-    SDLC_Session session(&context,0);
+    SDLC_Session*session = new SDLC_Session(&context,0);
     
     img->load("test.png");
     msg->show("hello",btnHander);
@@ -69,8 +69,8 @@ int main(int argc,char* agrv[]) {
   //  context.addComponent(lb);
     // context.addComponent(ani);
     // context.addComponent(&img);
-     context.addComponent(&session);
-    session.Show(img,
+     context.addComponent(session);
+    session -> Show(img,
 "一天动物园管理员发现袋鼠从笼子里跑出来了，于是开会讨论，一致认为是笼子的高度过低"
 "所以他们决定将笼子的高度由原来的10米加高到20米。结果第二天他们发现袋鼠还是跑到外面来，所以他们又决定再将高度加高到30米。"
 "没想到隔天居然又看到袋鼠全跑到外面，于是管理员们大为紧张，决定一不做二不休，将笼子的高度加高到100米。"
@@ -122,5 +122,5 @@ static int strick_thread(void *ptr)
 
 /* 
 todo
-解决析构异常 
+解决析构异常  V
 */

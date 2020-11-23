@@ -14,7 +14,7 @@ bool event_next_level_act(const SDL_Event& event,SDLC_Component *cmp ) {
 }
 bool event_next_level(const SDL_Event& event,SDLC_Component *cmp ) {
     if(event.type != SDL_MOUSEBUTTONUP) return true;
-        GloabalData.msgbox.show("确定要<切换到下一关>?",event_next_level_act);
+        GloabalData.msgbox->show("确定要<切换到下一关>?",event_next_level_act);
 
     return true;
 }
@@ -32,7 +32,7 @@ bool event_pre_level_act(const SDL_Event& event,SDLC_Component *cmp ) {
 }
 bool event_pre_level(const SDL_Event& event,SDLC_Component *cmp ) {
     if(event.type != SDL_MOUSEBUTTONUP) return true;
-    GloabalData.msgbox.show("确定要<切换到上一关>?",event_pre_level_act);
+    GloabalData.msgbox->show("确定要<切换到上一关>?",event_pre_level_act);
     return true;
 }
 
@@ -46,13 +46,13 @@ bool event_replay_level_act(const SDL_Event& event,SDLC_Component *cmp ) {
 }
 bool event_replay_level(const SDL_Event& event,SDLC_Component *cmp ) {
     if(event.type != SDL_MOUSEBUTTONUP) return true;
-        GloabalData.msgbox.show("确定要<重新开始>?",event_replay_level_act);
+        GloabalData.msgbox->show("确定要<重新开始>?",event_replay_level_act);
         return true;
 }
 
 bool event_help(const SDL_Event& event,SDLC_Component *cmp ) {
     if(event.type != SDL_MOUSEBUTTONUP) return true;
-        GloabalData.img_help.setvisible(! GloabalData.img_help.visible());
+        GloabalData.img_help->setvisible(! GloabalData.img_help->visible());
         return true;
 }
  
@@ -101,7 +101,7 @@ bool event_exit_act(const SDL_Event& event,SDLC_Component *cmp ) {
 }
 bool event_exit(const SDL_Event& event,SDLC_Component *cmp ) {
     if(event.type != SDL_MOUSEBUTTONUP) return true;
-    GloabalData.msgbox.show("确定要<退出游戏>?",&event_exit_act);
+    GloabalData.msgbox->show("确定要<退出游戏>?",&event_exit_act);
     return true;
 }
 

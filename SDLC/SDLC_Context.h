@@ -71,7 +71,8 @@ public:
 
     void updateWindow();
     SDL_Point getCurPostion();
-
+    virtual ~SDLC_Context();
+    
     friend class SDLC_Component;
 };
 bool SDLC_Init();

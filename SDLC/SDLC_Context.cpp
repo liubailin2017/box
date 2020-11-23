@@ -255,3 +255,13 @@ void SDLC_Context::strick() {
         strickHandler(NULL);
     }
 }
+
+SDLC_Context::~SDLC_Context() {
+    SDLC_Component *cmp = components;
+    SDLC_Component *cmp2;
+    if( cmp ) {
+        cmp2= cmp->brother;
+        delete cmp; 
+        cmp = cmp2;   
+    }
+}

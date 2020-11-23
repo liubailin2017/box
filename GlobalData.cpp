@@ -20,40 +20,40 @@ GameGloabalResouce::GameGloabalResouce():
                                         SDL_WINDOW_RESIZABLE|SDL_WINDOW_SHOWN*/)),
                                     isInit(SDLC_Init()), /*  加载 SDL2 */
                                     context(SDLC_Context(global_w)), 
-                                    topbar(Toolbar(&context)),
-                                    msgbox(SDLC_Msgbox(&context)),
+                                    topbar(new Toolbar(&context)),
+                                    msgbox(new SDLC_Msgbox(&context)),
                                     m(map()),
                                     c(content(&m)),
                                     leve(0),
-                                    isq(false),img_help(Helpbar(&context))
+                                    isq(false),img_help(new Helpbar(&context))
 {
-    context.addComponent(&msgbox);
-    context.addComponent(&topbar);
+    context.addComponent(msgbox);
+    context.addComponent(topbar);
     SDLC_Component *sc = new SDLC_Button(&context,FINI_GetStr(fini,"MENU1"),0xff223355);
     sc->setListener(&event_replay_level);
-    topbar.addComponent(sc);
+    topbar->addComponent(sc);
     sc = new SDLC_Button(&context,FINI_GetStr(fini,"MENU2"),0xff223355);
     sc->setListener(&event_pre_level); 
-    topbar.addComponent(sc);
+    topbar->addComponent(sc);
     sc = new SDLC_Button(&context,FINI_GetStr(fini,"MENU3"),0xff223355);  
     sc->setListener(&event_next_level);
-    topbar.addComponent(sc);
+    topbar->addComponent(sc);
     sc = new SDLC_Button(&context,FINI_GetStr(fini,"MENU4"),0x22333333);
     sc->setListener(&event_edit);
-    topbar.addComponent(sc);
+    topbar->addComponent(sc);
     sc = new SDLC_Button(&context,FINI_GetStr(fini,"MENU5"),0xff553322);  
     sc->setListener(&event_change_game);
-    topbar.addComponent(sc);
+    topbar->addComponent(sc);
     sc = new SDLC_Button(&context,FINI_GetStr(fini,"MENU6"),0xff334422);  
     sc->setListener(&event_back);
-    topbar.addComponent(sc);
+    topbar->addComponent(sc);
     sc = new SDLC_Button(&context,FINI_GetStr(fini,"MENU7"),0xff006622);  
     sc->setListener(&event_help);
-    topbar.addComponent(sc);
-    context.addComponent(&img_help);
+    topbar->addComponent(sc);
+    context.addComponent(img_help);
      sc = new SDLC_Button(&context,FINI_GetStr(fini,"MENU8"),0xff0066ff);  
     sc->setListener(&event_exit);
-    topbar.addComponent(sc);
+    topbar->addComponent(sc);
     loadMainHandle();
     bmapload(); /* 地图加载 */  
     selectLeve(leve, c);
@@ -160,7 +160,7 @@ void selectLeve(int leve,content &c) {
     /*step 3 */
     c.init();
     title = "当前关卡:"+std::to_string(leve+1)+"    "+flag[leve];
-    GloabalData.topbar.setText(title.c_str());
+    GloabalData.topbar->setText(title.c_str());
     // SDL_SetWindowTitle(GloabalData.global_w,title.c_str());
     
 }

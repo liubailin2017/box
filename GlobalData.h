@@ -22,9 +22,9 @@ struct GameGloabalResouce{
     int isInit; 
     SDL_Window* global_w; 
     SDLC_Context context;
-    Toolbar topbar;
-    Helpbar img_help;
-    SDLC_Msgbox msgbox;
+    Toolbar* topbar;
+    Helpbar* img_help;
+    SDLC_Msgbox* msgbox;
     
     palette global_palette;
     map m; 
