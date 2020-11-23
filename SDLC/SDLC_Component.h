@@ -15,12 +15,18 @@ class SDLC_Context;
     |            |
     A-B-C        G
     */
+
+/* 
+
+1.控件只能使用new创建
+2.已被挂到其它控件的控件由其父控件自动释放，控件不可手动释放,除非是自由的控件
+自由控件： 没有挂到其它控件的控件
+*/
 class SDLC_Component
 {
 private:
     int width;
     int height;
-
 protected:
     int id;
     int x;

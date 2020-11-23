@@ -24,11 +24,13 @@ private:
     SDLC_Label* label1;
     SDLC_Label* label2;
     SDLC_Label* label3;
-    SDLC_Image* bg; /*背景*/
+    SDLC_Image*headImg;
     std::string remain_msg;
+    int headHeight;//头像高度
+    int defHeight;
 public:
     
-    //virtual void updateSurface();
+    virtual void updateSurface();
     SDLC_Session(SDLC_Context *context,OnFinish onf);
     /* 可以在这实现一些动画效果 */
     //virtual void defaultStrickHandler(SDLC_Component *cmp);
@@ -36,6 +38,7 @@ public:
     virtual bool defaultmouseButtonHandler(const SDL_Event& event,SDLC_Component *cmp);
 
     void Show(std::string msg); /* 只显示文字 */
-//    void Show(SDLC_Image*head,std::string *msg); /* 显示头像和文字 */
-//    void Show(SDLC_Image *head,std::string *msg,Handler cb); /* 带两个按键的对话框 */
+    void Show(SDLC_Image*head,std::string msg); /* 显示头像和文字 */
+//    void Show(SDLC_Image *head,std::string msg,Handler cb); /* 带两个按键的对话框 */
+
 };

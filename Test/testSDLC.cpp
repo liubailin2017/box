@@ -58,19 +58,24 @@ int main(int argc,char* agrv[]) {
     //lb->setPostion((context.getWidth()-lb->getWidth())/2,(context.getHeight()-lb->getHeight())/2); 
  
     comr->setMovable(true);
-    SDLC_Msgbox msg(&context);
-    SDLC_Image img(&context);
+    SDLC_Msgbox *msg = new SDLC_Msgbox(&context);
+    SDLC_Image *img = new SDLC_Image(&context);
     SDLC_Session session(&context,0);
     
-    img.load("test.tga");
-    msg.show("hello",btnHander);
-    context.addComponent(comr);
-    context.addComponent(&msg);
+    img->load("test.png");
+    msg->show("hello",btnHander);
+    //context.addComponent(comr);
+    context.addComponent(msg);
   //  context.addComponent(lb);
-    context.addComponent(ani);
-    context.addComponent(&img);
-    context.addComponent(&session);
-    session.Show("hello,world");
+    // context.addComponent(ani);
+    // context.addComponent(&img);
+     context.addComponent(&session);
+    session.Show(img,
+"一天动物园管理员发现袋鼠从笼子里跑出来了，于是开会讨论，一致认为是笼子的高度过低"
+"所以他们决定将笼子的高度由原来的10米加高到20米。结果第二天他们发现袋鼠还是跑到外面来，所以他们又决定再将高度加高到30米。"
+"没想到隔天居然又看到袋鼠全跑到外面，于是管理员们大为紧张，决定一不做二不休，将笼子的高度加高到100米。"
+"一天长颈鹿和几只袋鼠们在闲聊，“你们看，这些人会不会再继续加高你们的笼子？长颈鹿问。“很难说。袋鼠说∶“如果他们再继续忘记关门的话！");
+
     SDL_Event event;
     mutex = SDL_CreateMutex();
     SDL_Thread *thread = SDL_CreateThread(strick_thread, "strick_thread", (void *)&context);
@@ -114,3 +119,8 @@ static int strick_thread(void *ptr)
     
     return 0;
 }
+
+/* 
+todo
+解决析构异常 
+*/
