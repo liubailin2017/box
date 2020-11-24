@@ -379,9 +379,10 @@ SDLC_Component* SDLC_Component::removeById(int id) {
         }
     }
 
-    parent = NULL;
-    prebrother = NULL;
-    id = 0;
+    tmp->parent = NULL;
+    tmp->prebrother = NULL;
+    tmp->brother = NULL;
+    tmp->id = 0;
     return tmp;
 }
 

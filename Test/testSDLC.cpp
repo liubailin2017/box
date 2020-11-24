@@ -52,24 +52,24 @@ int main(int argc,char* agrv[]) {
     SDLC_Context context(global_w);
     context.setInterval(1,NULL);
 
-    SDLC_Example *comr = new SDLC_Example(&context,50);
+    //SDLC_Example *comr = new SDLC_Example(&context,50);
    // SDLC_Label *lb = new SDLC_Label(&context,24,"别再说你只知道薰衣草了，罗马尼亚有种花和日本樱花齐名，却不为人知");
-    AnimationTest *ani = new AnimationTest(&context);
+    //AnimationTest *ani = new AnimationTest(&context);
     //lb->setPostion((context.getWidth()-lb->getWidth())/2,(context.getHeight()-lb->getHeight())/2); 
  
-    comr->setMovable(true);
-    SDLC_Msgbox *msg = new SDLC_Msgbox(&context);
+    //comr->setMovable(true);
+    //SDLC_Msgbox *msg = new SDLC_Msgbox(&context);
     SDLC_Image *img = new SDLC_Image(&context);
     SDLC_Session*session = new SDLC_Session(&context,0);
     
     img->load("test.png");
-    msg->show("hello",btnHander);
+    //msg->show("hello",btnHander);
     //context.addComponent(comr);
-    context.addComponent(msg);
+//context.addComponent(msg);
   //  context.addComponent(lb);
     // context.addComponent(ani);
     // context.addComponent(&img);
-     context.addComponent(session);
+    context.addComponent(session);
     session -> Show(img,
 "一天动物园管理员发现袋鼠从笼子里跑出来了，于是开会讨论，一致认为是笼子的高度过低"
 "所以他们决定将笼子的高度由原来的10米加高到20米。结果第二天他们发现袋鼠还是跑到外面来，所以他们又决定再将高度加高到30米。"
@@ -78,7 +78,7 @@ int main(int argc,char* agrv[]) {
 
     SDL_Event event;
     mutex = SDL_CreateMutex();
-    SDL_Thread *thread = SDL_CreateThread(strick_thread, "strick_thread", (void *)&context);
+//    SDL_Thread *thread = SDL_CreateThread(strick_thread, "strick_thread", (void *)&context);
   
     while (!isq)
     {
@@ -89,9 +89,17 @@ int main(int argc,char* agrv[]) {
                 isq = 1;
                 break;
             }
-            SDL_LockMutex(mutex);
+           // SDL_LockMutex(mutex);
             context.dispatch(event);
-            SDL_UnlockMutex(mutex);
+           // SDL_UnlockMutex(mutex);
+        }
+
+        if(SDL_GetTicks() - ticket > 30) {
+            //SDL_LockMutex(mutex);
+                ticket = SDL_GetTicks();
+                context.updateWindow();
+                context.strick();
+            //SDL_UnlockMutex(mutex);
         }
         SDL_Delay(10);
     }
@@ -102,23 +110,23 @@ int main(int argc,char* agrv[]) {
     return 0;
 }
 
-static int strick_thread(void *ptr)
-{
-    int ticket = SDL_GetTicks();
-    SDLC_Context *context = (SDLC_Context *) ptr;
-    while (!isq)
-    {                
-        if(SDL_GetTicks() - ticket > 30) {
-            SDL_LockMutex(mutex);
-                ticket = SDL_GetTicks();
-                context->updateWindow();
-                context->strick();
-            SDL_UnlockMutex(mutex);
-        }
-    }
+// static int strick_thread(void *ptr)
+// {
+//     int ticket = SDL_GetTicks();
+//     SDLC_Context *context = (SDLC_Context *) ptr;
+//     while (!isq)
+//     {                
+//         if(SDL_GetTicks() - ticket > 30) {
+//             SDL_LockMutex(mutex);
+//                 ticket = SDL_GetTicks();
+//                 context->updateWindow();
+//                 context->strick();
+//             SDL_UnlockMutex(mutex);
+//         }
+//     }
     
-    return 0;
-}
+//     return 0;
+// }
 
 /* 
 todo

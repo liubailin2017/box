@@ -2,6 +2,9 @@
 #include"../../SDLC_Component.h"
 #include"../Image.h"
 #include"../SDLC_Label.h"
+
+#include"../SDLC_Button.h"
+
 /*
   对话框,用来显示角色间的对话
 */
@@ -24,7 +27,13 @@ private:
     SDLC_Label* label1;
     SDLC_Label* label2;
     SDLC_Label* label3;
+    /* 头像 */
     SDLC_Image*headImg;
+
+    SDLC_Button *btn1;
+    SDLC_Button *btn2;
+    
+
     std::string remain_msg;
     int headHeight;//头像高度
     int defHeight;
@@ -39,6 +48,6 @@ public:
 
     void Show(std::string msg); /* 只显示文字 */
     void Show(SDLC_Image*head,std::string msg); /* 显示头像和文字 */
-//    void Show(SDLC_Image *head,std::string msg,Handler cb); /* 带两个按键的对话框 */
+    void Show(SDLC_Image *head,std::string msg,std::string btn1Text,std::string btn2Text,Handler cb); /* 带两个按键的对话框 */
 
 };

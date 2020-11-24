@@ -151,7 +151,8 @@ public:
     /* 把当前surface 更新到 上下文的surface上面 */
     virtual void display();
     virtual SDLC_Component *findById(int id); /* 在儿子节点下查找 */
-    virtual SDLC_Component *removeById(int id); 
+
+    virtual SDLC_Component *removeById(int id);  
 
     /* 升到最上层 */
     virtual void raise();

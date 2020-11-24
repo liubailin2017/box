@@ -8,16 +8,26 @@ SDLC_Component(context),
 label1(new SDLC_Label(context,16,"")),
 label2(new SDLC_Label(context,16,"")),
 label3(new SDLC_Label(context,16,"")),
+btn1(new SDLC_Button(context,"是",0xffff5566)),btn2(new SDLC_Button(context,"否",0xff55ff66)),
 headImg(nullptr),
 headHeight(0),
 defHeight(100)
 {
     onfinish = onf;
 
+    addComponent(btn1);
+    addComponent(btn2);
+
     addComponent(label1);
     addComponent(label2);
     addComponent(label3);
+    
 
+    btn1->setPostion(context->getWidth()-100,10);
+    btn2->setPostion(context->getWidth()-100,50);
+    
+
+    printf("id1 = %d  id2 = %d \n",btn1->getId(),btn2->getId());
     setbgcolor(0x5566ff66);
 
     
@@ -71,7 +81,11 @@ void SDLC_Session::Show(std::string msg) {
 }
 
 void SDLC_Session::Show(SDLC_Image*head,std::string msg) {
-   
+    Show(head,msg,"","",nullptr);
+}
+
+
+void SDLC_Session::Show(SDLC_Image *head,std::string msg,std::string btn1Text,std::string btn2Text,Handler cb) {
     if(headImg) {
         removeById(headImg->getId());
     }
@@ -121,14 +135,21 @@ void SDLC_Session::Show(SDLC_Image*head,std::string msg) {
         label1->setPostion(headImg->getWidth(),outLines+ 10);
         label2->setPostion(headImg->getWidth(),outLines+30);
         label3->setPostion(headImg->getWidth(),outLines+50);
+
+        btn1->setPostion(context->getWidth()-100,outLines+10);
+        btn2->setPostion(context->getWidth()-100,outLines+50);
+    
     }else {
         label1->setPostion(10,0);
         label2->setPostion(10,20);
         label3->setPostion(10,40);
+
+        btn1->setPostion(context->getWidth()-100,10);
+        btn2->setPostion(context->getWidth()-100,50);
+    
     }
 
     setvisible(true);
 }
 
-//    void SDLC_Session::Show(SDLC_Image *head,std::string *msg,Handler cb); /* 带两个按键的对话框 */
 
