@@ -22,7 +22,8 @@ class SDLC_Session : public SDLC_Component
 {
 private:
     int charCntOfLines; /* 每一行显示的字数*/ 
-    OnFinish onfinish;
+    OnFinish onfinish; /* 当完成了时的回调 */
+    Handler onSelected; /* 当选择时的回调 */
     /* 只允许显示3行*/
     SDLC_Label* label1;
     SDLC_Label* label2;

@@ -21,6 +21,9 @@ int _HEIGHT =640;
 #include"Extends/Image.h"
 #include<string.h>
 #include<time.h> 
+
+SDLC_Context *g_Context;
+
 bool test_event(const SDL_Event& event,SDLC_Component *cmp ) {
     printf("type : %d \n",event.type);
     return false;
@@ -34,10 +37,35 @@ bool up_event(const SDL_Event& event,SDLC_Component *cmp ) {
     return true;
 }
 
-bool btnHander(const SDL_Event& event,SDLC_Component *cmp) {
+
+bool onMessageBoxFinish(const SDL_Event& event,SDLC_Component *cmp) {
     SDLC_Button *btn = (SDLC_Button *)cmp;
-    printf("id %d \n",btn->btnflag);
+    printf("ShowMessage : btnflag %d \n",btn->btnflag);
+    return true;
 }
+
+bool onSessionSelected(const SDL_Event& event,SDLC_Component *cmp) {
+    SDLC_Button *btn = (SDLC_Button *)cmp;
+    if(event.type == SDL_MOUSEBUTTONDOWN) {
+        SDLC_Msgbox *msg = new SDLC_Msgbox(g_Context);
+        g_Context->addComponent(msg);
+        if(btn->btnflag == 0) {
+           msg->show("选择完成0",onMessageBoxFinish); 
+        } else {
+            msg->show("选择完成1",onMessageBoxFinish); 
+        }
+    }
+    return true; 
+}
+
+
+void SessionOnFinish(int id) {
+    SDLC_Msgbox *msg = new SDLC_Msgbox(g_Context);
+    g_Context->addComponent(msg);
+    msg->show("完成了对话",onMessageBoxFinish);
+}
+
+
 static int strick_thread(void *ptr);
 SDL_mutex *mutex;
 char bf[1024];
@@ -50,6 +78,7 @@ int main(int argc,char* agrv[]) {
                                     _WIDTH,_HEIGHT,
                                     SDL_WINDOW_RESIZABLE|SDL_WINDOW_SHOWN);
     SDLC_Context context(global_w);
+    g_Context = &context;
     context.setInterval(1,NULL);
 
     //SDLC_Example *comr = new SDLC_Example(&context,50);
@@ -58,14 +87,14 @@ int main(int argc,char* agrv[]) {
     //lb->setPostion((context.getWidth()-lb->getWidth())/2,(context.getHeight()-lb->getHeight())/2); 
  
     //comr->setMovable(true);
-    //SDLC_Msgbox *msg = new SDLC_Msgbox(&context);
+  
     SDLC_Image *img = new SDLC_Image(&context);
-    SDLC_Session*session = new SDLC_Session(&context,0);
+    SDLC_Session*session = new SDLC_Session(&context,&SessionOnFinish);
     
     img->load("test.png");
-    //msg->show("hello",btnHander);
+  
     //context.addComponent(comr);
-//context.addComponent(msg);
+
   //  context.addComponent(lb);
     // context.addComponent(ani);
     // context.addComponent(&img);
@@ -74,8 +103,9 @@ int main(int argc,char* agrv[]) {
 "一天动物园管理员发现袋鼠从笼子里跑出来了，于是开会讨论，一致认为是笼子的高度过低"
 "所以他们决定将笼子的高度由原来的10米加高到20米。结果第二天他们发现袋鼠还是跑到外面来，所以他们又决定再将高度加高到30米。"
 "没想到隔天居然又看到袋鼠全跑到外面，于是管理员们大为紧张，决定一不做二不休，将笼子的高度加高到100米。"
-"一天长颈鹿和几只袋鼠们在闲聊，“你们看，这些人会不会再继续加高你们的笼子？长颈鹿问。“很难说。袋鼠说∶“如果他们再继续忘记关门的话！");
-
+"一天长颈鹿和几只袋鼠们在闲聊，“你们看，这些人会不会再继续加高你们的笼子？长颈鹿问。“很难说。袋鼠说∶“如果他们再继续忘记关门的话！",
+"a","b",onSessionSelected);
+    
     SDL_Event event;
     mutex = SDL_CreateMutex();
 //    SDL_Thread *thread = SDL_CreateThread(strick_thread, "strick_thread", (void *)&context);
