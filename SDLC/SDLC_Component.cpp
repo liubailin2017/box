@@ -522,6 +522,12 @@ SDLC_Component::~SDLC_Component(){
         cnt ++;
         printf("delete cnt : %d, id:%d\n",cnt,id);
 #endif
+        if(context->curCmp == this) {
+            context->curCmp = nullptr;
+        }
+        if(context->curMvCmp == this) {
+            context->curMvCmp = nullptr;
+        }
         SDL_FreeSurface(surface);
 
 }

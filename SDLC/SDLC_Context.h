@@ -2,6 +2,8 @@
 #define _h_SDLC_Context
 #include<SDL2/SDL.h>
 #include"SDLC_Event.h"
+
+#include<list>
 class SDLC_Component;
 
 class SDLC_Context;
@@ -33,7 +35,11 @@ private :
 
     int interval;
     int intervalc;
-
+    /* 
+    即将回收的控件
+    在事件回调中，有时可能需要回收到自己，如果直接delete 自己会出现异常，可以把id加到这个list里，由Context来回收
+    */
+    std::list<SDLC_Component *> invalidComps; 
 public:
     SDLC_Context(SDL_Window *w);
 
@@ -70,6 +76,10 @@ public:
     void notifyUpdate();
 
     void updateWindow();
+    
+    /* 回收掉无效的控件 */
+    void freeInvalidComps(); 
+    void InvalidCompById(int id);
     SDL_Point getCurPostion();
     virtual ~SDLC_Context();
     

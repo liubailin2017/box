@@ -254,6 +254,29 @@ void SDLC_Context::strick() {
     if(0 == intervalc) {
         strickHandler(NULL);
     }
+  
+}
+
+void SDLC_Context::freeInvalidComps() {
+    std::list<SDLC_Component *>::iterator it = invalidComps.begin();
+    SDLC_Component *tmp;
+    while (it != invalidComps.end())
+    {
+
+        tmp = *it;
+ 
+        tmp = removeById(tmp->id);
+        delete tmp;
+        ++it;
+    }
+    invalidComps.clear();
+}
+
+void SDLC_Context::InvalidCompById(int id) {
+    SDLC_Component * cmp = findById(id);
+    if(cmp) {
+        invalidComps.push_back(cmp);
+    }
 }
 
 SDLC_Context::~SDLC_Context() {

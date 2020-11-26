@@ -34,6 +34,7 @@ bool up_event(const SDL_Event& event,SDLC_Component *cmp ) {
     }else if(event.type == SDL_MOUSEBUTTONDOWN) {
         printf("down id : %d \n",cmp->getId());
     }
+   
     return true;
 }
 
@@ -41,6 +42,7 @@ bool up_event(const SDL_Event& event,SDLC_Component *cmp ) {
 bool onMessageBoxFinish(const SDL_Event& event,SDLC_Component *cmp) {
     SDLC_Button *btn = (SDLC_Button *)cmp;
     printf("ShowMessage : btnflag %d \n",btn->btnflag);
+    
     return true;
 }
 
@@ -54,6 +56,7 @@ bool onSessionSelected(const SDL_Event& event,SDLC_Component *cmp) {
         } else {
             msg->show("选择完成1",onMessageBoxFinish); 
         }
+        g_Context->InvalidCompById(cmp->header()->getParent()->getId());
     }
     return true; 
 }
@@ -105,7 +108,6 @@ int main(int argc,char* agrv[]) {
 "没想到隔天居然又看到袋鼠全跑到外面，于是管理员们大为紧张，决定一不做二不休，将笼子的高度加高到100米。"
 "一天长颈鹿和几只袋鼠们在闲聊，“你们看，这些人会不会再继续加高你们的笼子？长颈鹿问。“很难说。袋鼠说∶“如果他们再继续忘记关门的话！",
 "a","b",onSessionSelected);
-    
     SDL_Event event;
     mutex = SDL_CreateMutex();
 //    SDL_Thread *thread = SDL_CreateThread(strick_thread, "strick_thread", (void *)&context);
@@ -120,6 +122,7 @@ int main(int argc,char* agrv[]) {
                 break;
             }
            // SDL_LockMutex(mutex);
+            
             context.dispatch(event);
            // SDL_UnlockMutex(mutex);
         }
@@ -132,6 +135,7 @@ int main(int argc,char* agrv[]) {
             //SDL_UnlockMutex(mutex);
         }
         SDL_Delay(10);
+        context.freeInvalidComps();
     }
     
     SDL_DestroyWindow(global_w);
