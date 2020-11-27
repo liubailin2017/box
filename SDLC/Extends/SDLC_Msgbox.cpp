@@ -15,6 +15,7 @@ class SDLC_Button_special:public SDLC_Button {
         if(false == SDLC_Component::handleEvent(event)) { return false;}
         if(event.type == SDL_MOUSEBUTTONUP) {
             if(msgbox) msgbox -> setvisible(false);
+            context->InvalidCompById(msgbox->getId());
         }
     }
     void setMsgBox(SDLC_Msgbox *mg) {
@@ -33,25 +34,31 @@ SDLC_Msgbox::SDLC_Msgbox(SDLC_Context *context):SDLC_Com_Radius(context,200,120)
     
     addComponent(slb);
     label = slb;
-        SDLC_Button_special *btn = new SDLC_Button_special(context,def_strs[0],0xff3345AB);
-        btn->setMsgBox(this);
-        btn->btnflag = 0;
-         
-        btn->setPostion(10,80);
-        btn1 =(SDLC_Button*)btn; 
-        addComponent(btn);
-        btn = new SDLC_Button_special(context,def_strs[1],0xff33AB45);
-        btn->setMsgBox(this);
-        btn->btnflag = 1;
-    
-        btn->setPostion(200-btn->getWidth()-10,80);
-        btn2 = (SDLC_Button*)btn;
-        addComponent(btn);
+    SDLC_Button_special *btn = new SDLC_Button_special(context,def_strs[0],0xff3345AB);
+    btn->setMsgBox(this);
+    btn->btnflag = 0;
+        
+    btn->setPostion(10,80);
+    btn1 =(SDLC_Button*)btn; 
+    addComponent(btn);
+    btn = new SDLC_Button_special(context,def_strs[1],0xff33AB45);
+    btn->setMsgBox(this);
+    btn->btnflag = 1;
+
+    btn->setPostion(200-btn->getWidth()-10,80);
+    btn2 = (SDLC_Button*)btn;
+    addComponent(btn);
     setPostion((context->getWidth() - getWidth())/2,(context->getHeight()-getHeight())/2);
     this->setvisible(false);
 }
 
- 
+int SDLC_Msgbox::fliterEvent(const SDL_Event& event) {
+    if(isvisible) {
+        return true;        
+    }
+    return false;
+}
+
 
 // int SDLC_Msgbox::fliterEvent(const SDL_Event& event){
 //     return true;

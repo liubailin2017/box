@@ -23,6 +23,7 @@ int _HEIGHT =640;
 #include<time.h> 
 
 SDLC_Context *g_Context;
+int isq = 0;
 
 bool test_event(const SDL_Event& event,SDLC_Component *cmp ) {
     printf("type : %d \n",event.type);
@@ -42,7 +43,9 @@ bool up_event(const SDL_Event& event,SDLC_Component *cmp ) {
 bool onMessageBoxFinish(const SDL_Event& event,SDLC_Component *cmp) {
     SDLC_Button *btn = (SDLC_Button *)cmp;
     printf("ShowMessage : btnflag %d \n",btn->btnflag);
-    
+    if(event.type == SDL_MOUSEBUTTONUP) {
+        isq = true;
+    }
     return true;
 }
 
@@ -72,7 +75,7 @@ void SessionOnFinish(int id) {
 static int strick_thread(void *ptr);
 SDL_mutex *mutex;
 char bf[1024];
-int isq = 0;
+
 int main(int argc,char* agrv[]) {
     int ticket ;
     SDLC_Init();

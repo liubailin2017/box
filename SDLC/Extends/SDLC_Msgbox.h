@@ -12,6 +12,8 @@ private:
     SDLC_Label* label;
 public:
     SDLC_Msgbox(SDLC_Context *context); 
+
+    virtual int fliterEvent(const SDL_Event& event);
     // SDLC_Msgbox(SDLC_Context *context,char *msg,int btnc, char* text[],Handler cb,void *arg);
     // virtual int fliterEvent(const SDL_Event& event); /* 捕获所有事件 */
     void show(char *msg,Handler cb);
