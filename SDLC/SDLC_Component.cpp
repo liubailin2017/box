@@ -97,22 +97,27 @@ int SDLC_Component::aby() {
 }
 
 bool SDLC_Component::dispatch(const SDL_Event& event) {
-
+    int intercept;
+    
     if(brother) { /* 先交给兄弟结点 */
         if(brother -> dispatch(event)) {
             return true;
         }
     }
-    
-    if(child && fliterEvent(event)) { /*兄弟结点没有处理 交给子结点 */
+
+    intercept = fliterEvent(event);
+    if(child && ((1 == intercept) || (2 == intercept)) )  { /*兄弟结点没有处理 交给子结点 */
         if(child -> dispatch(event)) {
             return true;
         }
     }
 
-    if(1 == fliterEvent(event) && handleEvent(event)) { /* 所有结点没有处理 判断是否本结点处理 */
+    if(1 == intercept && handleEvent(event)) { /* 所有结点没有处理 判断是否本结点处理 */
         return true;
     }
+
+    if(3 == intercept)
+        return true;
 
     return false;
 }

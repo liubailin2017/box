@@ -119,9 +119,13 @@ public:
     
     /* 判断是否处理些事件
     返回：
-    0 不处理事件
-    1 处理事件
-    2 鼠标事件 当前点为透明
+        0 不处理事件
+        1 可被自己处理 | 可被自己的子控件处理 | 可被拦截
+        2 可被自己的子控件处理,当被子控件处理时被拦截
+        3 可被拦截不处理
+        实现详细见 bool SDLC_Component::dispatch(const SDL_Event& event)
+        }
+
     */
     virtual int fliterEvent(const SDL_Event& event);
 

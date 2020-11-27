@@ -53,10 +53,14 @@ SDLC_Msgbox::SDLC_Msgbox(SDLC_Context *context):SDLC_Com_Radius(context,200,120)
 }
 
 int SDLC_Msgbox::fliterEvent(const SDL_Event& event) {
-    if(isvisible) {
-        return true;        
+    int rs = SDLC_Component::fliterEvent(event);
+   
+    if (rs == 0) { 
+        if(isvisible) { /* 当窗口可见时，拦截事件 */
+            rs = 3;
+        }
     }
-    return false;
+    return rs;
 }
 
 
