@@ -5,9 +5,28 @@
 #include"../SDLC_Label.h"
 
 #include"../SDLC_Button.h"
+#include<vector>
+class SDLC_Tooltip : public SDLC_WLabel {
 
-class SDLC_Tooltip : SDLC_Label {
+private :
+    void clear_surface();
+    int div_height;
+    std::vector<SDL_Surface *> texts; 
+protected:
+    
+    
 
-}
+public:
+   
+    SDLC_Tooltip(SDLC_Context *context);
+    /* override */
+    virtual void updateSurface();
+    /* override */
+    virtual void setText(std::wstring text);
+
+    void show(std::wstring msg);
+    virtual ~SDLC_Tooltip();
+};
 
 #endif
+
