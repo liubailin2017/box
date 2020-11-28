@@ -5,9 +5,9 @@
 
 SDLC_Session::SDLC_Session(SDLC_Context *context,OnFinish onf):
 SDLC_Component(context),
-label1(new SDLC_Label(context,16,"")),
-label2(new SDLC_Label(context,16,"")),
-label3(new SDLC_Label(context,16,"")),
+label1(new SDLC_WLabel(context,16,L"")),
+label2(new SDLC_WLabel(context,16,L"")),
+label3(new SDLC_WLabel(context,16,L"")),
 btn1(new SDLC_Button(context,"是",0xffff5566)),btn2(new SDLC_Button(context,"否",0xff55ff66)),
 headImg(nullptr),
 headHeight(0),
@@ -34,7 +34,7 @@ defHeight(100)
     /* 在最下面显示*/
     setPostion(0,context->getHeight() - defHeight);
     setSize(context->getWidth(),defHeight);
-    charCntOfLines = 80;
+    charCntOfLines = 30;
     setvisible(false);
 }
 
@@ -47,7 +47,7 @@ bool SDLC_Session::defaultmouseButtonHandler(const SDL_Event& event,SDLC_Compone
     if(event.type == SDL_MOUSEBUTTONDOWN) {
         if(btn1->visible() == false) { /* 当可操作的按钮没有时才换页，否则等待按钮的事件 */
             if (remain_msg.length() > 0) {
-                Show(headImg, remain_msg,"","",onSelected);
+                Show(headImg, remain_msg,onSelected);
             }else {
                 setvisible(false);
                 if(onfinish) {
@@ -81,16 +81,16 @@ void SDLC_Session::updateSurface() {
     }
 }
 
-void SDLC_Session::Show(std::string msg) {
+void SDLC_Session::Show(std::wstring msg) {
     Show(nullptr,msg);
 }
 
-void SDLC_Session::Show(SDLC_Image*head,std::string msg) {
-    Show(head,msg,"","",nullptr);
+void SDLC_Session::Show(SDLC_Image*head,std::wstring msg) {
+    Show(head,msg,nullptr);
 }
 
 
-void SDLC_Session::Show(SDLC_Image *head,std::string msg,std::string btn1Text,std::string btn2Text,Handler cb) {
+void SDLC_Session::Show(SDLC_Image *head,std::wstring msg,Handler cb) {
     if(headImg) {
         removeById(headImg->getId());
     }
@@ -121,7 +121,7 @@ void SDLC_Session::Show(SDLC_Image *head,std::string msg,std::string btn1Text,st
         remain_msg = remain_msg.substr(charCntOfLines,remain_msg.length()-charCntOfLines);
     } else {
         label1->setText(remain_msg);
-        remain_msg = "";
+        remain_msg = L"";
     }
     
     if(remain_msg.length() > charCntOfLines) {
@@ -129,7 +129,7 @@ void SDLC_Session::Show(SDLC_Image *head,std::string msg,std::string btn1Text,st
         remain_msg = remain_msg.substr(charCntOfLines,remain_msg.length()-charCntOfLines);
     } else {
         label2->setText(remain_msg);
-        remain_msg = "";
+        remain_msg = L"";
     }
     
     if(remain_msg.length() > charCntOfLines) {
@@ -137,7 +137,7 @@ void SDLC_Session::Show(SDLC_Image *head,std::string msg,std::string btn1Text,st
         remain_msg = remain_msg.substr(charCntOfLines,remain_msg.length()-charCntOfLines);
     } else {
         label3->setText(remain_msg);
-        remain_msg = "";
+        remain_msg = L"";
     }
 
     if(remain_msg.length() > 0 || nullptr == onSelected) {

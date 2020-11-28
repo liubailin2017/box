@@ -25,9 +25,9 @@ private:
     OnFinish onfinish; /* 当完成了时的回调 */
     Handler onSelected; /* 当选择时的回调 */
     /* 只允许显示3行*/
-    SDLC_Label* label1;
-    SDLC_Label* label2;
-    SDLC_Label* label3;
+    SDLC_WLabel* label1;
+    SDLC_WLabel* label2;
+    SDLC_WLabel* label3;
     /* 头像 */
     SDLC_Image*headImg;
 
@@ -35,7 +35,7 @@ private:
     SDLC_Button *btn2;
     
 
-    std::string remain_msg;
+    std::wstring remain_msg;
     int headHeight;//头像高度
     int defHeight;
 public:
@@ -47,8 +47,8 @@ public:
     /* 点击时切换没显示完的文字 */
     virtual bool defaultmouseButtonHandler(const SDL_Event& event,SDLC_Component *cmp);
 
-    void Show(std::string msg); /* 只显示文字 */
-    void Show(SDLC_Image*head,std::string msg); /* 显示头像和文字 */
-    void Show(SDLC_Image *head,std::string msg,std::string btn1Text,std::string btn2Text,Handler cb); /* 带两个按键的对话框 */
+    void Show(std::wstring msg); /* 只显示文字 */
+    void Show(SDLC_Image*head,std::wstring msg); /* 显示头像和文字 */
+    void Show(SDLC_Image *head,std::wstring msg,Handler cb); /* 带两个按键的对话框 */
 
 };

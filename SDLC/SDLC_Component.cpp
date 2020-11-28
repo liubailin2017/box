@@ -231,7 +231,7 @@ void SDLC_Component::setListener(Handler handler) {
 }
 
 void SDLC_Component::display() {
-    updateSurface();
+    if(isvisible) updateSurface();
     SDLC_Component *tmp = this->child;
     while(tmp) {
         tmp->display();
