@@ -3,7 +3,7 @@
 #include<SDL2/SDL.h>
 class SDLC_Component;
 class SDLC_Context;
-
+#include"string"
 #include"SDLC_Event.h"
     /*
     如图 控件结构 
@@ -27,6 +27,9 @@ class SDLC_Component
 private:
     int width;
     int height;
+    std::wstring tip;
+    int isShowTooltip;
+
 protected:
     int id;
     int x;
@@ -160,6 +163,9 @@ public:
 
     /* 升到最上层 */
     virtual void raise();
+
+    /* 设置提示文字 */
+    void setTooltip(std::wstring msg);
 
     SDLC_Component(SDLC_Context *context);
     SDLC_Component(SDLC_Context *context,int w,int d);

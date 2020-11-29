@@ -7,6 +7,8 @@
 class SDLC_Component;
 
 class SDLC_Context;
+
+class SDLC_Tooltip;
 /* 
 事件处理回调
 */
@@ -31,6 +33,8 @@ private :
     UpdateBg updateBg;
     HandleFun onhandle;
 
+    SDLC_Tooltip *tooltip;
+    
     StrickHandler strickHandler;
 
     int interval;
@@ -42,7 +46,7 @@ private :
     std::list<SDLC_Component *> invalidComps; 
 public:
     SDLC_Context(SDL_Window *w);
-
+    
     int getWidth();
     int getHeight();
     

@@ -1,5 +1,6 @@
 #include<SDL2/SDL.h>
 #include<iostream>
+#include"SDLC_Tooltip.h"
 #include"SDLC_Component.h"
 #include"SDLC_Context.h"
 #include"SDLC_log.h"
@@ -27,6 +28,16 @@ bool SDLC_Component::defaultmouseButtonHandler(const SDL_Event& event,SDLC_Compo
             context->status[3] = y;
         }
     }
+
+    if(event.type == SDL_MOUSEMOTION) {
+        if(tip.size() > 0) {
+            context->tooltip->show(tip,event.motion.x,event.motion.y);
+            isShowTooltip = true;
+        }else {
+            if (isShowTooltip) context->tooltip->hide();
+        }
+    }
+
     
     if(mouseButtonHandler == NULL) {
         return true; /* 默认是被消耗 */
@@ -41,6 +52,10 @@ bool SDLC_Component::defaultmouseButtonHandler(const SDL_Event& event,SDLC_Compo
 
 void SDLC_Component::defaultOutHandler(SDLC_Component *cmp) {
     std::cout << "out  ID:"<< cmp->getId() <<std::endl;
+    if(isShowTooltip) {
+        context->tooltip->hide();
+        isShowTooltip = false;
+    }
     if(cmp->outHandler) outHandler(cmp);
 }
 
@@ -313,6 +328,10 @@ bool SDLC_Component::visible() {
 
 void SDLC_Component::setvisible(bool isvisible) {
     this->isvisible = isvisible;
+    if(isvisible==false && isShowTooltip) {
+        context->tooltip->hide();
+    }
+    context->notifyUpdate();
 }
 
 void SDLC_Component::addComponent(SDLC_Component *cmp) {
@@ -452,6 +471,10 @@ void SDLC_Component::raise() {
     context->notifyUpdate();
 }
 
+void SDLC_Component::setTooltip(std::wstring msg) {
+    tip = msg;
+}
+
 bool SDLC_Component::isRoot() {
         return (context->components  == this);
 }
@@ -472,7 +495,7 @@ SDLC_Component::SDLC_Component(SDLC_Context *context,int x,int y,int w,int h,Uin
                                                         strickHandler(NULL),
                                                         bgcolor(bg),_movable(false),
                                                         intervalc(0),interval(0),
-                                                        canRaise(true)
+                                                        canRaise(true),isShowTooltip(false)
 {
     surface = SDL_CreateRGBSurface(0,width,height,32,rmask,gmask,bmask,amask);
     SDL_SetSurfaceBlendMode(surface,SDL_BLENDMODE_BLEND);
@@ -534,5 +557,7 @@ SDLC_Component::~SDLC_Component(){
             context->curMvCmp = nullptr;
         }
         SDL_FreeSurface(surface);
-
+        if(isShowTooltip) {
+            context->tooltip->hide();
+        }
 }

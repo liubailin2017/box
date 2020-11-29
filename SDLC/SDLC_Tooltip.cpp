@@ -1,12 +1,36 @@
 #include "SDLC_Tooltip.h"
 #include<vector>
+#include"SDLC_Context.h"
 
-
-SDLC_Tooltip::SDLC_Tooltip(SDLC_Context *context):SDLC_WLabel(context,16,L""),div_height(3) {
+SDLC_Tooltip::SDLC_Tooltip(SDLC_Context *context):SDLC_WLabel(context,L"",12,0xff000000),div_height(3) {
+    setbgcolor(0x55ffffff);
+    setvisible(false);
+    context->addComponent(this);
 }
 
-void SDLC_Tooltip::show(std::wstring msg) {
+void SDLC_Tooltip::show(std::wstring msg,int x,int y) {
+    int tx = x ,ty = y;
+    setText(msg);
+    raise();
+    setvisible(true);
+    
+    if(x + getWidth()  > context->getWidth()) {
+        tx = x - getWidth();
+    }
 
+    if(y + getHeight() > context->getHeight()) {
+        ty = y - getHeight();
+    }
+
+    setPostion(tx,ty);
+}
+
+void SDLC_Tooltip::hide() {
+    setvisible(false);
+}
+
+int SDLC_Tooltip::fliterEvent(const SDL_Event& event) {
+    return 0;
 }
 
 void SDLC_Tooltip::clear_surface() {

@@ -18,11 +18,10 @@ int _HEIGHT =640;
 #include"Extends/SDLC_Label.h"
 #include"Extends/SDLC_Msgbox.h"
 #include"Extends/game/SDLC_Session.h"
-#include"Extends/game/SDLC_Tooltip.h"
 #include"Extends/Image.h"
 #include<string.h>
 #include<time.h> 
-
+SDLC_Tooltip *tooltip;
 SDLC_Context *g_Context;
 int isq = 0;
 
@@ -72,7 +71,8 @@ void SessionOnFinish(int id) {
     msg->show("完成了对话",onMessageBoxFinish);
 }
 
-
+ 
+ 
 static int strick_thread(void *ptr);
 SDL_mutex *mutex;
 char bf[1024];
@@ -86,12 +86,12 @@ int main(int argc,char* agrv[]) {
                                     /*SDL_WINDOW_RESIZABLE|*/SDL_WINDOW_SHOWN);
     SDLC_Context context(global_w);
     g_Context = &context;
+
     context.setInterval(1,NULL);
 
     //SDLC_Example *comr = new SDLC_Example(&context,50);
     SDLC_Label *lb = new SDLC_Label(&context,24,"别再说你只知道薰衣草了，罗马尼亚有种花和\n日本樱花齐名，却不为人知");
-    SDLC_Tooltip *tooltip = new SDLC_Tooltip(&context);
-    tooltip->setText(L"别再说你只知道薰衣草了，罗马尼亚有种花和\n日本樱花齐名，却不为人知");
+
     //AnimationTest *ani = new AnimationTest(&context);
     lb->setPostion((context.getWidth()-lb->getWidth())/2,(context.getHeight()-lb->getHeight())/2); 
 
@@ -99,11 +99,9 @@ int main(int argc,char* agrv[]) {
   
     SDLC_Image *img = new SDLC_Image(&context);
     SDLC_Session*session = new SDLC_Session(&context,&SessionOnFinish);
-    
     img->load("test.png");
   
     //context.addComponent(comr);
-    context.addComponent(tooltip);
     context.addComponent(lb);
     // context.addComponent(ani);
     // context.addComponent(&img);
@@ -113,7 +111,7 @@ L"一天动物园管理员发现袋鼠从笼子里跑出来了，于是开会讨
 "所以他们决定将笼子的高度由原来的10米加高到20米。结果第二天他们发现袋鼠还是跑到外面来，所以他们又决定再将高度加高到30米。"
 "没想到隔天居然又看到袋鼠全跑到外面，于是管理员们大为紧张，决定一不做二不休，将笼子的高度加高到100米。"
 "一天长颈鹿和几只袋鼠们在闲聊，“你们看，这些人会不会再继续加高你们的笼子？长颈鹿问。“很难说。袋鼠说∶“如果他们再继续忘记关门的话！",
-nullptr);
+onSessionSelected);
     SDL_Event event;
     mutex = SDL_CreateMutex();
 //    SDL_Thread *thread = SDL_CreateThread(strick_thread, "strick_thread", (void *)&context);

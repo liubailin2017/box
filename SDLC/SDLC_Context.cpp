@@ -1,5 +1,6 @@
 #include "SDLC_Context.h"
 #include"SDLC_Component.h"
+#include"SDLC_Tooltip.h"
 #include"SDLC_log.h"
 #include"iostream"
 #include<SDL2/SDL.h>
@@ -208,8 +209,9 @@ SDLC_Context::SDLC_Context(SDL_Window *w) :
                                         components(NULL),
                                         curCmp(NULL),curMvCmp(NULL),focusCmp(NULL),
                                         updateBg(NULL),onhandle(NULL),strickHandler(NULL),
-                                        interval(0),intervalc(0)
+                                        interval(0),intervalc(0),tooltip(new SDLC_Tooltip(this))
                                         {
+    addComponent(tooltip);
     update();
 }
 #include<string.h>

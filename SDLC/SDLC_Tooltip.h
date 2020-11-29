@@ -1,10 +1,8 @@
 #ifndef _SDLC_Tooltip_h_Extends_
 #define _SDLC_Tooltip_h_Extends_
-#include"../../SDLC_Component.h"
-#include"../Image.h"
-#include"../SDLC_Label.h"
+#include"SDLC_Component.h"
+#include"Extends/SDLC_Label.h"
 
-#include"../SDLC_Button.h"
 #include<vector>
 class SDLC_Tooltip : public SDLC_WLabel {
 
@@ -23,8 +21,9 @@ public:
     virtual void updateSurface();
     /* override */
     virtual void setText(std::wstring text);
-
-    void show(std::wstring msg);
+    virtual int fliterEvent(const SDL_Event& event); /* 不捕获所有事件 */
+    void show(std::wstring msg,int x,int y);
+    void hide();
     virtual ~SDLC_Tooltip();
 };
 

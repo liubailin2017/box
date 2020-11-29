@@ -4,20 +4,21 @@
 
 
 SDLC_Session::SDLC_Session(SDLC_Context *context,OnFinish onf):
-SDLC_Component(context),
-label1(new SDLC_WLabel(context,16,L"")),
-label2(new SDLC_WLabel(context,16,L"")),
-label3(new SDLC_WLabel(context,16,L"")),
-btn1(new SDLC_Button(context,"是",0xffff5566)),btn2(new SDLC_Button(context,"否",0xff55ff66)),
-headImg(nullptr),
-headHeight(0),
-defHeight(100)
+    SDLC_Component(context),
+    label1(new SDLC_WLabel(context,16,L"")),
+    label2(new SDLC_WLabel(context,16,L"")),
+    label3(new SDLC_WLabel(context,16,L"")),
+    btn1(new SDLC_Button(context,"是",0xffff5566)),btn2(new SDLC_Button(context,"否",0xff55ff66)),
+    headImg(nullptr),
+    headHeight(0),
+    defHeight(100)
 {
     onfinish = onf;
 
     addComponent(btn1);
     addComponent(btn2);
-
+    btn1->setTooltip(L"选择就表示你同意");
+    btn2->setTooltip(L"选择就表示你不同意");
     addComponent(label1);
     addComponent(label2);
     addComponent(label3);
