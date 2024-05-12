@@ -337,4 +337,5 @@ bool snake_main_hand(const SDL_Event& event,SDLC_Context *context) {
             default:
                 break;
             }
+    return true;
 }

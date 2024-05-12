@@ -8,6 +8,7 @@
 #include <string.h>
 #include "fini.h"
 
+
 FIni *FINI_Create(const char *filename)
 {
 	FIni *self = (FIni *)malloc(sizeof(FIni));

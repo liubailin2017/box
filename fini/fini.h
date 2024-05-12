@@ -8,6 +8,7 @@
 #ifndef FINI_H_
 #define FINI_H_
 
+
 #include <stdio.h>
 
 // ini文件中的数据长度

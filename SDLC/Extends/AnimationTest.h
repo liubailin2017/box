@@ -1,10 +1,10 @@
 #include"../SDLC_Component.h"
 
-
-typedef struct RECTS {
+typedef struct tagRECTS {
   SDL_Rect *rect;
   int len;
-};
+}RECTS;
+
 class AnimationTest : public SDLC_Component
 {
 private:

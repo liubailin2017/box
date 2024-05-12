@@ -3,11 +3,12 @@
 enum direct {UP=0,DOWN=10,LEFT=20,RIGHT=30};
 enum type {BLOCK = 0, PERSON = 1,BOX = 2,WALL = 4,INTEND = 8};
 #define _PUSH_BYTE  128
+
+#ifndef __cplusplus
+    #define nullptr (0)
 #endif
 
-#ifndef nullptr
-#define nullptr 0
-#endif
+
 #ifdef _WIN32
 #define B0 "  "
 #else
@@ -20,4 +21,8 @@ enum type {BLOCK = 0, PERSON = 1,BOX = 2,WALL = 4,INTEND = 8};
 #define B10 "★"
 #define B9 "♂"
 #define Er "E"
+
+
+#endif
+
 

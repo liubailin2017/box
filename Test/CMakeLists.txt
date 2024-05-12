@@ -1,6 +1,6 @@
-cmake_minimum_required(VERSION 3.1.5)
+cmake_minimum_required(VERSION 3.5)
 project(box CXX)
-SET(CMAKE_CXX_FLAGS_DEBUG "$ENV{CXXFLAGS} -O0 -Wall -g -ggdb")
+#SET(CMAKE_CXX_FLAGS_DEBUG "$ENV{CXXFLAGS} -O0 -Wall -g -ggdb")
 include_directories(C:/Users/liubailin/SDL2/SDL2_image-2.0.5/i686-w64-mingw32/include/)
 include_directories(C:/Users/liubailin/SDL2/SDL2-2.0.9/i686-w64-mingw32/include/)
 include_directories(D:/lib/SDL2_ttf/i686-w64-mingw32/include)
