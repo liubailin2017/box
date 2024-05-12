@@ -28,43 +28,14 @@
 
 ![加载图片请稍候...](readme_img/prtsc.gif)
 [B站](https://www.bilibili.com/video/BV1Sa4y1e7nv)
-## 依赖
+## 依赖 (推荐使用vcpkg)
 
 ### [SDL2](http://www.libsdl.org/download-2.0.php)
 
-### [SDL2_image](http://www.libsdl.org/projects/SDL_image/)
+### SDL2_image 
+### SDL2_ttf 
 
 ## 编译
-
-### windows
-
-    首先你需要在 
-    ./src 
-    ./SDLdraw 
-    ./ 
-    三个目录下的 CMakeLists.txt 文件中指定 SDL2 SDL2_image目录为你电脑上对应的路径，
-    
-    然后请使用<cmd> cd 到源码<跟目录> 运行
-
-    cmake cmake -G "MinGW Makefiles" .
-    mingw32-make
-
-#### NOTE
-
-    如果不成功，请测试 
-
-    gcc -v
-    mingw32-make -v
-    gdb -v
-
-    cmake --version
-
-    命令是否可用
-
-### ubuntu(linux)（未测试）
-
-    cmake .
-    make
 
 ## 下载
 
