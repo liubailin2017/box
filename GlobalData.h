@@ -15,7 +15,7 @@
 #include"SDLC/Extends/SDLC_Msgbox.h"
 #include "fini/fini.h"
 /* 全局对象，用于初始化环境 */
-struct GameGloabalResouce{   
+struct GameGloabalResouce{ 
     
     public:
     FIni *fini;

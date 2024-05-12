@@ -24,7 +24,6 @@
 
 #include"GlobalData.h"
 
-
 GameGloabalResouce GloabalData; /* 全局变量初始化 */
 
 #include"Box/_maps.h"/* flag */
@@ -43,6 +42,7 @@ void main_save() {
         fclose(f);
     }
 }
+
 void Log(char *msg ) {
     FILE* f = fopen("log.txt","a");
     time_t t= time(NULL);
@@ -53,6 +53,7 @@ void Log(char *msg ) {
     fwrite(msg,strlen(msg),1,f);
     fclose(f);
 }
+int strick_thread(void *ptr);
 int main(int argc,char* agrv[]) {
  
     Log("开始游戏\n");
@@ -71,6 +72,7 @@ int main(int argc,char* agrv[]) {
             GloabalData.context.dispatch(event); 
             SDL_UnlockMutex(GloabalData.mutex);
         }
+        strick_thread(nullptr);
         SDL_Delay(10);
     }
 
@@ -83,25 +85,34 @@ int main(int argc,char* agrv[]) {
 
 int strick_thread(void *ptr)
 {
-    int ticket = SDL_GetTicks();
+    // GloabalData->ticket = SDL_GetTicks();
     SDLC_Context *context = &GloabalData.context;
-    while (!GloabalData.isq)
-    {
-        if(SDL_GetTicks() - ticket > 30) {
-
-                /* 只要一加锁这个函数就会阻塞  未知原因
-                SDL_SetWindowTitle(GloabalData.global_w,"hello,world"); 
-                */
-                ticket = SDL_GetTicks();
-                SDL_LockMutex(GloabalData.mutex);  
-                context->updateWindow(); 
-                context->strick();          
-                SDL_UnlockMutex(GloabalData.mutex);
-
-        }
-     
-        SDL_Delay(10);
+    if(SDL_GetTicks() - GloabalData.ticket > 30) {
+            GloabalData.ticket = SDL_GetTicks();
+            context->updateWindow(); 
+            context->strick();          
     }
-    
+
     return 0;
 }
+
+// int strick_thread(void *ptr)
+// {
+//     int ticket = SDL_GetTicks();
+//     SDLC_Context *context = &GloabalData.context;
+//     while (!GloabalData.isq)
+//     {
+//         if(SDL_GetTicks() - ticket > 30) {
+//                 ticket = SDL_GetTicks();
+//                 SDL_LockMutex(GloabalData.mutex);  
+//                 context->updateWindow(); 
+//                 context->strick();          
+//                 SDL_UnlockMutex(GloabalData.mutex);
+
+//         }
+     
+//         SDL_Delay(10);
+//     }
+    
+//     return 0;
+// }

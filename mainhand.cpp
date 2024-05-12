@@ -39,7 +39,7 @@ void draw_main(SDL_Surface *surface) {
         p = p->pre;
     }
 }
-
+#include"menu_event.h"
 bool main_hand(const SDL_Event& event,SDLC_Context *context) {
     switch (event.type) {            
         case SDL_WINDOWEVENT:
@@ -56,6 +56,7 @@ bool main_hand(const SDL_Event& event,SDLC_Context *context) {
         break;
 
         case SDL_KEYDOWN:
+        {
             switch (event.key.keysym.sym)
             {
                 case SDLK_UP:
@@ -105,9 +106,12 @@ bool main_hand(const SDL_Event& event,SDLC_Context *context) {
             GloabalData.c.display();
 
             GloabalData.context.notifyUpdate();
-            break;
+        }
+        break;
 
-        case SDL_MOUSEBUTTONDOWN:{
+
+        case SDL_MOUSEBUTTONDOWN:
+        {
             if(event.button.button == 1) {
                 GloabalData.global_palette.reset();
                 GloabalData.c.display();
@@ -140,9 +144,12 @@ bool main_hand(const SDL_Event& event,SDLC_Context *context) {
         }
         break;
         case SDL_MOUSEBUTTONUP:
+        {
             mainHandleRes.path_isend = true;
+        } 
         break;
-        case SDL_MOUSEMOTION:{
+        case SDL_MOUSEMOTION:
+        {
             if(mainHandleRes.path_isend) break;
             int boxw = GloabalData.global_palette.getBoxW();
             int boxh = GloabalData.global_palette.getBoxH();
@@ -159,7 +166,12 @@ bool main_hand(const SDL_Event& event,SDLC_Context *context) {
         }
         break;
         case SDL_QUIT: 
-            GloabalData.isq =true;
+            //GloabalData.isq =true;
+            {
+                SDL_Event event;
+                event.type = SDL_MOUSEBUTTONUP;
+                event_exit(event,nullptr);
+            }
             break;
         default:
             break;

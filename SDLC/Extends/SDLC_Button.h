@@ -27,7 +27,7 @@ private:
 public:
     int btnflag; /* 用于在回调函数的标识 */
     void* arg;
-    virtual void updateSurface();
+    void updateSurface() override;
     SDLC_Button(SDLC_Context *context,char *text);
     SDLC_Button(SDLC_Context *context,char *text,Uint32 bg);
     SDLC_Button(SDLC_Context *context,char *text,int size, Uint32 bg);
@@ -39,8 +39,8 @@ public:
     virtual void defaultInHandler(SDLC_Component *cmp);
 
     /* 原始的 bgcolor 是临时的背景色 */
-    virtual void setbgcolor(Uint32 bgc);
-    virtual Uint32 getBgcolor();
+    virtual void setbgcolor(Uint32 bgc) override;
+    virtual Uint32 getBgcolor() override;
     
     virtual ~SDLC_Button();
 };

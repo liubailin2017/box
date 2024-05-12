@@ -108,7 +108,7 @@ public:
 
     void setMovable(bool v);
     void setRaise(bool v);
-    /*  时钟 */
+    /*  敲击 */
     void strick();
     void setInterval(int i,StrickHandler h); 
 

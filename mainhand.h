@@ -15,7 +15,7 @@
 #include "SDLC/SDLC_Component.h"
 #include "SDLC/Extends/Image.h"
 
-struct MainHandResouce{   
+struct MainHandResouce{
     tool::queue<tool::pos> qpos;
     tool::bfs _bfs;
     tool::pos *path;

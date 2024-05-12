@@ -60,7 +60,7 @@ GameGloabalResouce::GameGloabalResouce():
     snake_init();
     
     mutex = SDL_CreateMutex();
-    thread_strick = SDL_CreateThread(strick_thread,"strick_thread",NULL);
+    // thread_strick = SDL_CreateThread(strick_thread,"strick_thread",NULL);
 }
 
 

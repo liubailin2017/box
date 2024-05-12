@@ -13,7 +13,7 @@ protected:
   std::string text;
   Uint32 text_color;
 public:
-    virtual void updateSurface();
+    void updateSurface() override; 
     SDLC_Label(SDLC_Context *context,char *text);
     SDLC_Label(SDLC_Context *context,int fsize,char *text); 
     SDLC_Label(SDLC_Context *context,char *text,Uint32 color); 

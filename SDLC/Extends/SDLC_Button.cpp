@@ -12,8 +12,8 @@ void SDLC_Button::updateSurface() {
     case STATUS_IN:
     case STATUS_UP:
     case STATUS_SELECt:
-        SDLC_Component::setbgcolor(bgc);
-        sdltool::line(surface,0,getHeight(),getWidth(),getHeight(),bgc_in,10);
+        SDLC_Component::setbgcolor(bgc_in);
+        //sdltool::line(surface,0,getHeight(),getWidth(),getHeight(),bgc_in,10);
         break;
     case STATUS_NOMAL:
     case STATUS_OUT:
@@ -23,6 +23,7 @@ void SDLC_Button::updateSurface() {
         SDLC_Component::setbgcolor(bgc_down);
         break;
     default:
+        SDLC_Component::updateSurface();
         break;
     }
     SDL_BlitSurface(surface_text,NULL,surface,NULL);
@@ -64,18 +65,6 @@ SDLC_Button::SDLC_Button(SDLC_Context *context,char *text,int size,Uint32 bg):SD
 
     bgc_in = bgc_down;
 }
-
-// SDLC_Button::SDLC_Button(SDLC_Context *context,int x,int y,int w,int d):SDLC_Button(context,x,y,w,d,0xffff00ff) {}
-
-// SDLC_Button::SDLC_Button(SDLC_Context *context,int x,int y,int w,int d,Uint32 bg):SDLC_Label(context,NULL),status(STATUS_NOMAL) {
-//     bgc_down = 0xAA0000FF;
-//     bgc_in = 0xAAFFFFFF;
-//     setPostion(x,y);
-//     setSize(w,d);
-//     setbgcolor(bg);
-//     bgc = bg;
-    
-// }
 
 SDLC_Button::~SDLC_Button() {
  }
