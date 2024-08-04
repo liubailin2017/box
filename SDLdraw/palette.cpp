@@ -8,23 +8,41 @@ palette::palette(int w,int h,int box_w,int box_h):w(w),h(h),box_w(box_w),box_h(b
     }
 }
 palette::palette(int x,int y):palette(x,y,30,30){};
-palette::palette():palette(30,30){};
+palette::palette():palette(30,30){
 
-/*
-    should not copy surfure and data;
-*/
-palette& palette::operator=(const palette &plt){
+};
+
+template <typename T>
+void __swap_( T& s, T& d) {
+    T t = s;
+    s = d;
+    d = t; 
+}
+
+palette& palette::operator=(palette &&plt) {
+    __swap_(w,plt.w);
+    __swap_(h,plt.h);
+    __swap_(box_w,plt.box_w);
+    __swap_(box_h,plt.box_h);
+    __swap_(c,plt.c);
+    __swap_(surface,plt.surface);
+    __swap_(data,plt.data);
+    return *this;
+}
+
+palette& palette::operator=(palette &plt) {
     w = plt.w;
     h=plt.h;
     box_w=plt.box_w;
     box_h = plt.box_h;
-    c =0;
+    c = plt.c;
     if(surface)
         SDL_FreeSurface(surface);
-    surface = SDL_CreateRGBSurface(0,box_w*w,box_h*h,32,rmask,gmask,bmask,0);
+    surface = SDL_DuplicateSurface(plt.surface);
     if(data) 
         delete[] data;
     data = new Uint8[w*h];
+    memcpy(data,plt.data,w*h);
     return *this;
 }
 

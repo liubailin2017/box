@@ -27,6 +27,7 @@ GameGloabalResouce::GameGloabalResouce():
                                     leve(0),
                                     isq(false),img_help(new Helpbar(&context))
 {
+    fade = 0.f;
     context.addComponent(msgbox);
     context.addComponent(topbar);
     SDLC_Component *sc = new SDLC_Button(&context,FINI_GetStr(fini,"MENU1"),0xff223355);
@@ -149,18 +150,26 @@ void fromFile(int* len/* output */, int* **bmap /* output */) {
 }
 
 void selectLeve(int leve,content &c) {
+    
     std::string title;
     /*step 1 */
     c.getmap()->read(GloabalData.bmap.bmap[leve]);
     /*step 2 */
-    palette p(c.getmap()->_w(),c.getmap()->_h(),_WIDTH/c.getmap()->_w(),_HEIGHT/c.getmap()->_h());
-    GloabalData.global_palette = p;
+    GloabalData.old_palette = std::move(GloabalData.global_palette);
+    GloabalData.fade = 1.f;
+    GloabalData.global_palette = palette (c.getmap()->_w(),c.getmap()->_h(),_WIDTH/c.getmap()->_w(),_HEIGHT/c.getmap()->_h());
     GloabalData.global_palette.reset();
     GloabalData.c.display();
+    if(GloabalData.pleve > leve) {
+        GloabalData.isinc = 2;
+    }else if(GloabalData.pleve < leve)  {
+        GloabalData.isinc = 1;
+    }else { 
+        GloabalData.isinc = 0;
+    }
     /*step 3 */
     c.init();
     title = "当前关卡:"+std::to_string(leve+1)+"    "+flag[leve];
     GloabalData.topbar->setText(title.c_str());
-    // SDL_SetWindowTitle(GloabalData.global_w,title.c_str());
-    
+    GloabalData.pleve = leve;
 }

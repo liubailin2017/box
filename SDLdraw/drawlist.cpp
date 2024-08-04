@@ -115,5 +115,59 @@ void drawobj(palette *p,block* obj){
 #include"../GlobalData.h"
 
 void SDLdraw_update(SDL_Surface* win_surface ) {
+    if( !GloabalData.isinc || ( GloabalData.fade <= 0.000001f )) {
         SDL_BlitSurface(GloabalData.global_palette.getSuface(),NULL,win_surface,NULL);
+    }else { 
+        if(GloabalData.isinc == 1) {
+             
+            int w =  win_surface->w;
+            int W = w * (1. - GloabalData.fade);
+            int h = win_surface->h;
+            int H = h * (1. - GloabalData.fade);
+            SDL_Rect r;
+            // r.x = .5 * (w - W);
+            // r.y = .5 * (h - H);
+            // r.w = W;
+            // r.h = H;
+            
+            r.x = 0;
+            r.y =  h *  (  - GloabalData.fade);
+            r.w = w;
+            r.h = h;
+
+            SDL_BlitSurface (GloabalData.global_palette.getSuface(),NULL,win_surface,&r);
+            
+            r.x = 0;
+            r.y =  h *  (1. - GloabalData.fade);
+            r.w = w;
+            r.h = h;
+            SDL_BlitSurface(GloabalData.old_palette.getSuface(),NULL,win_surface,&r);
+
+        }else if(GloabalData.isinc == 2){
+             
+            int w =  win_surface->w;
+            int W = w * (  GloabalData.fade);
+            int h = win_surface->h;
+            int H = h * (  GloabalData.fade);
+            SDL_Rect r;
+            // r.x = .5 * (w - W);
+            // r.y = .5 * (h - H);
+            // r.w = W;
+            // r.h = H;
+            
+            r.x = 0;
+            r.y = h *  ( GloabalData.fade - 1.);
+            r.w = w;
+            r.h = h;
+            SDL_BlitSurface (GloabalData.old_palette.getSuface(),NULL,win_surface,&r); 
+
+            r.x = 0;
+            r.y = h *  (  GloabalData.fade);
+            r.w = w;
+            r.h = h;
+            SDL_BlitSurface(GloabalData.global_palette.getSuface(),NULL,win_surface,&r);         
+        }
+       
+    }
+    
 }

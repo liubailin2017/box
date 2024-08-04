@@ -87,7 +87,7 @@ int strick_thread(void *ptr)
 {
     // GloabalData->ticket = SDL_GetTicks();
     SDLC_Context *context = &GloabalData.context;
-    if(SDL_GetTicks() - GloabalData.ticket > 30) {
+    if(SDL_GetTicks() - GloabalData.ticket > 10) {
             GloabalData.ticket = SDL_GetTicks();
             context->updateWindow(); 
             context->strick();          

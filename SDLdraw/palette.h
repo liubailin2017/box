@@ -39,8 +39,8 @@ public:
     palette(int w,int h,int box_w,int box_h);
     palette(int h,int w);
     void setsize(int bw,int bh);
-    palette& operator=(const palette &plt);
-
+    palette& operator=(palette &plt);
+    palette& operator=(palette &&plt);
     palette();
     ~palette();
 };

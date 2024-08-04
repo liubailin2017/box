@@ -198,7 +198,8 @@ void mainstrick(SDLC_Component *cmp) {
         GloabalData.leve %= GloabalData.bmap.cnt_map;
         selectLeve(GloabalData.leve,GloabalData.c);
     }
-    
+    GloabalData.fade =  GloabalData.fade - .05;
+    if(GloabalData.fade < 0.) GloabalData.fade = 0.f;
     GloabalData.global_palette.reset();
     GloabalData.c.display();
     GloabalData.context.notifyUpdate();

@@ -27,9 +27,13 @@ struct GameGloabalResouce{
     SDLC_Msgbox* msgbox;
     
     palette global_palette;
+    palette old_palette;
+    float fade;
+    int isinc;
+ 
     map m; 
     content c;
-
+    int pleve;
     int leve;
     bool isq;
     int ticket ;
